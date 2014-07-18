@@ -1,4 +1,13 @@
-TouchShooter
+TouchDeShot
 ============
 
-danmaku shooting
+danmaku shooting<br>
+<br>
+タッチ中のみ当り判定あり、ショット発射<br>
+タッチし続けるとパワーチャージ<br>
+放すとパワーは０になる<br>
+<br>
+簡単に無敵になれるので弾幕はキツめ。
+<br>
+というのはどうでしょう<br>
+<br>

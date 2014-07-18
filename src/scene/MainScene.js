@@ -1,5 +1,4 @@
 /*
- *  ASURA
  *  MainScene.js
  *  2014/07/10
  *  @auther minimo  
