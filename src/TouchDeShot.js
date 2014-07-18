@@ -1,16 +1,16 @@
 /*
- *  TouchShooter
+ *  TouchDeShot
  *  2014/07/10
  *  @auther minimo  
  *  This Program is MIT license.
  */
 
 //namespace ASURA
-ts = {
+tds = {
     core: null,
 };
 
-ts.TouchShooter = tm.createClass({
+tds.TouchShooter = tm.createClass({
     superClass: tm.app.CanvasApp,
 
     score: 0,
@@ -23,7 +23,7 @@ ts.TouchShooter = tm.createClass({
     init: function(id) {
         this.superInit(id);
 
-        ts.core = this;
+        tds.core = this;
         this.resize(SC_W, SC_H).fitWindow();
         this.fps = 60;
         this.background = "rgba(0, 0, 0, 0)";
@@ -31,13 +31,13 @@ ts.TouchShooter = tm.createClass({
         this.keyboard = tm.input.Keyboard(window);
 
         var loadingScene = tm.ui.LoadingScene({
-            assets: ts.assets,
+            assets: tds.assets,
             width: SC_W,
             height: SC_H,
             bgColor: "black",
             nextScene: function() {
                 this._onLoadAssets();
-                return ts.MainScene();
+                return tds.MainScene();
             }.bind(this),
         });
         this.replaceScene(loadingScene);

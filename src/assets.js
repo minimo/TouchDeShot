@@ -5,8 +5,7 @@
  *  This Program is MIT license.
  */
 
-//アセット一覧
-ts.assets = {
+tds.assets = {
     //images
     "mask":         "assets/mask.png",
     "gunship1":     "assets/gunship1.png",

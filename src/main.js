@@ -59,7 +59,7 @@ app = {};
 
 //アプリケーションメイン
 tm.main(function() {
-    app = ts.TouchShooter("#world");
+    app = tds.TouchShooter("#world");
 //    app.enableStats();
     app.run();
 });

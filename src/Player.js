@@ -5,7 +5,7 @@
  *  This Program is MIT license.
  */
 
-tm.define("ts.Player", {
+tm.define("tds.Player", {
     superClass: "tm.display.Sprite",
 
     control: true,  //操作可能フラグ
@@ -75,7 +75,7 @@ tm.define("ts.Player", {
             if (i > 8) i = 8;
             this.setFrameIndex(i,32,32);
         }
-        
+
         this.bx = this.x;
         this.by = this.y;
         this.time++;

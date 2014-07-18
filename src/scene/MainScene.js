@@ -6,7 +6,7 @@
  *
  */
 
-tm.define("ts.MainScene", {
+tm.define("tds.MainScene", {
     superClass: tm.app.Scene,
 
     //マルチタッチ補助クラス
@@ -36,7 +36,7 @@ tm.define("ts.MainScene", {
         //マルチタッチ初期化
         this.touches = tm.input.TouchesEx(this);
 
-        this.player = ts.Player().addChildTo(this);
+        this.player = tds.Player().addChildTo(this);
         this.player.setPosition(SC_W/2, SC_H/2);
         this.player.setScale(2.0);
     },
@@ -71,6 +71,8 @@ tm.define("ts.MainScene", {
             this.beforeX = sx;
             this.beforeY = sy;
         }
+        var pt = tds.Effect.Particle().addChildTo(this);
+        pt.setPosition(sx, sy);
     },
 
     //タッチorクリック終了処理

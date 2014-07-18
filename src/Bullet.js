@@ -6,7 +6,7 @@
  *  This Program is MIT license.
  */
 
-tm.define("asura.Bullet", {
+tm.define("tds.Bullet", {
     superClass: "tm.display.Sprite",
 
     speed: 7,       //移動速度
