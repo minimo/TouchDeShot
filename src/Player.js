@@ -16,10 +16,11 @@ tm.define("tds.Player", {
     rollcount: 50,  //機体ロール具合
     type: 0,        //自機タイプ
 
-    power: 0,   //ショット威力 0-18000
-    charge: 0,  //パワーチャージ係数
-    level: 0,   //ショットレベル
-    limit: 0,   //ショットレベル上限
+    power: 0,           //パワーチャージ
+    powerMax: 18000,    //パワーチャージ最大
+    level: 0,           //ショットレベル
+    levelMax: 10,       //ショットレベル
+    limit: 0,           //ショットレベル上限
 
     init: function() {
         this.superInit("gunship1", 32, 32);
@@ -67,6 +68,51 @@ tm.define("tds.Player", {
         //移動範囲の制限
         this.x = Math.clamp(this.x, 16, SC_W-16);
         this.y = Math.clamp(this.y, 16, SC_H-16);
+
+        if (this.mouseON) {
+            for (var i = 0; i < 1; i++) {
+                var rad = rand(0, 628) / 100;
+                var dis = rand(50, 100);
+                var x = Math.cos(rad)*dis;
+                var y = Math.sin(rad)*dis;
+                var s = rand(50, 100);
+                var p = tds.Effect.Particle(s, 1, 0.99).addChildTo(this.parent);
+                p.setPosition(x+this.x, y+this.y);
+                p.vx = -x / 50;
+                p.vy = -y / 50;
+                p.target = this;
+                p.vanish = false;
+                p.update = function() {
+                    this.alpha *= this.alphaDecayRate;
+                    if (this.alpha < 0.01) {
+                        this.remove();
+                    } else if (1.0 < this.alpha) {
+                        this.alpha = 1.0;
+                    }
+                    if (this.target.mouseON && !this.vanish) {
+                        this.x += this.vx;
+                        this.y += this.vy;
+                    } else {
+                        this.vanish = true;
+                        this.x -= this.vx*3;
+                        this.y -= this.vy*3;
+                    }
+                }
+                this.power++;
+                if (this.power > this.powerMax) {
+                    this.level++;
+                    if (this.level > this.levelMax) {
+                        this.level = this.levelMax;
+                        this.power = this.powerMax;
+                    } else {
+                        this.power = 0;
+                    }
+                }
+            } else {
+                this.power = 0;
+                this.level = 0;
+            }
+        }
         
         //機体ロール
         if (this.time % 2 == 0) {

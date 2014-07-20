@@ -71,8 +71,6 @@ tm.define("tds.MainScene", {
             this.beforeX = sx;
             this.beforeY = sy;
         }
-        var pt = tds.Effect.Particle().addChildTo(this);
-        pt.setPosition(sx, sy);
     },
 
     //タッチorクリック終了処理
