@@ -9,21 +9,18 @@
 tm.define("tds.Bullet", {
     superClass: "tm.bulletml.Bullet",
 
-    speed: 7,       //移動速度
-    vx: 0,
-    vy: 0,
-    type: 0,        //タイプ
+    init: function(runner, param) {
+        this.superInit(runner);
+        this.removeChildren();
 
-    init: function() {
-        this.superInit("bullet1", 32, 32);
-        this.setFrameIndex(4);
+        //当り判定設定
+        this.boundingType = "circle";
+        this.radius = 2;
 
-        this.time = 0;
-        return this;
+        this.beforeX = this.x;
+        this.beforeY = this.y;
     },
-    update: function() {
-        this.x += this.vx;
-        this.y += this.vy;
+    onremoved: function() {
+        
     },
 });
-
