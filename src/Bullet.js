@@ -7,7 +7,7 @@
  */
 
 tm.define("tds.Bullet", {
-    superClass: "tm.display.Sprite",
+    superClass: "tm.bulletml.Bullet",
 
     speed: 7,       //移動速度
     vx: 0,
