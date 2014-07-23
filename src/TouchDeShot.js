@@ -4,6 +4,7 @@
  *  @auther minimo  
  *  This Program is MIT license.
  */
+(function() {
 
 //namespace ASURA
 tds = {
@@ -51,3 +52,5 @@ tds.TouchShooter = tm.createClass({
         tm.social.Nineleap.postRanking(this.highScore, "");
     }
 });
+
+})();

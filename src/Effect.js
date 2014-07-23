@@ -4,6 +4,7 @@
  *  @auther minimo  
  *  This Program is MIT license.
  */
+(function() {
  
 tds.Effect = [];
 
@@ -61,3 +62,4 @@ tm.define("tds.Effect.Particle", {
     },
 });
 
+})();

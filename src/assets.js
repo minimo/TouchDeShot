@@ -4,6 +4,7 @@
  *  @auther minimo  
  *  This Program is MIT license.
  */
+(function() {
 
 tds.assets = {
     //images
@@ -12,3 +13,4 @@ tds.assets = {
     "shot":         "assets/shot.png",
 }
 
+})();

@@ -5,6 +5,7 @@
  *  This Program is MIT license.
  *
  */
+(function() {
 
 tm.define("tds.MainScene", {
     superClass: tm.app.Scene,
@@ -83,3 +84,4 @@ tm.define("tds.MainScene", {
     },
 });
 
+})();

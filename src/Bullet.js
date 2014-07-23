@@ -5,6 +5,7 @@
  *  @auther minimo  
  *  This Program is MIT license.
  */
+(function() {
 
 tm.define("tds.Bullet", {
     superClass: "tm.bulletml.Bullet",
@@ -24,3 +25,5 @@ tm.define("tds.Bullet", {
         
     },
 });
+
+})();

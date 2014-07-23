@@ -4,6 +4,7 @@
  *  @auther minimo  
  *  This Program is MIT license.
  */
+(function() {
 
 tm.define("tds.Player", {
     superClass: "tm.display.Sprite",
@@ -184,3 +185,5 @@ tds.AuraPaticleImage = tm.graphics.Canvas()
     )
     .fillRect(0, 0, 50, 50)
     .element;
+
+})();
