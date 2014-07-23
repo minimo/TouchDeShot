@@ -16,11 +16,11 @@ tm.define("tds.Player", {
     rollcount: 50,  //機体ロール具合
     type: 0,        //自機タイプ
 
-    power: 0,           //パワーチャージ
-    powerMax: 18000,    //パワーチャージ最大
-    level: 0,           //ショットレベル
-    levelMax: 10,       //ショットレベル
-    limit: 0,           //ショットレベル上限
+    power: 0,       //パワーチャージ
+    powerMax: 180,  //パワーチャージ最大
+    level: 0,       //ショットレベル
+    levelMax: 10,   //ショットレベル
+    limit: 0,       //ショットレベル上限
 
     init: function() {
         this.superInit("gunship1", 32, 32);
@@ -69,13 +69,15 @@ tm.define("tds.Player", {
         this.x = Math.clamp(this.x, 16, SC_W-16);
         this.y = Math.clamp(this.y, 16, SC_H-16);
 
-        if (this.mouseON) {
-            for (var i = 0; i < 1; i++) {
+        //オーラ処理
+        if (this.mouseON && this.time % 3 == 0) {
+            this.alpha = 1;
+            for (var i = 0; i < this.level+1; i++) {
                 var rad = rand(0, 628) / 100;
                 var dis = rand(50, 100);
                 var x = Math.cos(rad)*dis;
                 var y = Math.sin(rad)*dis;
-                var s = rand(50, 100);
+                var s = rand(30, 100);
                 var p = tds.Effect.Particle(s, 1, 0.99).addChildTo(this.parent);
                 p.setPosition(x+this.x, y+this.y);
                 p.vx = -x / 50;
@@ -101,17 +103,18 @@ tm.define("tds.Player", {
                 this.power++;
                 if (this.power > this.powerMax) {
                     this.level++;
+                    this.power = 0;
                     if (this.level > this.levelMax) {
                         this.level = this.levelMax;
                         this.power = this.powerMax;
-                    } else {
-                        this.power = 0;
                     }
                 }
-            } else {
-                this.power = 0;
-                this.level = 0;
             }
+        }
+        if (!this.mouseON) {
+            this.power = 0;
+            this.level = 0;
+            this.alpha = 0.5;
         }
         
         //機体ロール
