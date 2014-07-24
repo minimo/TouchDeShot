@@ -4,10 +4,11 @@
  *  @auther minimo  
  *  This Program is MIT license.
  */
-(function() {
-
 tds.Effect = [];
 
+(function() {
+
+//パーティクル
 tm.define("tds.Effect.Particle", {
     superClass: tm.display.CanvasElement,
 
