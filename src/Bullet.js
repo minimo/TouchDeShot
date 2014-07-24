@@ -1,5 +1,4 @@
 /*
- *  ASURA
  *  Bullet.js
  *  2014/07/16
  *  @auther minimo  
@@ -9,6 +8,8 @@
 
 tm.define("tds.Bullet", {
     superClass: "tm.bulletml.Bullet",
+    
+    isVanish: false,
 
     init: function(runner, param) {
         this.superInit(runner);
@@ -22,7 +23,8 @@ tm.define("tds.Bullet", {
         this.beforeY = this.y;
     },
     onremoved: function() {
-        
+        if (this.isVanish) {
+        }
     },
 });
 
