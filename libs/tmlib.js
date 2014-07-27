@@ -7219,8 +7219,8 @@ tm.dom = tm.dom || {};
             this.superInit();
             
             this.element = new Image();
-            if (!tm.isLocal()) {
-                this.element.crossOrigin="anonymous";
+            if ( !tm.isLocal() && !(/^data:/.test(src)) ) {
+                // this.element.crossOrigin = "anonymous";
             }
             this.element.src = src;
             
@@ -7229,6 +7229,16 @@ tm.dom = tm.dom || {};
                 self.loaded = true;
                 var e = tm.event.Event("load");
                 self.dispatchEvent( e );
+            };
+
+            this.element.onerror = function(e) {
+                console.error("[tmlib] {0}の読み込みに失敗!".format(src));
+                
+                var key = src.split('/').last.replace('.png', '').split('?').first.split('#').first;
+                var elm = e.target;
+                
+                elm.src = "http://dummyimage.com/128x128/444444/eeeeee&text=" + key;
+                elm.onerror = null;
             };
         },
         
@@ -7642,6 +7652,9 @@ tm.dom = tm.dom || {};
         _propertiesToJson: function(elm) {
             var properties = elm.getElementsByTagName("properties")[0];
             var obj = {};
+            if (properties === undefined) {
+                return obj;
+            }
             for (var k = 0;k < properties.childNodes.length;k++) {
                 var p = properties.childNodes[k];
                 if (p.tagName === "property") {
@@ -10687,11 +10700,11 @@ tm.graphics = tm.graphics || {};
      * @member tm.asset.Texture
      * ビットマップ生成
      */
-    tm.asset.Texture.prototype.getBitmap = function(width, height) {
+    tm.asset.Texture.prototype.getBitmap = function(x, y, width, height) {
         var canvas = tm.graphics.Canvas();
         canvas.resize(this.width, this.height);
         canvas.drawTexture(this, 0, 0, this.width, this.height);
-        return canvas.getBitmap(width, height);
+        return canvas.getBitmap(x, y, width, height);
     };
 
     var dummyCanvas = null;
@@ -15457,6 +15470,7 @@ tm.display = tm.display || {};
         /** @property originY */
         /** @property width */
         /** @property height */
+        /** @property tileset */
 
         /**
          * @constructor
@@ -15479,6 +15493,7 @@ tm.display = tm.display || {};
             this.width = chipWidth*this.mapSheet.width;
             this.height= chipWidth*this.mapSheet.height;
 
+            this.tileset = [];
             this._build();
         },
 
@@ -15487,6 +15502,10 @@ tm.display = tm.display || {};
          */
         _build: function() {
             var self = this;
+
+            this.mapSheet.tilesets.each(function(tileset) {
+                self._buildTileset(tileset);
+            });
 
             this.mapSheet.layers.each(function(layer, hoge) {
                 if (layer.type == "objectgroup") {
@@ -15501,14 +15520,38 @@ tm.display = tm.display || {};
         /**
          * @private
          */
+        _buildTileset: function(tileset) {
+            var self      = this;
+            var mapSheet  = this.mapSheet;
+            var texture   = tm.asset.Manager.get(tileset.image);
+            var xIndexMax = (texture.width / mapSheet.tilewidth)|0;
+            var yIndexMax = (texture.height / mapSheet.tileheight)|0;
+
+            yIndexMax.times(function(my) {
+                xIndexMax.times(function(mx) {
+                    var rect = tm.geom.Rect(
+                        mx * mapSheet.tilewidth,
+                        my * mapSheet.tileheight,
+                        mapSheet.tilewidth,
+                        mapSheet.tileheight
+                        );
+                    self.tileset.push({
+                        image: tileset.image,
+                        rect: rect
+                    });
+                });
+            });
+        },
+
+        /**
+         * @private
+         */
         _buildLayer: function(layer) {
-            var self        = this;
-            var mapSheet    = this.mapSheet;
-            var texture     = tm.asset.Manager.get(mapSheet.tilesets[0].image);
-            var xIndexMax   = (texture.width/mapSheet.tilewidth)|0;
-            var shape       = tm.display.Shape(this.width, this.height).addChildTo(this);
-            var visible = (layer.visible === 1) || (layer.visible === undefined);
-            var opacity = layer.opacity === undefined ? 1 : layer.opacity;
+            var self     = this;
+            var mapSheet = this.mapSheet;
+            var shape    = tm.display.Shape(this.width, this.height).addChildTo(this);
+            var visible  = (layer.visible === 1) || (layer.visible === undefined);
+            var opacity  = layer.opacity === undefined ? 1 : layer.opacity;
             shape.origin.set(0, 0);
 
             if (visible) {
@@ -15521,16 +15564,17 @@ tm.display = tm.display || {};
 
                     var xIndex = index%mapSheet.width;
                     var yIndex = (index/mapSheet.width)|0;
-
-                    var mx = (type%xIndexMax);
-                    var my = (type/xIndexMax)|0;
-
                     var dx = xIndex*self.chipWidth;
                     var dy = yIndex*self.chipHeight;
 
+                    var tile = self.tileset[type];
+
+                    var texture = tm.asset.Manager.get(tile.image);
+                    var rect = tile.rect;
+
                     shape.canvas.globalAlpha = opacity;
                     shape.canvas.drawTexture(texture,
-                        mx*mapSheet.tilewidth, my*mapSheet.tileheight, mapSheet.tilewidth, mapSheet.tileheight,
+                        rect.x, rect.y, rect.width, rect.height,
                         dx, dy, self.chipWidth, self.chipHeight
                         );
                 }.bind(this));
@@ -17618,25 +17662,25 @@ tm.ui = tm.ui || {};
 		init: function(param) {
 			this.superInit();
 
-			var loader = tm.asset.Loader();
-			loader.load({
-				"ss": "scene/ss.png",
-			});
+			// var loader = tm.asset.Loader();
+			// loader.load({
+			// 	"ss": "scene/ss.png",
+			// });
 
-			loader.onload = function() {
-				this.fromJSON({
-					children: {
-						ss: {
-							type: "tm.display.Sprite",
-							init: "ss",
-							originX: 0,
-							originY: 0,
-							y: -88,
-							alpha: 0.1,
-						}
-					}
-				})
-			}.bind(this);
+			// loader.onload = function() {
+			// 	this.fromJSON({
+			// 		children: {
+			// 			ss: {
+			// 				type: "tm.display.Sprite",
+			// 				init: "ss",
+			// 				originX: 0,
+			// 				originY: 0,
+			// 				y: -88,
+			// 				alpha: 0.1,
+			// 			}
+			// 		}
+			// 	})
+			// }.bind(this);
 
 			this.fromJSON({
 				children: {
@@ -18442,8 +18486,14 @@ tm.sound = tm.sound || {};
 
 (function() {
 
-    var isAvailable = tm.global.webkitAudioContext ? true : false;
-    var context = isAvailable ? new webkitAudioContext() : null;
+    var context = null;
+    if (tm.global.webkitAudioContext) {
+        context = new webkitAudioContext();
+    } else if (tm.global.mozAudioContext) {
+        context = new mozAudioContext();
+    } else if (tm.global.AudioContext) {
+        context = new AudioContext();
+    }
 
     /**
      * @class tm.sound.WebAudio
@@ -18461,6 +18511,8 @@ tm.sound = tm.sound || {};
         panner: null,
         /** volume */
         volume: 0.8,
+
+        _pannerEnabled: true,
 
         /**
          * @constructor
@@ -18494,9 +18546,7 @@ tm.sound = tm.sound || {};
         play: function(time) {
             if (time === undefined) time = 0;
 
-            if (this.source.playbackState == 0) {
-                this.source.noteOn(this.context.currentTime + time);
-            }
+            this.source.start(this.context.currentTime + time);
             
             var self = this;
             var time = (this.source.buffer.duration/this.source.playbackRate.value)*1000;
@@ -18516,14 +18566,14 @@ tm.sound = tm.sound || {};
             if (this.source.playbackState == 0) {
                 return ;
             }
-            this.source.noteOff(this.context.currentTime + time);
+            this.source.stop(this.context.currentTime + time);
             
             var buffer = this.buffer;
             var volume = this.volume;
             var loop   = this.loop;
             
             this.source = this.context.createBufferSource();
-            this.source.connect(this.panner);
+            this.source.connect(this.gainNode);
             this.buffer = buffer;
             this.volume = volume;
             this.loop = loop;
@@ -18544,7 +18594,7 @@ tm.sound = tm.sound || {};
          * レジューム
          */
         resume: function() {
-            this.source.connect(this.panner);
+            this.source.connect(this.gainNode);
 
             return this;
         },
@@ -18632,7 +18682,9 @@ tm.sound = tm.sound || {};
                 url: src,
                 responseType: "arraybuffer",
                 success: function(data) {
+                    // console.debug("WebAudio ajax load success");
                     self.context.decodeAudioData(data, function(buffer) {
+                        console.debug("WebAudio decodeAudioData success");
                         self._setup();
                         self.buffer = buffer;
                         self.loaded = true;
@@ -18647,13 +18699,19 @@ tm.sound = tm.sound || {};
          */
         _setup: function() {
             this.source     = this.context.createBufferSource();
-//            this.gainNode   = this.context.createGainNode();
+            this.gainNode   = this.context.createGain();
             this.panner     = this.context.createPanner();
             this.analyser   = this.context.createAnalyser();
 
-            this.source.connect(this.panner);
+            this.source.connect(this.gainNode);
+            this.gainNode.connect(this.panner);
             this.panner.connect(this.analyser);
             this.analyser.connect(this.context.destination);
+
+            // TODO 暫定的対応
+            if (tm.BROWSER === "Firefox") {
+                this.pannerEnabled = false;
+            }
         },
 
         /**
@@ -18705,8 +18763,8 @@ tm.sound = tm.sound || {};
      * ボリューム
      */
     tm.sound.WebAudio.prototype.accessor("volume", {
-        get: function()  { return this.source.gain.value; },
-        set: function(v) { this.source.gain.value = v; }
+        get: function()  { return this.gainNode.gain.value; },
+        set: function(v) { this.gainNode.gain.value = v; }
     });
 
     /**
@@ -18718,8 +18776,29 @@ tm.sound = tm.sound || {};
         set: function(v) { this.source.playbackRate.value = v; }
     });
 
+    /**
+     * @property    pannerEnabled
+     * panner有効
+     */
+    tm.sound.WebAudio.prototype.accessor("pannerEnabled", {
+        get: function()  { return this._pannerEnabled; },
+        set: function(v) {
+            this.gainNode.disconnect();
+            this.panner.disconnect();
+            if (v) {
+                this.gainNode.connect(this.panner);
+                this.panner.connect(this.analyser);
+            } else {
+                this.gainNode.connect(this.analyser);
+            }
+            this._pannerEnabled = v;
+
+            // console.debug("WebAudio pannerEnabled: " + v);
+        }
+    });
+
     /** @static @property */
-    tm.sound.WebAudio.isAvailable = tm.global.webkitAudioContext ? true : false;
+    tm.sound.WebAudio.isAvailable = (tm.global.webkitAudioContext || tm.global.mozAudioContext || tm.global.AudioContext) ? true : false;
 
 })();
 
