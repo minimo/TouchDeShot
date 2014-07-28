@@ -40,6 +40,7 @@ tm.define("tds.MainScene", {
         this.player = tds.Player().addChildTo(this);
         this.player.setPosition(SC_W/2, SC_H/2);
         this.player.setScale(2.0);
+        this.player.parentScene = this;
     },
     
     update: function() {

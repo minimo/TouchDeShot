@@ -23,6 +23,8 @@ tm.define("tds.Player", {
     levelMax: 10,   //ショットレベル
     limit: 0,       //ショットレベル上限
 
+    parentScene: null,
+
     init: function() {
         this.superInit("gunship1", 32, 32);
         this.setFrameIndex(4);
