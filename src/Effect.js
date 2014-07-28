@@ -94,6 +94,8 @@ tm.define("tds.Effect.Aura", {
         if (this.x-2 < x && x < this.x+2 && this.y-2 < y && y < this.y+2) {
             this.remove();
         }
+        this.scaleX *= 0.98;
+        this.scaleY *= 0.98;
     },
 });
 
@@ -103,8 +105,9 @@ tds.AuraPaticleImage = tm.graphics.Canvas()
     .setFillStyle(
         tm.graphics.RadialGradient(25, 25, 0, 25, 25, 25)
             .addColorStopList([
-                {offset:0, color: "rgba(255,255,255,0.1)"},
-                {offset:1, color: "rgba(  0,  0,  0,0.0)"},
+                {offset:0.0, color: "hsla({0}, 60%, 50%, 0.4)".format(200)},
+                {offset:0.5, color: "hsla({0}, 60%, 50%, 0.2)".format(240)},
+                {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(240)},
             ]).toStyle()
     )
     .fillRect(0, 0, 50, 50)

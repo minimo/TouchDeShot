@@ -72,7 +72,7 @@ tm.define("tds.Player", {
 
         //オーラ処理
         if (this.mouseON && this.time % 3 == 0) {
-            this.alpha = 1;
+            this.tweener.clear().to({alpha:1},200);
             for (var i = 0; i < this.level+1; i++) {
                 var rad = rand(0, 628) / 100;
                 var dis = rand(50, 100);
@@ -97,7 +97,7 @@ tm.define("tds.Player", {
         if (!this.mouseON) {
             this.power = 0;
             this.level = 0;
-            this.alpha = 0.5;
+            this.tweener.clear().to({alpha:0.3},200);
         }
         
         //機体ロール
