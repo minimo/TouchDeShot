@@ -28,7 +28,7 @@ tm.define("tds.MainScene", {
 
     init: function() {
         this.superInit();
-        this.background = "rgba(0, 0, 0, 0.0)";
+//        this.background = "rgba(255, 0, 0, 1.0)";
 
         //マルチタッチ初期化
         this.touches = tm.input.TouchesEx(this);
@@ -40,8 +40,8 @@ tm.define("tds.MainScene", {
         }
 
         //バックグラウンド
-        this.bg = tm.display.Sprite("mask", SC_W, SC_H).addChildTo(this);
-        this.bg.setPosition(SC_W/2, SC_H/2);
+//        this.bg = tm.display.Sprite("mask", SC_W, SC_H).addChildTo(this);
+//        this.bg.setPosition(SC_W/2, SC_H/2);
 
         //プレイヤー
         this.player = tds.Player().addChildTo(this);
@@ -101,17 +101,3 @@ tm.define("tds.MainScene", {
 });
 
 })();
-
-/*
-LAYER_SYSTEM = 10;           //システム表示
-LAYER_FOREGROUND = 9;       //フォアグラウンド
-LAYER_EFFECT_UPPER = 8;     //エフェクト上位
-LAYER_PLAYER = 8;           //プレイヤー
-LAYER_OBJECT_UPPER = 6;     //オブジェクト上位
-LAYER_BULLET = 5;           //弾
-LAYER_SHOT = 4;             //ショット
-LAYER_OBJECT = 3;           //オブジェクト中間
-LAYER_OBJECT_LOWER = 2;     //オブジェクト下位
-LAYER_EFFECT_LOWER = 1;     //エフェクト下位
-LAYER_BACKGROUND = 0;       //バックグラウンド
-*/
