@@ -30,13 +30,24 @@ tm.define("tds.MainScene", {
         this.superInit();
         this.background = "rgba(0, 0, 0, 0.0)";
 
+        //マルチタッチ初期化
+        this.touches = tm.input.TouchesEx(this);
+
+        this.base = tm.app.Object2D();
+        this.base.originX = 0;
+        this.base.originY = 0;
+        this.superClass.prototype.addChild.call(this, this.base);
+
+        //レイヤー作成
+        for (var i = 0; i < LAYER_SYSTEM+1; i++) {
+            var this.layer[i] = tm.app.Object2D().addChildTo(this);
+        }
+
         //バックグラウンド
         this.bg = tm.display.Sprite("mask", SC_W, SC_H).addChildTo(this);
         this.bg.setPosition(SC_W/2, SC_H/2);
 
-        //マルチタッチ初期化
-        this.touches = tm.input.TouchesEx(this);
-
+        //プレイヤー
         this.player = tds.Player().addChildTo(this);
         this.player.setPosition(SC_W/2, SC_H/2);
         this.player.setScale(2.0);
@@ -82,6 +93,21 @@ tm.define("tds.MainScene", {
 
         var sx = e.pointing.x;
         var sy = e.pointing.y;
+    },
+
+    //addChildオーバーライド
+    addChild: function(child) {
+        if (child.layer === undefined) {
+            return this.superClass.prototype.addChild.apply(this, child);
+        }
+
+        if (0 =< child.layer && child.layer =< LAYER_SYSTEM) {
+            return this.layers[child.layer].addChild(child);
+        }
+
+        //どれにも該当しない場合はバックグラウンドへ追加
+        return this.layers[LAYER_BACKGROUND].addChild(child);
+//        this.superClass.prototype.addChild.apply(this, arguments);
     },
 });
 

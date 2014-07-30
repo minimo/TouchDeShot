@@ -28,12 +28,13 @@ DIFF_HARD   = 2;
 DIFF_HELL   = 3;
 
 //レイヤー区分
-LAYER_SYSTEM = 9;           //システム表示
-LAYER_FOREGROUND = 8;       //フォアグラウンド
-LAYER_EFFECT_UPPER = 7;     //エフェクト上位
-LAYER_PLAYER = 6;           //プレイヤー
-LAYER_OBJECT_UPPER = 5;     //オブジェクト上位
-LAYER_BULLET = 4;           //弾
+LAYER_SYSTEM = 10;           //システム表示
+LAYER_FOREGROUND = 9;       //フォアグラウンド
+LAYER_EFFECT_UPPER = 8;     //エフェクト上位
+LAYER_PLAYER = 8;           //プレイヤー
+LAYER_OBJECT_UPPER = 6;     //オブジェクト上位
+LAYER_BULLET = 5;           //弾
+LAYER_SHOT = 4;             //ショット
 LAYER_OBJECT = 3;           //オブジェクト中間
 LAYER_OBJECT_LOWER = 2;     //オブジェクト下位
 LAYER_EFFECT_LOWER = 1;     //エフェクト下位
