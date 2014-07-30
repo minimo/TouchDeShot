@@ -7,7 +7,7 @@
 (function() {
 
 tm.define("tds.Player", {
-    superClass: "tm.display.Sprite",
+    superClass: "tm.app.Object2D",
     layer: LAYER_OBJECT,
 
     control: true,  //操作可能フラグ
@@ -15,7 +15,6 @@ tm.define("tds.Player", {
     mouseON: false, //マウス操作中フラグ
 
     speed: 7,       //移動速度
-    rollcount: 50,  //機体ロール具合
     type: 0,        //自機タイプ
 
     power: 0,       //パワーチャージ
@@ -28,8 +27,13 @@ tm.define("tds.Player", {
     parentScene: null,
 
     init: function() {
-        this.superInit("gunship1", 32, 32);
-        this.setFrameIndex(4);
+        this.superInit();
+
+        
+
+        //当り判定設定
+        this.boundingType = "circle";
+        this.radius = 2;
 
         this.time = 0;
         return this;
@@ -55,21 +59,6 @@ tm.define("tds.Player", {
                     s.setPosition(this.x, this.y-16);
                 }
             }
-        }
-
-        if (this.bx > this.x) {
-            this.rollcount-=3;
-            if (this.rollcount < 0) this.rollcount = 0;
-        }
-        if (this.bx < this.x) {
-            this.rollcount+=3;
-            if (this.rollcount > 80) this.rollcount = 80;
-        }
-        if (this.bx == this.x) {
-            if (this.rollcount < 50) this.rollcount+=3;
-            else this.rollcount-=3;
-            if (this.rollcount < 0) this.rollcount = 0;
-            if (this.rollcount > 80) this.rollcount = 80;
         }
 
         //移動範囲の制限
@@ -104,14 +93,6 @@ tm.define("tds.Player", {
             this.power = 0;
             this.level = 0;
             this.tweener.clear().to({alpha:0.3},200);
-        }
-        
-        //機体ロール
-        if (this.time % 2 == 0) {
-            var i = ~~(this.rollcount/10);
-            if (i < 0) i = 0;
-            if (i > 8) i = 8;
-            this.setFrameIndex(i,32,32);
         }
 
         this.bx = this.x;
