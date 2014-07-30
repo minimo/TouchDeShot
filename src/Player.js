@@ -80,10 +80,10 @@ tm.define("tds.Player", {
             this.tweener.clear().to({alpha:1},200);
             for (var i = 0; i < this.level+1; i++) {
                 var rad = rand(0, 628) / 100;
-                var dis = rand(50, 100);
+                var dis = rand(10, 150);
                 var x = Math.cos(rad)*dis;
                 var y = Math.sin(rad)*dis;
-                var s = rand(30, 100);
+                var s = rand(50, 150);
                 var p = tds.Effect.Aura(this, s, 1, 0.99).addChildTo(this.parent);
                 p.setPosition(x+this.x, y+this.y);
                 p.vx = -x / 50;

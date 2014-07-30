@@ -10,7 +10,7 @@ tds.Effect = [];
 
 //パーティクル
 tm.define("tds.Effect.Particle", {
-    superClass: tm.display.CanvasElement,
+    superClass: "tm.display.Shape",
     layer: LAYER_EFFECT_UPPER,
 
     alpha: 1.0,
@@ -21,7 +21,7 @@ tm.define("tds.Effect.Particle", {
     isEffect: true,
     isUpper: true,
 
-    init: function(size, initialAlpha, alphaDecayRate, image) {
+    init: function(size, initialAlpha, alphaDecayRate) {
         this.superInit();
         size = size || 100;
         if (initialAlpha === undefined) initialAlpha = 1;
@@ -32,22 +32,16 @@ tm.define("tds.Effect.Particle", {
         this.alphaDecayRate = alphaDecayRate;
         this.blendMode = "lighter";
 
-        if (image) {
-            this.image = image;
-        } else {
-            var size_half = size*0.5;
-            this.image = tm.graphics.Canvas()
-                .resize(size, size)
-                .setFillStyle(
-                    tm.graphics.RadialGradient(size_half, size_half, 0, size_half, size_half, size_half)
-                        .addColorStopList([
-                            {offset:0, color: "rgba(255,255,255,0.1)"},
-                            {offset:1, color: "rgba(  0,  0,  0,0.0)"},
-                        ]).toStyle()
-                )
-                .fillRect(0, 0, size, size)
-                .element;
-        }
+        var c = this.canvas;
+        c.setFillStyle(
+            tm.graphics.RadialGradient(size/4, size/4, 0, size/4, size/4, size/4)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla({0}, 60%, 50%, 0.8)".format(0)},
+                    {offset:0.5, color: "hsla({0}, 60%, 50%, 0.4)".format(0)},
+                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(0)},
+                ]).toStyle()
+            )
+            .fillRect(0, 0, 50, 50);
     },
     update: function(app) {
         this.alpha *= this.alphaDecayRate;
@@ -57,22 +51,39 @@ tm.define("tds.Effect.Particle", {
             this.alpha = 1.0;
         }
     },
-    draw: function(canvas) {
-        canvas.context.drawImage(this.image, -this.width*this.origin.x, -this.height*this.origin.y, this.width, this.height);
-    },
-    clone: function() {
-        return tds.Effect.Particle(this.size, this.initialAlpha, this.alphaDecayRate, this.image);
-    },
 });
 
 tm.define("tds.Effect.Aura", {
-    superClass: "tds.Effect.Particle",
+    superClass: "tm.display.Shape",
     layer: LAYER_EFFECT_UPPER,
 
     init: function(target, size, initialAlpha, alphaDecayRate) {
-        this.superInit(size, initialAlpha, alphaDecayRate, tds.AuraPaticleImage);
+        this.superInit();
+
+        size = size || 100;
+        if (initialAlpha === undefined) initialAlpha = 1;
+        if (alphaDecayRate === undefined) alphaDecayRate = 0.9;
+
+        this.width = this.height = this.size = size;
+        this.alpha = initialAlpha;
+        this.alphaDecayRate = alphaDecayRate;
+        this.blendMode = "lighter";
+
         this.target = target;
         this.vanish = false;
+
+        this.setScale(size*0.01);
+
+        var c = this.canvas;
+        c.setFillStyle(
+            tm.graphics.RadialGradient(25, 25, 0, 25, 25, 25)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla({0}, 60%, 50%, 0.4)".format(200)},
+                    {offset:0.5, color: "hsla({0}, 60%, 50%, 0.2)".format(240)},
+                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(240)},
+                ]).toStyle()
+            )
+            .fillRect(0, 0, 50, 50);
     },
 
     update: function() {
@@ -102,32 +113,5 @@ tm.define("tds.Effect.Aura", {
     },
 });
 
-//オーラパーティクル用
-tds.AuraPaticleImage = tm.graphics.Canvas()
-    .resize(50, 50)
-    .setFillStyle(
-        tm.graphics.RadialGradient(25, 25, 0, 25, 25, 25)
-            .addColorStopList([
-                {offset:0.0, color: "hsla({0}, 60%, 50%, 0.4)".format(200)},
-                {offset:0.5, color: "hsla({0}, 60%, 50%, 0.2)".format(240)},
-                {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(240)},
-            ]).toStyle()
-    )
-    .fillRect(0, 0, 50, 50)
-    .element;
-
-//ショットパーティクル用
-tds.ShotParticleImage = tm.graphics.Canvas()
-    .resize(50, 50)
-    .setFillStyle(
-        tm.graphics.RadialGradient(25, 25, 0, 25, 25, 25)
-            .addColorStopList([
-                {offset:0.0, color: "hsla({0}, 60%, 50%, 0.4)".format(100)},
-                {offset:0.5, color: "hsla({0}, 60%, 50%, 0.2)".format(140)},
-                {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(140)},
-            ]).toStyle()
-    )
-    .fillRect(0, 0, 50, 50)
-    .element;
 
 })();
