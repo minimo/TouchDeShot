@@ -57,17 +57,17 @@ tm.define("tds.Effect.Aura", {
     superClass: "tm.display.Shape",
     layer: LAYER_EFFECT_UPPER,
 
-    init: function(target, size, initialAlpha, alphaDecayRate) {
+    init: function(target, size, alphaDecayRate) {
         this.superInit();
 
         size = size || 100;
-        if (initialAlpha === undefined) initialAlpha = 1;
         if (alphaDecayRate === undefined) alphaDecayRate = 0.9;
 
         this.width = this.height = this.size = size;
-        this.alpha = initialAlpha;
+        this.alpha = 0.02;
         this.alphaDecayRate = alphaDecayRate;
         this.blendMode = "lighter";
+        this.tweener.clear().to({alpha:1},200).to({alpha:0},2000);
 
         this.target = target;
         this.vanish = false;
@@ -87,7 +87,7 @@ tm.define("tds.Effect.Aura", {
     },
 
     update: function() {
-        this.alpha *= this.alphaDecayRate;
+//        this.alpha *= this.alphaDecayRate;
         if (this.alpha < 0.01) {
             this.remove();
         } else if (1.0 < this.alpha) {

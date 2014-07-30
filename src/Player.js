@@ -23,6 +23,7 @@ tm.define("tds.Player", {
     level: 0,       //ショットレベル
     levelMax: 10,   //ショットレベル
     limit: 0,       //ショットレベル上限
+    shotInterval: 5,
 
     parentScene: null,
 
@@ -49,7 +50,7 @@ tm.define("tds.Player", {
 
             if (this.mouseON) {
                 //ショット
-                if (this.shotON && this.time % 3 == 0) {
+                if (this.shotON && this.time % this.shotInterval == 0) {
                     var s = tds.ShotBullet(0).addChildTo(this.parentScene);
                     s.setPosition(this.x, this.y-16);
                 }
@@ -84,7 +85,7 @@ tm.define("tds.Player", {
                 var x = Math.cos(rad)*dis;
                 var y = Math.sin(rad)*dis;
                 var s = rand(50, 150);
-                var p = tds.Effect.Aura(this, s, 1, 0.99).addChildTo(this.parent);
+                var p = tds.Effect.Aura(this, s, 0.99).addChildTo(this.parent);
                 p.setPosition(x+this.x, y+this.y);
                 p.vx = -x / 50;
                 p.vy = -y / 50;
