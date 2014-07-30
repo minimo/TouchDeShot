@@ -11,6 +11,7 @@ tds.Effect = [];
 //パーティクル
 tm.define("tds.Effect.Particle", {
     superClass: tm.display.CanvasElement,
+    layer: LAYER_EFFECT_UPPER,
 
     alpha: 1.0,
     alphaDecayRate: 0.85,
@@ -18,6 +19,7 @@ tm.define("tds.Effect.Particle", {
 
     image: null,
     isEffect: true,
+    isUpper: true,
 
     init: function(size, initialAlpha, alphaDecayRate, image) {
         this.superInit();
@@ -65,6 +67,7 @@ tm.define("tds.Effect.Particle", {
 
 tm.define("tds.Effect.Aura", {
     superClass: "tds.Effect.Particle",
+    layer: LAYER_EFFECT_UPPER,
 
     init: function(target, size, initialAlpha, alphaDecayRate) {
         this.superInit(size, initialAlpha, alphaDecayRate, tds.AuraPaticleImage);
@@ -108,6 +111,20 @@ tds.AuraPaticleImage = tm.graphics.Canvas()
                 {offset:0.0, color: "hsla({0}, 60%, 50%, 0.4)".format(200)},
                 {offset:0.5, color: "hsla({0}, 60%, 50%, 0.2)".format(240)},
                 {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(240)},
+            ]).toStyle()
+    )
+    .fillRect(0, 0, 50, 50)
+    .element;
+
+//ショットパーティクル用
+tds.ShotParticleImage = tm.graphics.Canvas()
+    .resize(50, 50)
+    .setFillStyle(
+        tm.graphics.RadialGradient(25, 25, 0, 25, 25, 25)
+            .addColorStopList([
+                {offset:0.0, color: "hsla({0}, 60%, 50%, 0.4)".format(100)},
+                {offset:0.5, color: "hsla({0}, 60%, 50%, 0.2)".format(140)},
+                {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(140)},
             ]).toStyle()
     )
     .fillRect(0, 0, 50, 50)

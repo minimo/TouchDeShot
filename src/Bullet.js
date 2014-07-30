@@ -8,6 +8,7 @@
 
 tm.define("tds.Bullet", {
     superClass: "tm.bulletml.Bullet",
+    layer: LAYER_BULLET,
 
     param: null,
 
@@ -44,6 +45,7 @@ tm.define("tds.Bullet", {
 
 tm.define("tds.ShotBullet", {
     superClass: "tm.display.Sprite",
+    layer: LAYER_SHOT,
 
     speed: 5,
     power: 1,

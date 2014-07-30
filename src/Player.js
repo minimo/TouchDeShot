@@ -8,6 +8,7 @@
 
 tm.define("tds.Player", {
     superClass: "tm.display.Sprite",
+    layer: LAYER_OBJECT,
 
     control: true,  //操作可能フラグ
     shotON: true,   //ショットフラグ

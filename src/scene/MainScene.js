@@ -33,14 +33,10 @@ tm.define("tds.MainScene", {
         //マルチタッチ初期化
         this.touches = tm.input.TouchesEx(this);
 
-        this.base = tm.app.Object2D();
-        this.base.originX = 0;
-        this.base.originY = 0;
-        this.superClass.prototype.addChild.call(this, this.base);
-
         //レイヤー作成
+        this.layers = [];
         for (var i = 0; i < LAYER_SYSTEM+1; i++) {
-            var this.layer[i] = tm.app.Object2D().addChildTo(this);
+            this.layers[i] = tm.app.Object2D().addChildTo(this);
         }
 
         //バックグラウンド
@@ -97,18 +93,25 @@ tm.define("tds.MainScene", {
 
     //addChildオーバーライド
     addChild: function(child) {
-        if (child.layer === undefined) {
-            return this.superClass.prototype.addChild.apply(this, child);
+        if (this.layer === undefined) {
+            return this.superClass.prototype.addChild.apply(this, arguments);
         }
-
-        if (0 =< child.layer && child.layer =< LAYER_SYSTEM) {
-            return this.layers[child.layer].addChild(child);
-        }
-
-        //どれにも該当しない場合はバックグラウンドへ追加
-        return this.layers[LAYER_BACKGROUND].addChild(child);
-//        this.superClass.prototype.addChild.apply(this, arguments);
+        return this.layers[child.layer].addChild(child);
     },
 });
 
 })();
+
+/*
+LAYER_SYSTEM = 10;           //システム表示
+LAYER_FOREGROUND = 9;       //フォアグラウンド
+LAYER_EFFECT_UPPER = 8;     //エフェクト上位
+LAYER_PLAYER = 8;           //プレイヤー
+LAYER_OBJECT_UPPER = 6;     //オブジェクト上位
+LAYER_BULLET = 5;           //弾
+LAYER_SHOT = 4;             //ショット
+LAYER_OBJECT = 3;           //オブジェクト中間
+LAYER_OBJECT_LOWER = 2;     //オブジェクト下位
+LAYER_EFFECT_LOWER = 1;     //エフェクト下位
+LAYER_BACKGROUND = 0;       //バックグラウンド
+*/
