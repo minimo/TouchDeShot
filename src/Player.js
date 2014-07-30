@@ -48,7 +48,9 @@ tm.define("tds.Player", {
 
             if (this.mouseON) {
                 //ショット
-                if (this.shotON) {
+                if (this.shotON && this.time % 3 == 0) {
+                    var s = tds.ShotBullet(0).addChildTo(this.parentScene);
+                    s.setPosition(this.x, this.y-16);
                 }
             }
         }

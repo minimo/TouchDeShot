@@ -47,16 +47,25 @@ tm.define("tds.ShotBullet", {
 
     speed: 5,
     power: 1,
+    defaultSpeed: 15,
+    defaultPower: 1,
 
     init: function(rotation, speed, power) {
         this.superInit("shot");
 
         this.rotation = rotation || 0;
-        this.speed = speed || 5;
-        this.power = power || 1;
+        this.speed = speed || this.defaultSpeed;
+        this.power = power || this.defaultPower;
 
-        this.vx = Math.cos(rotation*toRad) * speed;
-        this.vy = Math.sin(rotation*toRad) * speed;
+        this.scaleX = 4;
+        this.scaleY = 2;
+
+        this.alpha = 0.8;
+        this.blendMode = "lighter";
+
+        rotation-=90;
+        this.vx = Math.cos(rotation*toRad) * this.speed;
+        this.vy = Math.sin(rotation*toRad) * this.speed;
 
         //当り判定設定
         this.boundingType = "circle";
@@ -65,9 +74,9 @@ tm.define("tds.ShotBullet", {
         this.beforeX = this.x;
         this.beforeY = this.y;
     },
-    onremoved: function() {
+    update: function() {
         this.x += this.vx;
-        this.y += this.vx;
+        this.y += this.vy;
 
         if (this.x < -20 || this.x > SC_W+20 || this.y < -20 || this.y > SC_H+20) {
             this.remove();
