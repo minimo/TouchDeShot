@@ -43,8 +43,11 @@ tm.define("tds.Bullet", {
     },
 });
 
+var shotPath = [
+    [32,0], [64,48], [32,64], [0,48], [32, 0]
+];
 tm.define("tds.ShotBullet", {
-    superClass: "tm.display.Sprite",
+    superClass: "tm.display.Shape",
     layer: LAYER_SHOT,
 
     speed: 5,
@@ -53,14 +56,21 @@ tm.define("tds.ShotBullet", {
     defaultPower: 1,
 
     init: function(rotation, speed, power) {
-        this.superInit("shot");
+        this.superInit();
+        this.width = this.height = 32;
+        var c = this.canvas;
+        c.setColorStyle("hsla(250, 50%, 50%, 1.0)", "hsla(250, 50%, 50%, 1.0)");
+        c.setLineStyle(2);
+        c.beginPath();
+        c.moveTo(shotPath[0][0], shotPath[0][1]);
+        for (var i = 1; i < shotPath.length; i++) {
+            c.lineTo(shotPath[i][0], shotPath[i][1]);
+        }
+        c.stroke().fill().closePath();
 
         this.rotation = rotation || 0;
         this.speed = speed || this.defaultSpeed;
         this.power = power || this.defaultPower;
-
-        this.scaleX = 4;
-        this.scaleY = 2;
 
         this.alpha = 0.8;
         this.blendMode = "lighter";
