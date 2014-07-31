@@ -41,6 +41,8 @@ tm.define("tds.Player", {
     setupBody: function() {
         //コア
         var core = tm.display.Shape().addChildTo(this);
+        core.x = 2;
+        core.y = 3;
         core.width = core.height = 16;
         core.canvas.setFillStyle(
             tm.graphics.RadialGradient(25, 25, 0, 25, 25, 25)
@@ -55,21 +57,25 @@ tm.define("tds.Player", {
 
         //機体
         var body = tm.display.Shape().addChildTo(this);
+        body.y = 10;
         var c = body.canvas;
         c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.5)");
         c.setLineStyle(1);
         var path = [
-            [24,0], [24,32], [0,64], [24,0]
+            [28,0], [28,40], [25,30],
         ];
         c.beginPath();
         c.moveTo(path[0][0], path[0][1]);
         for (var i = 1; i < path.length; i++) {
             c.lineTo(path[i][0], path[i][1]);
         }
-        c.moveTo(path[0][0]+32, path[0][1]);
+        c.lineTo(path[0][0], path[0][1]);
+
+        c.moveTo(64-path[0][0], path[0][1]);
         for (var i = 1; i < path.length; i++) {
-            c.lineTo(path[i][0]+32, path[i][1]);
+            c.lineTo(64-path[i][0], path[i][1]);
         }
+        c.lineTo(64-path[0][0], path[0][1]);
         c.stroke().fill().closePath();
     },
     update: function() {
