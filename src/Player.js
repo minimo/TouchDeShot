@@ -29,14 +29,48 @@ tm.define("tds.Player", {
     init: function() {
         this.superInit();
 
-        
+        this.setupBody();
 
         //当り判定設定
         this.boundingType = "circle";
         this.radius = 2;
-
+        
         this.time = 0;
         return this;
+    },
+    setupBody: function() {
+        //コア
+        var core = tm.display.Shape().addChildTo(this);
+        core.width = core.height = 16;
+        core.canvas.setFillStyle(
+            tm.graphics.RadialGradient(25, 25, 0, 25, 25, 25)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla({0}, 60%, 50%, 1.0)".format(200)},
+                    {offset:0.5, color: "hsla({0}, 60%, 50%, 1.0)".format(240)},
+                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(240)},
+                ]).toStyle()
+            ).fillRect(0, 0, 50, 50);
+        core.tweener.clear();
+        core.tweener.scale(1.5, 100, "easeInOutQuad").scale(1.0, 200, "easeInOutQuad").setLoop(true);
+
+        //機体
+        var body = tm.display.Shape().addChildTo(this);
+        var c = body.canvas;
+        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.5)");
+        c.setLineStyle(1);
+        var path = [
+            [24,0], [24,32], [0,64], [24,0]
+        ];
+        c.beginPath();
+        c.moveTo(path[0][0], path[0][1]);
+        for (var i = 1; i < path.length; i++) {
+            c.lineTo(path[i][0], path[i][1]);
+        }
+        c.moveTo(path[0][0]+32, path[0][1]);
+        for (var i = 1; i < path.length; i++) {
+            c.lineTo(path[i][0]+32, path[i][1]);
+        }
+        c.stroke().fill().closePath();
     },
     update: function() {
         //操作系
