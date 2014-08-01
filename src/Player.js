@@ -42,13 +42,13 @@ tm.define("tds.Player", {
 
         //機体
         this.body = tm.display.Shape(32, 32).addChildTo(this);
-        this.body.y = -5;
+        this.body.y = -7;
         var c = this.body.canvas;
-        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.5)");
+        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 1.0)");
         c.setLineStyle(1);
         var path = [
 //            [12,0], [12,20], [16,26], [17,26], [21,20], [21,0], [25,28], [17,32], [16,32], [7,28],
-            [16,0], [10,24], [16,32], [22,24],
+            [16,0], [10,26], [16,32], [22,26],
         ];
         c.beginPath();
         c.moveTo(path[0][0], path[0][1]);
@@ -67,7 +67,7 @@ tm.define("tds.Player", {
         this.wing = tm.display.Shape(48, 16).addChildTo(this);
         this.wing.y = 4;
         var c = this.wing.canvas;
-        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.5)");
+        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 1.0)");
         c.setLineStyle(1);
         var path = [
             [16,0], [16,14], [0,0], [10,4],
