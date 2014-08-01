@@ -39,30 +39,16 @@ tm.define("tds.Player", {
         return this;
     },
     setupBody: function() {
-        //コア
-        var core = tm.display.Shape().addChildTo(this);
-        core.x = 2;
-        core.y = 3;
-        core.width = core.height = 16;
-        core.canvas.setFillStyle(
-            tm.graphics.RadialGradient(25, 25, 0, 25, 25, 25)
-                .addColorStopList([
-                    {offset:0.0, color: "hsla({0}, 60%, 50%, 1.0)".format(200)},
-                    {offset:0.5, color: "hsla({0}, 60%, 50%, 1.0)".format(240)},
-                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(240)},
-                ]).toStyle()
-            ).fillRect(0, 0, 50, 50);
-        core.tweener.clear();
-        core.tweener.scale(1.5, 100, "easeInOutQuad").scale(1.0, 200, "easeInOutQuad").setLoop(true);
 
         //機体
-        var body = tm.display.Shape().addChildTo(this);
-        body.y = 10;
-        var c = body.canvas;
+        this.body = tm.display.Shape(32, 32).addChildTo(this);
+        this.body.y = -5;
+        var c = this.body.canvas;
         c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.5)");
         c.setLineStyle(1);
         var path = [
-            [28,0], [28,40], [25,30],
+//            [12,0], [12,20], [16,26], [17,26], [21,20], [21,0], [25,28], [17,32], [16,32], [7,28],
+            [16,0], [10,24], [16,32], [22,24],
         ];
         c.beginPath();
         c.moveTo(path[0][0], path[0][1]);
@@ -70,13 +56,47 @@ tm.define("tds.Player", {
             c.lineTo(path[i][0], path[i][1]);
         }
         c.lineTo(path[0][0], path[0][1]);
-
-        c.moveTo(64-path[0][0], path[0][1]);
+        c.moveTo(32-path[0][0], path[0][1]);
         for (var i = 1; i < path.length; i++) {
-            c.lineTo(64-path[i][0], path[i][1]);
+            c.lineTo(32-path[i][0], path[i][1]);
         }
-        c.lineTo(64-path[0][0], path[0][1]);
+        c.lineTo(32-path[0][0], path[0][1]);
         c.stroke().fill().closePath();
+
+        //翼
+        this.wing = tm.display.Shape(48, 16).addChildTo(this);
+        this.wing.y = 4;
+        var c = this.wing.canvas;
+        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.5)");
+        c.setLineStyle(1);
+        var path = [
+            [16,0], [16,14], [0,0], [10,4],
+        ];
+        c.beginPath();
+        c.moveTo(path[0][0], path[0][1]);
+        for (var i = 1; i < path.length; i++) {
+            c.lineTo(path[i][0], path[i][1]);
+        }
+        c.lineTo(path[0][0], path[0][1]);
+        c.moveTo(48-path[0][0], path[0][1]);
+        for (var i = 1; i < path.length; i++) {
+            c.lineTo(48-path[i][0], path[i][1]);
+        }
+        c.lineTo(48-path[0][0], path[0][1]);
+        c.stroke().fill().closePath();
+
+        //コア
+        var core = tm.display.Shape(16, 16).addChildTo(this);
+        core.canvas.setFillStyle(
+            tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla({0}, 60%, 50%, 1.0)".format(200)},
+                    {offset:0.5, color: "hsla({0}, 60%, 50%, 1.0)".format(240)},
+                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(240)},
+                ]).toStyle()
+            ).fillRect(0, 0, 16, 16);
+        core.tweener.clear();
+        core.tweener.scale(1.5, 100, "easeInOutQuad").scale(1.0, 200, "easeInOutQuad").setLoop(true);
     },
     update: function() {
         //操作系
