@@ -25,21 +25,6 @@ tm.define("tds.Enemy", {
 
         this.time = 0;
     },
-    setupBody: function() {
-
-        //コア
-        var core = tm.display.Shape(16, 16).addChildTo(this);
-        core.canvas.setFillStyle(
-            tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8)
-                .addColorStopList([
-                    {offset:0.0, color: "hsla({0}, 60%, 50%, 1.0)".format(100)},
-                    {offset:0.5, color: "hsla({0}, 60%, 50%, 1.0)".format(140)},
-                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(140)},
-                ]).toStyle()
-            ).fillRect(0, 0, 16, 16);
-        core.tweener.clear();
-        core.tweener.scale(1.5, 100, "easeInOutQuad").scale(1.0, 200, "easeInOutQuad").setLoop(true);
-    },
 });
 
 })();
