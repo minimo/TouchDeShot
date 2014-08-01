@@ -90,6 +90,7 @@ tm.define("tds.Effect.Aura", {
 //        this.alpha *= this.alphaDecayRate;
         if (this.alpha < 0.01) {
             this.remove();
+            return;
         } else if (1.0 < this.alpha) {
             this.alpha = 1.0;
         }
@@ -107,6 +108,7 @@ tm.define("tds.Effect.Aura", {
         var y = this.target.y;
         if (this.x-2 < x && x < this.x+2 && this.y-2 < y && y < this.y+2) {
             this.remove();
+            return;
         }
         this.scaleX *= 0.98;
         this.scaleY *= 0.98;
