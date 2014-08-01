@@ -27,7 +27,7 @@ tm.define("tds.Player", {
     rollcount: 0,
     rollmax: 3,
     pitchcount: 0,
-    pitchmax: 3,
+    pitchmax: 2,
 
     parentScene: null,
 
@@ -72,10 +72,10 @@ tm.define("tds.Player", {
         this.wing = tm.display.Shape(48, 16).addChildTo(this);
         this.wing.y = 4;
         var c = this.wing.canvas;
-        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 1.0)");
-        c.setLineStyle(1);
+        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.0)");
+        c.setLineStyle(2);
         var path = [
-            [16,0], [16,14], [0,0], [10,4],
+            [16,5], [16,16], [0,0], [10,8],
         ];
         c.beginPath();
         c.moveTo(path[0][0], path[0][1]);
@@ -126,35 +126,19 @@ tm.define("tds.Player", {
             }
         }
 
-        if (this.bx > this.x) {
-            this.rollcount--;
-            if (this.rollcount < -this.rollmax) this.rollcount = -this.rollmax;
-        }
-        if (this.bx < this.x) {
-            this.rollcount++;
-            if (this.rollcount > this.rollmax) this.rollcount = this.rollmax;
-        }
+        if (this.bx > this.x) this.rollcount--;
+        if (this.bx < this.x) this.rollcount++;
         if (this.bx == this.x) {
-            if (this.rollcount < 0) this.rollcount++;
-            else this.rollcount--;
-            if (this.rollcount < -this.rollmax) this.rollcount = -this.rollmax;
-            if (this.rollcount > this.rollmax) this.rollcount = this.rollmax;
+            if (this.rollcount < 0) this.rollcount++; else this.rollcount--;
         }
-
-        if (this.by > this.y) {
-            this.pitchcount--;
-            if (this.pitchcount < -this.pitchmax) this.pitchcount = -this.pitchmax;
-        }
-        if (this.by < this.y) {
-            this.pitchcount++;
-            if (this.pitchcount > this.pitchmax) this.pitchcount = this.pitchmax;
-        }
+        if (this.by > this.y) this.pitchcount--;
+        if (this.by < this.y) this.pitchcount++;
         if (this.by == this.y) {
             if (this.pitchcount < 0) this.pitchcount++;
             else this.pitchcount--;
-            if (this.pitchcount < -this.pitchmax) this.pitchcount = -this.pitchmax;
-            if (this.pitchcount > this.pitchmax) this.pitchcount = this.pitchmax;
         }
+        this.rollcount = Math.clamp(this.rollcount, -this.rollmax, this.rollmax);
+        this.pitchcount = Math.clamp(this.pitchcount, -this.pitchmax, this.pitchmax);
         this.wing.x = -this.rollcount;
         this.wing.y = -this.pitchcount;
 
