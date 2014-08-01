@@ -22,7 +22,12 @@ tm.define("tds.Player", {
     level: 0,       //ショットレベル
     levelMax: 10,   //ショットレベル
     limit: 0,       //ショットレベル上限
-    shotInterval: 5,
+    shotInterval: 5,//ショット間隔
+
+    rollcount: 0,
+    rollmax: 3,
+    pitchcount: 0,
+    pitchmax: 3,
 
     parentScene: null,
 
@@ -120,6 +125,38 @@ tm.define("tds.Player", {
                 }
             }
         }
+
+        if (this.bx > this.x) {
+            this.rollcount--;
+            if (this.rollcount < -this.rollmax) this.rollcount = -this.rollmax;
+        }
+        if (this.bx < this.x) {
+            this.rollcount++;
+            if (this.rollcount > this.rollmax) this.rollcount = this.rollmax;
+        }
+        if (this.bx == this.x) {
+            if (this.rollcount < 0) this.rollcount++;
+            else this.rollcount--;
+            if (this.rollcount < -this.rollmax) this.rollcount = -this.rollmax;
+            if (this.rollcount > this.rollmax) this.rollcount = this.rollmax;
+        }
+
+        if (this.by > this.y) {
+            this.pitchcount--;
+            if (this.pitchcount < -this.pitchmax) this.pitchcount = -this.pitchmax;
+        }
+        if (this.by < this.y) {
+            this.pitchcount++;
+            if (this.pitchcount > this.pitchmax) this.pitchcount = this.pitchmax;
+        }
+        if (this.by == this.y) {
+            if (this.pitchcount < 0) this.pitchcount++;
+            else this.pitchcount--;
+            if (this.pitchcount < -this.pitchmax) this.pitchcount = -this.pitchmax;
+            if (this.pitchcount > this.pitchmax) this.pitchcount = this.pitchmax;
+        }
+        this.wing.x = -this.rollcount;
+        this.wing.y = -this.pitchcount;
 
         //移動範囲の制限
         this.x = Math.clamp(this.x, 16, SC_W-16);
