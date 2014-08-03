@@ -25,9 +25,9 @@ tm.define("tds.Player", {
     shotInterval: 5,//ショット間隔
 
     rollcount: 0,
-    rollmax: 3,
+    rollmax: 9,
     pitchcount: 0,
-    pitchmax: 2,
+    pitchmax: 6,
 
     parentScene: null,
 
@@ -50,10 +50,9 @@ tm.define("tds.Player", {
         this.body.y = -7;
         var c = this.body.canvas;
         c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 1.0)");
-        c.setLineStyle(1);
+        c.setLineStyle(0);
         var path = [
-//            [12,0], [12,20], [16,26], [17,26], [21,20], [21,0], [25,28], [17,32], [16,32], [7,28],
-            [16,0], [10,26], [16,32], [22,26],
+            [16,0], [11,24], [16,32], [21,24],
         ];
         c.beginPath();
         c.moveTo(path[0][0], path[0][1]);
@@ -70,12 +69,12 @@ tm.define("tds.Player", {
 
         //翼
         this.wing = tm.display.Shape(48, 16).addChildTo(this);
-        this.wing.y = 4;
+        this.wing.y = 0;
         var c = this.wing.canvas;
-        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.0)");
-        c.setLineStyle(2);
+        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.5)");
+        c.setLineStyle(1);
         var path = [
-            [16,5], [16,16], [0,0], [10,8],
+            [16,5], [16,16], [0,6], [13,10],
         ];
         c.beginPath();
         c.moveTo(path[0][0], path[0][1]);
@@ -101,7 +100,13 @@ tm.define("tds.Player", {
                 ]).toStyle()
             ).fillRect(0, 0, 16, 16);
         core.tweener.clear();
-        core.tweener.scale(1.5, 100, "easeInOutQuad").scale(1.0, 200, "easeInOutQuad").setLoop(true);
+        core.tweener.scale(1.0, 100, "easeInOutQuad").scale(0.5, 200, "easeInOutQuad").setLoop(true);
+
+        //ビット
+        var bit = this.bit = tds.PlayerBit().addChildTo(this);
+        bit.x = 32; bit.y = 8;
+        var bit = this.bit = tds.PlayerBit().addChildTo(this);
+        bit.x = -32; bit.y = 8;
     },
     update: function() {
         //操作系
@@ -139,8 +144,8 @@ tm.define("tds.Player", {
         }
         this.rollcount = Math.clamp(this.rollcount, -this.rollmax, this.rollmax);
         this.pitchcount = Math.clamp(this.pitchcount, -this.pitchmax, this.pitchmax);
-        this.wing.x = -this.rollcount;
-        this.wing.y = -this.pitchcount;
+        this.wing.x = -~~(this.rollcount/3);
+        this.wing.y = -~~(this.pitchcount/3)-2;
 
         //移動範囲の制限
         this.x = Math.clamp(this.x, 16, SC_W-16);
@@ -210,6 +215,27 @@ tm.define("tds.Player", {
         });
         this.shotON = false;
         this.control = false;
+    },
+});
+
+tm.define("tds.PlayerBit", {
+    superClass: "tm.app.Shape",
+
+    init: function(parentScene) {
+        this.superInit(8, 8);
+
+        var param = {
+            strokeStyle:"hsla(200, 50%, 50%, 1.0)",
+            fillStyle: "hsla(200, 50%, 50%, 0.3)",
+            lineWidth: 1,
+        };
+        this.renderRectangle(param);
+
+        this.time = 0;
+        return this;
+    },
+    update: function() {
+        this.rotation+=10;
     },
 });
 

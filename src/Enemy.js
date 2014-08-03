@@ -15,8 +15,6 @@ tm.define("tds.Enemy", {
     init: function() {
         this.superInit();
 
-        this.setupBody();
-
         //当り判定設定
         this.boundingType = "circle";
         this.radius = 2;
@@ -26,5 +24,9 @@ tm.define("tds.Enemy", {
         this.time = 0;
     },
 });
+
+tds.setupEnemy = function(name) {
+    var data = tds.enemyData[name];
+}
 
 })();
