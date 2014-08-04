@@ -22,13 +22,23 @@ tm.define("tds.Bullet", {
         this.boundingType = "circle";
         this.radius = 2;
 
-//        this.removeChildren();
-/*
-        this.param = param;
-        if (param.shot) {
-        } else {
-        }
-*/
+        this.removeChildren();
+        var b = tm.display.Shape(32, 32).addChildTo(this);
+        var c = b.canvas;
+        c.setFillStyle(
+            tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla({0}, 80%, 50%, 1.0)".format(200)},
+                    {offset:0.5, color: "hsla({0}, 80%, 50%, 0.5)".format(200)},
+                    {offset:1.0, color: "hsla({0}, 80%, 50%, 0.0)".format(200)},
+                ]).toStyle()
+            )
+            .fillRect(0, 0, 32, 32);
+
+        this.on("enterframe", function(){
+            this.rotation+=10;
+        }.bind(this) );
+
         this.beforeX = this.x;
         this.beforeY = this.y;
     },
