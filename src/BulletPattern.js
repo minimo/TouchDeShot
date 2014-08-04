@@ -6,5 +6,14 @@
  */
 (function() {
 
+//Ž©‹@‘_‚¢’e
+var DANMAKU0 = new bulletml.Root({
+    top: action([
+        repeat(999, [
+            fire(speed(2.1), bullet()),
+            wait("$rand * 20"),
+        ]),
+    ]),
+});
 
 })();

@@ -5,10 +5,11 @@
  *  This Program is MIT license.
  */
 (function() {
+tds.enemyData = [];
 
-tds.EnemySpec['zako1'] = {
-    width: 32,
-    height: 32,
+tds.enemyData['zako1'] = {
+    width: 16,
+    height: 16,
     colx: -16,  //当たり判定始点
     coly: -16,
     colw: 32,   //当たり判定サイズ
@@ -20,15 +21,16 @@ tds.EnemySpec['zako1'] = {
     type: ENEMY_NORMAL_SKY, //敵タイプ
 
     setup: function() {
-        var sh = tm.display.Shape().addChildTo(this);
+        var sh = tm.display.Shape(32, 32).addChildTo(this);
+        sh.renderRectangle();
+
+        this.tweener.moveBy(0,128, 1000).moveBy(0, -128, 1000);
     },
     algorithm: function() {
     },
     attack: function() {
     },
     dead: function() {
-    },
-    remove: function() {
     },
 };
 
