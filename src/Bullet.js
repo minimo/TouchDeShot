@@ -29,7 +29,7 @@ tm.define("tds.Bullet", {
             tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
                 .addColorStopList([
                     {offset:0.0, color: "hsla({0}, 80%, 50%, 1.0)".format(200)},
-                    {offset:0.5, color: "hsla({0}, 80%, 50%, 0.5)".format(200)},
+                    {offset:0.8, color: "hsla({0}, 80%, 50%, 0.5)".format(200)},
                     {offset:1.0, color: "hsla({0}, 80%, 50%, 0.0)".format(200)},
                 ]).toStyle()
             )
@@ -37,6 +37,10 @@ tm.define("tds.Bullet", {
 
         this.on("enterframe", function(){
             this.rotation+=10;
+            if (this.isHitElement(app.player)) {
+                app.player.damage();
+                this.remove();
+            }
         }.bind(this) );
 
         this.beforeX = this.x;
@@ -98,10 +102,6 @@ tm.define("tds.ShotBullet", {
         this.y += this.vy;
 
         if (this.x < -20 || this.x > SC_W+20 || this.y < -20 || this.y > SC_H+20) {
-            this.remove();
-        }
-        if (this.isHitElement(app.player)) {
-            app.player.damage();
             this.remove();
         }
     },

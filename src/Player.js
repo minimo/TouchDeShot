@@ -186,6 +186,9 @@ tm.define("tds.Player", {
         this.time++;
     },
 
+    damage: function() {
+    },
+
     //プレイヤー投入時演出
     startup: function() {
         var that = this;
