@@ -17,21 +17,18 @@ tm.define("tds.Bullet", {
 
     init: function(runner, param) {
         this.superInit(runner);
-        this.removeChildren();
 
         //当り判定設定
         this.boundingType = "circle";
         this.radius = 2;
 
-        this.removeChildren();
-
+//        this.removeChildren();
+/*
         this.param = param;
         if (param.shot) {
-            this.isShot = true;
-            tm.display.Sprite("shot").addChildTo(this);
         } else {
         }
-
+*/
         this.beforeX = this.x;
         this.beforeY = this.y;
     },
@@ -91,6 +88,10 @@ tm.define("tds.ShotBullet", {
         this.y += this.vy;
 
         if (this.x < -20 || this.x > SC_W+20 || this.y < -20 || this.y > SC_H+20) {
+            this.remove();
+        }
+        if (this.isHitElement(app.player)) {
+            app.player.damage();
             this.remove();
         }
     },

@@ -48,10 +48,11 @@ tm.define("tds.MainScene", {
         this.player.setPosition(SC_W/2, SC_H/2);
         this.player.setScale(2.0);
         this.player.parentScene = this;
+        app.player = this.player;
 
         //テスト用敵
         this.enemy = tds.Enemy("zako1").addChildTo(this);
-        this.enemy.setPosition(SC_W/2, SC_H/4);
+        this.enemy.setPosition(SC_W/2, -SC_H/4);
    },
     
     update: function() {

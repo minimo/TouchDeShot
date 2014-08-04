@@ -6,14 +6,20 @@
  */
 (function() {
 
+tds.bulletPattern = [];
+var $ = bulletml.dsl;
+
 //Ž©‹@‘_‚¢’e
-var DANMAKU0 = new bulletml.Root({
-    top: action([
-        repeat(999, [
-            fire(speed(2.1), bullet()),
-            wait("$rand * 20"),
+tds.bulletPattern["DANMAKU0"] = new bulletml.Root({
+    top: $.action([
+        $.wait(60),
+        $.repeat(999, [
+            $.fire($.speed(5), $.bullet()),
+            $.wait("$rand * 20"),
         ]),
     ]),
 });
+
+
 
 })();

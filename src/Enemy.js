@@ -11,6 +11,11 @@ tm.define("tds.Enemy", {
     layer: LAYER_OBJECT,
 
     name: null,
+    def: 0,
+    defMax: 0,
+    bulletPattern: null,
+    nowBulletPattern: null,
+
     parentScene: null,
     data: null,
 
@@ -23,16 +28,34 @@ tm.define("tds.Enemy", {
         this.name = name;
         var d = this.data = tds.enemyData[name];
         if (!d) return false;
-        
+
+        this.def = d.def;
+        this.defMax = d.def;
+
         this.width = d.width;
         this.height = d.height;
         this.layer = d.layer;
+        this.point = d.point;
 
         this.setup = d.setup;
-        this.algorithm = d.algorithm;
-        this.dead = d.dead;
+        if (d.algorithm) this.algorithm = d.algorithm;
+        if (d.dead) this.dead = d.dead;
 
+        this.bulletPattern = d.bulletPattern;
+        if (this.bulletPattern instanceof Array) {
+            this.nowBulletPattern = this.bulletPattern[0];
+        } else {
+            this.nowBulletPattern = this.bulletPattern;
+        }
+
+        var params = {
+            target: app.player,
+            createNewBullet: function(runner, attr) {
+                tds.Bullet(runner, attr).addChildTo(app.currentScene);
+            }
+        };
         this.setup();
+        this.startDanmaku(tds.bulletPattern[this.nowBulletPattern], params);
 
         //当り判定設定
         this.boundingType = "rect";
@@ -45,12 +68,18 @@ tm.define("tds.Enemy", {
 
     update: function() {
         this.algorithm();
+        this.time++;
+    },
 
-        if (this.HP < 1) {
+    damage: function(power) {
+        this.def -= power;
+        if (this.def < 1) {
             this.dead();
             this.remove();
         }
-        this.time++;
+    },
+
+    dead: function() {
     },
 });
 
