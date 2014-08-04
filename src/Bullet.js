@@ -49,8 +49,6 @@ tm.define("tds.Bullet", {
     onremoved: function() {
         if (this.isVanish) {
         }
-        if (this.isShot) {
-        }
     },
 });
 

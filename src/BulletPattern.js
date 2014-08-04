@@ -15,7 +15,7 @@ tds.bulletPattern["DANMAKU0"] = new bulletml.Root({
         $.wait(60),
         $.repeat(999, [
             $.fire($.speed(5), $.bullet()),
-            $.wait("$rand * 20"),
+            $.wait("$rand * 30"),
         ]),
     ]),
 });
