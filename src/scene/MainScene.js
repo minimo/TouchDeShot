@@ -98,7 +98,7 @@ tm.define("tds.MainScene", {
 
     //addChildオーバーライド
     addChild: function(child) {
-        if (this.layer === undefined) {
+        if (child.layer === undefined) {
             return this.superClass.prototype.addChild.apply(this, arguments);
         }
         return this.layers[child.layer].addChild(child);
