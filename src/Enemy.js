@@ -9,6 +9,7 @@
 tm.define("tds.Enemy", {
     superClass: "tm.app.Object2D",
     layer: LAYER_OBJECT,
+    isCollision: true,
 
     name: null,
     def: 0,

@@ -37,6 +37,8 @@ tm.define("tds.Bullet", {
 
         this.on("enterframe", function(){
             this.rotation+=10;
+
+            //自機との当り判定チェック
             if (this.isHitElement(app.player)) {
                 app.player.damage();
                 this.remove();
@@ -101,6 +103,19 @@ tm.define("tds.ShotBullet", {
 
         if (this.x < -20 || this.x > SC_W+20 || this.y < -20 || this.y > SC_H+20) {
             this.remove();
+        }
+
+        //敵との当り判定チェック
+        var s = [LAYER_OBJECT_UPPER, LAYER_OBJECT, LAYER_OBJECT_LOWER];
+        for (var i = 0; i < 3; i++) {
+            var layer = app.currentScene.layers[s[i]];
+            layer.children.each( function(a) {
+                if (a.isCollision && a.isHitElement(this)) {
+                    a.damage(this.power);
+                    this.remove();
+                    return;
+                }
+            }.bind(this));
         }
     },
 });
