@@ -21,14 +21,25 @@ tds.enemyData['zako1'] = {
     type: ENEMY_NORMAL_SKY, //敵タイプ
 
     setup: function() {
-        var sh = tm.display.Shape(32, 32).addChildTo(this);
-        sh.renderRectangle();
-        var that = this;
-        this.tweener.moveBy(0, 300, 1000).wait(2000).moveBy(0, -300, 1000).call(function(){that.remove();});
+        var param = {
+            strokeStyle:"hsla(150, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(150, 50%, 50%, 0.3)",
+            lineWidth: 1,
+        };
+        var sh = tm.display.Shape(32, 32).addChildTo(this).renderRectangle(param);
+
+        this.tweener.moveBy(0, 300, 1000, "easeOutQuart").wait(2000).moveBy(0, -300, 1000).call(function(){this.remove();}.bind(this));
     },
+
     algorithm: function() {
-        this.rotation -= 5;
+        //自機の方向を向く
+        var ax = this.x - this.player.x;
+        var ay = this.y - this.player.y;
+        var rad = Math.atan2(ay, ax);
+        var deg = ~~(rad * toDeg);
+        this.rotation = deg + 90;
     },
+
     dead: function() {
     },
 };

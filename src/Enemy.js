@@ -9,6 +9,8 @@
 tm.define("tds.Enemy", {
     superClass: "tm.app.Object2D",
     layer: LAYER_OBJECT,
+    parentScene: null,
+    player: null,
     isCollision: true,
 
     name: null,
@@ -17,7 +19,6 @@ tm.define("tds.Enemy", {
     bulletPattern: null,
     nowBulletPattern: null,
 
-    parentScene: null,
     data: null,
 
     algorithm: function() {},
@@ -49,13 +50,14 @@ tm.define("tds.Enemy", {
             this.nowBulletPattern = this.bulletPattern;
         }
 
+        this.setup();
+
         var params = {
             target: app.player,
             createNewBullet: function(runner, attr) {
                 tds.Bullet(runner, attr).addChildTo(app.currentScene);
             }
         };
-        this.setup();
         this.startDanmaku(tds.bulletPattern[this.nowBulletPattern], params);
 
         //当り判定設定
