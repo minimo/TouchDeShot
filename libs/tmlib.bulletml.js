@@ -29,13 +29,11 @@ tm.define("tm.bulletml.Bullet", {
         this.runner.onVanish = function() {
             bullet.remove();
         };
+        this.on("enterframe", function() {
+            this.runner.update();
+            this.setPosition(this.runner.x, this.runner.y);
+        }.bind(this));
     },
-
-    update: function() {
-        this.runner.update();
-        this.setPosition(this.runner.x, this.runner.y);
-    }
-
 });
 
 tm.app.Object2D.prototype.startDanmaku = function(root, config) {
