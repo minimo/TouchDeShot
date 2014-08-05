@@ -7,11 +7,12 @@
 (function() {
 
 tm.define("tds.Enemy", {
-    superClass: "tm.app.Object2D",
+    superClass: "tm.display.CanvasElement",
     layer: LAYER_OBJECT,
     parentScene: null,
     player: null,
     isCollision: true,
+    isDead: false,
 
     name: null,
     def: 0,
@@ -70,19 +71,29 @@ tm.define("tds.Enemy", {
     },
 
     update: function() {
+        if (this.isDead) return;
         this.algorithm();
         this.time++;
     },
 
     damage: function(power) {
+        if (this.isDead) return;
         this.def -= power;
         if (this.def < 1) {
             this.dead();
-            this.remove();
         }
     },
 
     dead: function() {
+        this.isCollision = false;
+        this.isDead = true;
+        this.tweener.clear();
+        this.stopDanmaku();
+
+        this.on("enterframe", function() {
+            this.alpha *= 0.9;
+            if (this.alpha < 0.02) this.remove();
+        }.bind(this));
     },
 });
 

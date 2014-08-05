@@ -39,9 +39,6 @@ tds.enemyData['zako1'] = {
         var deg = ~~(rad * toDeg);
         this.rotation = deg + 90;
     },
-
-    dead: function() {
-    },
 };
 
 
