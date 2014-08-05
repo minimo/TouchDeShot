@@ -22,31 +22,33 @@ tm.define("tds.Effect.Particle", {
     isUpper: true,
 
     init: function(size, initialAlpha, alphaDecayRate) {
-        this.superInit();
-        size = size || 100;
+        size = size || 32;
+        this.superInit(size, size);
+
         if (initialAlpha === undefined) initialAlpha = 1;
         if (alphaDecayRate === undefined) alphaDecayRate = 0.9;
 
-        this.width = this.height = this.size = size;
+        this.size = size;
         this.alpha = initialAlpha;
         this.alphaDecayRate = alphaDecayRate;
         this.blendMode = "lighter";
 
         var c = this.canvas;
         c.setFillStyle(
-            tm.graphics.RadialGradient(size/4, size/4, 0, size/4, size/4, size/4)
+            tm.graphics.RadialGradient(size/2, size/2, 0, size/2, size/2, size/2)
                 .addColorStopList([
-                    {offset:0.0, color: "hsla({0}, 60%, 50%, 0.8)".format(0)},
-                    {offset:0.5, color: "hsla({0}, 60%, 50%, 0.4)".format(0)},
+                    {offset:0.0, color: "hsla({0}, 60%, 50%, 1.0)".format(0)},
+                    {offset:0.5, color: "hsla({0}, 60%, 50%, 0.5)".format(0)},
                     {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(0)},
                 ]).toStyle()
             )
-            .fillRect(0, 0, 50, 50);
+            .fillRect(0, 0, size, size);
     },
     update: function(app) {
         this.alpha *= this.alphaDecayRate;
         if (this.alpha < 0.01) {
             this.remove();
+            return;
         } else if (1.0 < this.alpha) {
             this.alpha = 1.0;
         }

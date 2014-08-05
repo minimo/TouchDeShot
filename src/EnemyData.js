@@ -10,8 +10,8 @@ tds.enemyData = [];
 tds.enemyData['zako1'] = {
     bulletPattern: "DANMAKU0",  //使用弾幕パターン
 
-    width: 16,  //当り判定サイズ
-    height: 16,
+    width:  32,  //当り判定サイズ
+    height: 32,
 
     def: 10,    //耐久力
     point: 300, //ポイント
@@ -22,8 +22,8 @@ tds.enemyData['zako1'] = {
 
     setup: function() {
         var param = {
-            strokeStyle:"hsla(150, 50%, 70%, 1.0)",
-            fillStyle:  "hsla(150, 50%, 50%, 0.3)",
+            strokeStyle:"hsla(100, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(100, 50%, 50%, 0.3)",
             lineWidth: 1,
         };
         var sh = tm.display.Shape(32, 32).addChildTo(this).renderRectangle(param);

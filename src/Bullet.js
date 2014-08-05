@@ -116,10 +116,20 @@ tm.define("tds.ShotBullet", {
             layer.children.each( function(a) {
                 if (a.isCollision && a.isHitElement(this)) {
                     a.damage(this.power);
+                    this.vanish();
                     this.remove();
                     return;
                 }
             }.bind(this));
+        }
+    },
+
+    vanish: function() {
+        for (var i = 0; i < 5; i++) {
+            var p = tds.Effect.Particle(32, 1, 0.95).addChildTo(this.parentScene).setPosition(this.x, this.y);
+            var x = rand(0, 30)-15;
+            var y = rand(0, 50)*-1;
+            p.tweener.moveBy(x, y, 1000, "easeOutCubic");
         }
     },
 });
