@@ -13,7 +13,7 @@ tds.enemyData['zako1'] = {
     width: 16,  //当り判定サイズ
     height: 16,
 
-    def: 30,    //耐久力
+    def: 10,    //耐久力
     point: 300, //ポイント
     burn: 0,    //爆発パターン
 
