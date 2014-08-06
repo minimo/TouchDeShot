@@ -13,6 +13,7 @@ tm.define("tds.Enemy", {
     player: null,
     isCollision: true,
     isDead: false,
+    isMuteki: false,
 
     name: null,
     def: 0,
@@ -77,7 +78,7 @@ tm.define("tds.Enemy", {
     },
 
     damage: function(power) {
-        if (this.isDead) return;
+        if (this.isMuteki || this.isDead) return;
         this.def -= power;
         if (this.def < 1) {
             this.dead();

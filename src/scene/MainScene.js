@@ -56,7 +56,7 @@ tm.define("tds.MainScene", {
             borderColor: "white",
             borderWidth: 1,
         }
-        var pg = this.powerGauge = tm.ui.Gauge(param).addChildTo(this).setPosition(25,0);
+        var pg = this.powerGauge = tm.ui.Gauge(param).addChildTo(this).setPosition(30,0);
         pg.rotation = 90;
         pg.ratio = 0.5;
 
@@ -67,15 +67,19 @@ tm.define("tds.MainScene", {
     },
 
     update: function() {
+        //ステージ進行
         var event = this.stage.get(this.time);
         if (event) {
-            if (typeof event.value == 'string') {
+            if (typeof(event.value) === 'function') {
+                event.value.call(this);
+            } else {
                 this.enterEnemyUnit(event.value);
             }
         }
         this.time++;
     },
 
+    //敵ユニット単位の投入
     enterEnemyUnit: function(name) {
         var unit = tds.enemyUnit[name];
         if (unit === undefined)return;
