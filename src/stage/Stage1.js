@@ -7,14 +7,14 @@
 (function() {
 
 tm.define("tds.Stage1", {
-    superClass: "tds.stageController",
+    superClass: "tds.StageController",
 
     init: function(parent, player) {
         this.superInit(parent, player);
 
         //Stage data
-        this.add(60, "cube1-left");
-        this.add(60, "cube1-left");
+        this.add(10, "cube1-left");
+        this.add(120, "cube1-right");
     },
 });
 

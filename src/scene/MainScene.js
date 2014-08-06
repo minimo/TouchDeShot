@@ -26,6 +26,9 @@ tm.define("tds.MainScene", {
     time: 0,
     absTime: 0,
 
+    //ステージ制御
+    stage: null,
+
     init: function() {
         this.superInit();
 //        this.background = "rgba(255, 0, 0, 1.0)";
@@ -57,13 +60,31 @@ tm.define("tds.MainScene", {
         pg.rotation = 90;
         pg.ratio = 0.5;
 
-        //テスト用敵
-        tds.Enemy("cube1").addChildTo(this).setPosition(SC_W/2, -SC_H/4);
-        tds.Enemy("cube1").addChildTo(this).setPosition(SC_W/3, -SC_H/4);
-        tds.Enemy("cube1").addChildTo(this).setPosition(SC_W/4, -SC_H/4);
+        //ステージ制御
+        this.stage = tds.Stage1(this, this.player);
+
+        this.time = 0;
     },
-    
+
     update: function() {
+        var event = this.stage.get(this.time);
+        if (event) {
+            if (typeof event.value == 'string') {
+                this.enterEnemyUnit(event.value);
+            }
+        }
+        this.time++;
+    },
+
+    enterEnemyUnit: function(name) {
+        var unit = tds.enemyUnit[name];
+        if (unit === undefined)return;
+
+        var len = unit.length;
+        for (var i = 0; i < len; i++) {
+            var e = unit[i];
+            tds.Enemy(e.name).addChildTo(this).setPosition(e.x, e.y);
+        }
     },
 
     //タッチorクリック開始処理

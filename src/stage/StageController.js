@@ -23,21 +23,17 @@ tm.define("tds.StageController", {
         this.seq = [];
     },
 
-    addEnemyUnit: function(time, name, boss) {
+    add: function(time, value, flag) {
         this.index += time;
         this.seq[this.index] = {
-            type: "enemyunit",
-            value: name,
+            value: value,
             flag: flag,
-        };
-    },
-
-    addEvent: function(time, name, boss) {
+        }
     },
 
     get: function(time) {
         var data = this.seq[time];
-        if (this.boss || data === undefined) return null;
+        if (data === undefined) return null;
         return data;
     },
 
