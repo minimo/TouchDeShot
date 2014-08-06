@@ -8,7 +8,6 @@
 
 //ステージ制御
 tm.define("tds.StageController", {
-    superClass: "tm.app.Object2D",
 
     parentScene: null,
     player: null,
@@ -17,28 +16,34 @@ tm.define("tds.StageController", {
     seq: null,
     index: 0,
 
-    init: function() {
-        this.superInit();
+    init: function(parent, player) {
+        this.parentScene = parent;
+        this.player = player;
 
         this.seq = [];
-        this.on("enterframe", this.tick);
     },
 
     addEnemyUnit: function(time, name, boss) {
         this.index += time;
         this.seq[this.index] = {
+            type: "enemyunit",
+            value: name,
+            flag: flag,
         };
     },
 
     addEvent: function(time, name, boss) {
     },
 
-    clear: function() {
-        this.seq = [];
-        this.frame = 0;
+    get: function(time) {
+        var data = this.seq[time];
+        if (this.boss || data === undefined) return null;
+        return data;
     },
 
-    tick: function() {
+    clear: function() {
+        this.seq = [];
+        this.index = 0;
     },
 });
 
