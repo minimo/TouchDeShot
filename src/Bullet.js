@@ -65,12 +65,12 @@ tm.define("tds.ShotBullet", {
     parentScene: null,
     player: null,
 
-    speed: 5,
+    speed: 15,
     power: 1,
     defaultSpeed: 15,
     defaultPower: 1,
 
-    init: function(rotation, speed, power) {
+    init: function(rotation, power) {
         this.superInit(32,32);
         var c = this.canvas;
         c.setColorStyle("hsla(250, 50%, 50%, 1.0)", "hsla(250, 50%, 50%, 1.0)");
@@ -84,7 +84,7 @@ tm.define("tds.ShotBullet", {
         c.stroke().fill().closePath();
 
         this.rotation = rotation || 0;
-        this.speed = speed || this.defaultSpeed;
+        this.speed = this.defaultSpeed;
         this.power = power || this.defaultPower;
 
         this.alpha = 0.8;

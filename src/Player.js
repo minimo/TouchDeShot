@@ -121,15 +121,10 @@ tm.define("tds.Player", {
             }else{
                 this.mouseON = false;
             }
-
-            if (this.mouseON) {
-                //ショット
-                if (this.shotON && this.time % this.shotInterval == 0) {
-                    var s = tds.ShotBullet(0).addChildTo(this.parentScene);
-                    s.setPosition(this.x, this.y-16);
-                }
-            }
         }
+
+        //ショット
+        if (this.mouseON && this.shotON && this.time % this.shotInterval == 0) this.enterShot();
 
         if (this.bx > this.x) this.rollcount--;
         if (this.bx < this.x) this.rollcount++;
@@ -187,6 +182,17 @@ tm.define("tds.Player", {
     },
 
     damage: function() {
+    },
+
+    levelUp: function() {
+    },
+
+    enterShot: function() {
+        tds.ShotBullet(0, this.level+1).addChildTo(this.parentScene).setPosition(this.x, this.y-16);
+        if (this.level > 0) {
+            tds.ShotBullet( 5, this.level+1).addChildTo(this.parentScene).setPosition(this.x+10, this.y-16);
+            tds.ShotBullet(-5, this.level+1).addChildTo(this.parentScene).setPosition(this.x-10, this.y-16);
+        }
     },
 
     //プレイヤー投入時演出
