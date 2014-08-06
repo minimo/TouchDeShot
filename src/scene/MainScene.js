@@ -39,19 +39,28 @@ tm.define("tds.MainScene", {
             this.layers[i] = tm.app.Object2D().addChildTo(this);
         }
 
-        //バックグラウンド
-//        this.bg = tm.display.Sprite("mask", SC_W, SC_H).addChildTo(this);
-//        this.bg.setPosition(SC_W/2, SC_H/2);
-
         //プレイヤー
         this.player = tds.Player().addChildTo(this);
         this.player.setPosition(SC_W/2, SC_H/2);
         this.player.setScale(2.0);
         app.player = this.player;
 
+        var param = {
+            width: 320,
+            height: 25,
+            color: "hsl(220, 100%, 50%, 1.0)",
+            bgColor: "#444",
+            borderColor: "white",
+            borderWidth: 1,
+        }
+        var pg = this.powerGauge = tm.ui.Gauge(param).addChildTo(this).setPosition(25,0);
+        pg.rotation = 90;
+        pg.ratio = 0.5;
+
         //テスト用敵
-        tds.Enemy("zako1").addChildTo(this).setPosition(SC_W/2, -SC_H/4);
-        tds.Enemy("zako1").addChildTo(this).setPosition(SC_W/3, -SC_H/4);
+        tds.Enemy("cube1").addChildTo(this).setPosition(SC_W/2, -SC_H/4);
+        tds.Enemy("cube1").addChildTo(this).setPosition(SC_W/3, -SC_H/4);
+        tds.Enemy("cube1").addChildTo(this).setPosition(SC_W/4, -SC_H/4);
     },
     
     update: function() {
