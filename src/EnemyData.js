@@ -13,7 +13,7 @@ tds.enemyData['cube1'] = {
     width:  32,  //当り判定サイズ
     height: 32,
 
-    def: 10,    //耐久力
+    def: 3,     //耐久力
     point: 300, //ポイント
 
     layer: LAYER_OBJECT,   //表示レイヤー番号
@@ -25,12 +25,12 @@ tds.enemyData['cube1'] = {
             fillStyle:  "hsla(100, 50%, 50%, 0.3)",
             lineWidth: 1,
         };
-        tm.display.Shape(32, 16).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(16, 40).addChildTo(this).renderRectangle(param);
 
-        var sh = tm.display.Shape(40, 40).addChildTo(this);
+        var sh = tm.display.Shape(60, 10).addChildTo(this);
         sh.renderRectangle(param);
         sh.update = function() {
-            this.rotation += 10;
+            this.rotation += 30;
         }
 
         this.tweener.moveBy(0, 300, 1000, "easeOutQuart").wait(2000).moveBy(0, -300, 1000).call(function(){this.remove();}.bind(this));
