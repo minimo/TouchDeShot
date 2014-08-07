@@ -25,7 +25,13 @@ tds.enemyData['cube1'] = {
             fillStyle:  "hsla(100, 50%, 50%, 0.3)",
             lineWidth: 1,
         };
-        var sh = tm.display.Shape(32, 32).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(32, 16).addChildTo(this).renderRectangle(param);
+
+        var sh = tm.display.Shape(40, 40).addChildTo(this);
+        sh.renderRectangle(param);
+        sh.update = function() {
+            this.rotation += 10;
+        }
 
         this.tweener.moveBy(0, 300, 1000, "easeOutQuart").wait(2000).moveBy(0, -300, 1000).call(function(){this.remove();}.bind(this));
     },
