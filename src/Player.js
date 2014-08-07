@@ -115,8 +115,8 @@ tm.define("tds.Player", {
             var dx = p.position.x - p.prevPosition.x;
             var dy = p.position.y - p.prevPosition.y;
             if (p.getPointing()) {
-                this.x += dx;
-                this.y += dy;
+                this.x += Math.clamp(dx*1.3, -40, 40);
+                this.y += Math.clamp(dy*1.3, -40, 40);
                 this.mouseON = true;
             }else{
                 this.mouseON = false;
