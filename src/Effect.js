@@ -21,8 +21,9 @@ tm.define("tds.Effect.Particle", {
     isEffect: true,
     isUpper: true,
 
-    init: function(size, initialAlpha, alphaDecayRate) {
+    init: function(size, initialAlpha, alphaDecayRate, color) {
         size = size || 32;
+        color = color || 0;
         this.superInit(size, size);
 
         if (initialAlpha === undefined) initialAlpha = 1;
@@ -37,24 +38,26 @@ tm.define("tds.Effect.Particle", {
         c.setFillStyle(
             tm.graphics.RadialGradient(size/2, size/2, 0, size/2, size/2, size/2)
                 .addColorStopList([
-                    {offset:0.0, color: "hsla({0}, 60%, 50%, 1.0)".format(0)},
-                    {offset:0.5, color: "hsla({0}, 60%, 50%, 0.5)".format(0)},
-                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(0)},
+                    {offset:0.0, color: "hsla({0}, 60%, 50%, 1.0)".format(color)},
+                    {offset:0.5, color: "hsla({0}, 60%, 50%, 0.5)".format(color)},
+                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(color)},
                 ]).toStyle()
             )
             .fillRect(0, 0, size, size);
-    },
-    update: function(app) {
-        this.alpha *= this.alphaDecayRate;
-        if (this.alpha < 0.01) {
-            this.remove();
-            return;
-        } else if (1.0 < this.alpha) {
-            this.alpha = 1.0;
-        }
+
+        this.on("enterframe", function() {
+            this.alpha *= this.alphaDecayRate;
+            if (this.alpha < 0.01) {
+                this.remove();
+                return;
+            } else if (1.0 < this.alpha) {
+                this.alpha = 1.0;
+            }
+        }.bind(this));
     },
 });
 
+//オーラ用パーティクル
 tm.define("tds.Effect.Aura", {
     superClass: "tm.display.Shape",
     layer: LAYER_EFFECT_UPPER,
@@ -89,7 +92,6 @@ tm.define("tds.Effect.Aura", {
     },
 
     update: function() {
-//        this.alpha *= this.alphaDecayRate;
         if (this.alpha < 0.01) {
             this.remove();
             return;
@@ -99,8 +101,6 @@ tm.define("tds.Effect.Aura", {
         if (this.target.mouseON && !this.vanish) {
              this.x += this.vx;
              this.y += this.vy;
-//              this.x += (this.target.x-this.x)*0.05;
-//              this.y += (this.target.y-this.y)*0.05;
         } else {
              this.vanish = true;
              this.x -= this.vx*3;
