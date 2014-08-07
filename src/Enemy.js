@@ -8,13 +8,17 @@
 
 tm.define("tds.Enemy", {
     superClass: "tm.display.CanvasElement",
-    layer: LAYER_OBJECT,
-    parentScene: null,
-    player: null,
-    isCollision: true,
-    isDead: false,
-    isMuteki: false,
+    layer: LAYER_OBJECT,    //所属レイヤー
+    parentScene: null,      //親シーン
+    player: null,           //プレイヤー参照用
 
+    //各種フラグ
+    isCollision: true,  //当り判定
+    isDead: false,      //死亡
+    isMuteki: false,    //無敵
+    isBoss: false,      //ボス
+
+    //キャラクタ情報
     name: null,
     def: 0,
     defMax: 0,
@@ -22,9 +26,6 @@ tm.define("tds.Enemy", {
     nowBulletPattern: null,
 
     data: null,
-
-    algorithm: function() {},
-    dead: function() {},
 
     init: function(name) {
         this.superInit();
@@ -83,6 +84,9 @@ tm.define("tds.Enemy", {
         this.time++;
     },
 
+    algorithm: function() {
+    },
+
     damage: function(power) {
         if (this.isMuteki || this.isDead) return;
         this.def -= power;
@@ -101,6 +105,35 @@ tm.define("tds.Enemy", {
             this.alpha *= 0.9;
             if (this.alpha < 0.02) this.remove();
         }.bind(this));
+    },
+
+    //指定ターゲットの方向を向く
+    lookAt: function(target) {
+        target = target || this.player;
+
+        //ターゲットの方向を向く
+        var ax = this.x - target.x;
+        var ay = this.y - target.y;
+        var rad = Math.atan2(ay, ax);
+        var deg = ~~(rad * toDeg);
+        this.rotation = deg + 90;
+    },
+
+    //指定ターゲットの方向に進む
+    moveTo: function(target, speed, look) {
+        target = target || this.player;
+        speed = speed || 5;
+
+        //ターゲットの方向を計算
+        var ax = this.x - target.x;
+        var ay = this.y - target.y;
+        var rad = Math.atan2(ay, ax);
+        var deg = ~~(rad * toDeg);
+
+        if (look) this.rotation = deg + 90;
+
+        this.x += Math.cos(rad+Math.PI) * speed;
+        this.y += Math.sin(rad+Math.PI) * speed;
     },
 });
 

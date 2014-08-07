@@ -21,6 +21,10 @@ tds.enemyUnit = {
     { "name": "cube1", "x":SC_W*0.9, "y":-120 },
 ],
 
+"boss1": [
+    { "name": "boss1", "x":SC_W*0.5, "y":-100 },
+],
+
 }
 
 })();

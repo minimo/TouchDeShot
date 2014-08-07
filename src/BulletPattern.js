@@ -27,20 +27,7 @@ tds.bulletPattern["AIM_1"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
         $.repeat(999, [
-            $.fire($.speed(10), $.bullet()),
-            $.wait("$rand * 60"),
-        ]),
-    ]),
-});
-
-//Ž©‹@‘_‚¢’e
-tds.bulletPattern["AIM_2"] = new bulletml.Root({
-    top: $.action([
-        $.wait(60),
-        $.repeat(999, [
-            $fire0(5),
-            $.wait("$rand * 60"),
-            $fire1(5),
+            $fire0(6),
             $.wait("$rand * 60"),
         ]),
     ]),
