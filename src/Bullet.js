@@ -47,6 +47,9 @@ tm.define("tds.Bullet", {
                 this.player.damage();
                 this.remove();
             }
+            if (this.x < -20 || this.x > SC_W+20 || this.y < -20 || this.y > SC_H+20) {
+                this.remove();
+            }
         }.bind(this) );
 
         this.beforeX = this.x;

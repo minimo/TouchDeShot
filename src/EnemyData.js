@@ -58,6 +58,8 @@ tds.enemyData['cube2'] = {
     layer: LAYER_OBJECT,   //表示レイヤー番号
     type: ENEMY_NORMAL_SKY, //敵タイプ
 
+    isNear: false,
+
     setup: function() {
         var param = {
             strokeStyle:"hsla(100, 50%, 70%, 1.0)",
@@ -74,7 +76,14 @@ tds.enemyData['cube2'] = {
     },
 
     algorithm: function() {
-        this.moveTo(this.player, 5, true);
+        if (!this.isNear) {
+            this.moveTo(this.player, 5, true);
+        } else {
+            this.x += this.vx;
+            this.y += this.vy;
+        }
+        var dis = distance(this, this.player);
+        if (dis < 200) this.isNear = true;
     },
 };
 

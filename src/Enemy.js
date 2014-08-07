@@ -17,6 +17,7 @@ tm.define("tds.Enemy", {
     isDead: false,      //死亡
     isMuteki: false,    //無敵
     isBoss: false,      //ボス
+    isOnscreen: false,  //画面内に入った
 
     //キャラクタ情報
     name: null,
@@ -26,6 +27,9 @@ tm.define("tds.Enemy", {
     nowBulletPattern: null,
 
     data: null,
+
+    beforeX: 0,
+    beforeY: 0,
 
     init: function(name) {
         this.superInit();
@@ -81,6 +85,12 @@ tm.define("tds.Enemy", {
     update: function() {
         if (this.isDead) return;
         this.algorithm();
+        if (this.x < -200 || this.x > SC_W+200 || this.y < -200 || this.y > SC_H+200) {
+            this.remove();
+            this.isCollision = false;
+        }
+        this.beforeX = this.x;
+        this.beforeY = this.y;
         this.time++;
     },
 
@@ -132,8 +142,10 @@ tm.define("tds.Enemy", {
 
         if (look || look === undefined) this.rotation = deg + 90;
 
-        this.x += Math.cos(rad+Math.PI) * speed;
-        this.y += Math.sin(rad+Math.PI) * speed;
+        this.vx = Math.cos(rad+Math.PI)*speed;
+        this.vy = Math.sin(rad+Math.PI)*speed;
+        this.x += this.vx;
+        this.y += this.vy;
     },
 });
 
