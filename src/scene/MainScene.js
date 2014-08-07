@@ -48,18 +48,6 @@ tm.define("tds.MainScene", {
         this.player.setScale(2.0);
         app.player = this.player;
 
-        var param = {
-            width: 320,
-            height: 25,
-            color: "hsl(220, 100%, 50%, 1.0)",
-            bgColor: "#444",
-            borderColor: "white",
-            borderWidth: 1,
-        }
-        var pg = this.powerGauge = tm.ui.Gauge(param).addChildTo(this).setPosition(30,0);
-        pg.rotation = 90;
-        pg.ratio = 0.5;
-
         //ステージ制御
         this.stage = tds.Stage1(this, this.player);
 
