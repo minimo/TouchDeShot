@@ -8,7 +8,7 @@
 tds.enemyData = [];
 
 tds.enemyData['cube1'] = {
-    bulletPattern: "DANMAKU0",  //使用弾幕パターン
+    bulletPattern: "AIM_2",  //使用弾幕パターン
 
     width:  32,  //当り判定サイズ
     height: 32,
