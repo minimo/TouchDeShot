@@ -36,12 +36,12 @@ tm.define("tds.Enemy", {
         this.def = d.def;
         this.defMax = d.def;
 
-        this.width = d.width;
-        this.height = d.height;
-        this.layer = d.layer;
-        this.point = d.point;
+        this.width = d.width || 32;
+        this.height = d.height || 32;
+        this.layer = d.layer || LAYER_OBJECT;
+        this.point = d.point || 0;
 
-        this.setup = d.setup;
+        if (d.setup) this.setup = d.setup;
         if (d.algorithm) this.algorithm = d.algorithm;
         if (d.dead) this.dead = d.dead;
 
@@ -69,6 +69,12 @@ tm.define("tds.Enemy", {
     },
 
     setup: function(name) {
+        var param = {
+            strokeStyle:"hsla(0, 100%, 100%, 1.0)",
+            fillStyle:  "hsla(0, 100%, 100%, 1.0)",
+            lineWidth: 2,
+        };
+        var sh = tm.display.Shape(32, 32).addChildTo(this).renderRectangle(param);
     },
 
     update: function() {
