@@ -130,7 +130,7 @@ tm.define("tds.Enemy", {
         var rad = Math.atan2(ay, ax);
         var deg = ~~(rad * toDeg);
 
-        if (look) this.rotation = deg + 90;
+        if (look || look === undefined) this.rotation = deg + 90;
 
         this.x += Math.cos(rad+Math.PI) * speed;
         this.y += Math.sin(rad+Math.PI) * speed;
