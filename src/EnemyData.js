@@ -83,7 +83,7 @@ tds.enemyData['boss1'] = {
     bulletPattern: "AIM_1",  //使用弾幕パターン
 
     width:  256,  //当り判定サイズ
-    height: 128,
+    height: 110,
 
     def: 500,      //耐久力
     point: 100000, //ポイント
@@ -95,17 +95,42 @@ tds.enemyData['boss1'] = {
         var param = {
             strokeStyle:"hsla(250, 50%, 50%, 1.0)",
             fillStyle:  "hsla(250, 50%, 50%, 0.3)",
-            lineWidth: 1,
+            lineWidth: 2,
         };
-        tm.display.Shape(256, 128).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(200, 100).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(240,  80).addChildTo(this).renderRectangle(param);
 
-        tm.display.Shape(64, 128).addChildTo(this).setPosition( 128+40, 0).renderRectangle(param);
-        tm.display.Shape(64, 128).addChildTo(this).setPosition(-128-40, 0).renderRectangle(param);
+        tm.display.Shape(64, 128).addChildTo(this).setPosition( 138, 0).renderRectangle(param);
+        tm.display.Shape(54, 118).addChildTo(this).setPosition( 138, 0).renderRectangle(param);
 
-        var sh = tm.display.Shape(60, 10).addChildTo(this);
+        tm.display.Shape(64, 128).addChildTo(this).setPosition(-138, 0).renderRectangle(param);
+        tm.display.Shape(54, 118).addChildTo(this).setPosition(-138, 0).renderRectangle(param);
+
+        //ローター
+        tm.display.Shape(16, 16).addChildTo(this).setPosition(-100, 0).renderRectangle(param);
+        var sh = tm.display.Shape(110, 20).addChildTo(this).setPosition(-100, 0);
         sh.renderRectangle(param);
         sh.update = function() {
-            this.rotation += 30;
+            this.rotation += 10;
+        }
+        var sh = tm.display.Shape(110, 20).addChildTo(this).setPosition(-100, 0);
+        sh.renderRectangle(param);
+        sh.rotation = 90;
+        sh.update = function() {
+            this.rotation += 10;
+        }
+
+        tm.display.Shape(16, 16).addChildTo(this).setPosition( 100, 0).renderRectangle(param);
+        var sh = tm.display.Shape(110, 20).addChildTo(this).setPosition( 100, 0);
+        sh.renderRectangle(param);
+        sh.update = function() {
+            this.rotation -= 10;
+        }
+        var sh = tm.display.Shape(110, 20).addChildTo(this).setPosition( 100, 0);
+        sh.renderRectangle(param);
+        sh.rotation = 90;
+        sh.update = function() {
+            this.rotation -= 10;
         }
 
         this.tweener.moveBy(0, 300, 3000).wait(2000);
