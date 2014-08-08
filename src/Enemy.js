@@ -115,6 +115,7 @@ tm.define("tds.Enemy", {
             this.alpha *= 0.9;
             if (this.alpha < 0.02) this.remove();
         }.bind(this));
+        tds.burnParticle().addChildTo(this.parentScene).setPosition(this.x, this.y);
     },
 
     //指定ターゲットの方向を向く
