@@ -25,19 +25,9 @@ tm.define("tds.Bullet", {
         this.radius = 2;
 
         var color = param.color || 200;
-
         this.removeChildren();
-        var b = tm.display.Shape(32, 32).addChildTo(this);
-        var c = b.canvas;
-        c.setFillStyle(
-            tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
-                .addColorStopList([
-                    {offset:0.0, color: "hsla({0}, 80%, 50%, 1.0)".format(color)},
-                    {offset:0.8, color: "hsla({0}, 80%, 50%, 0.5)".format(color)},
-                    {offset:1.0, color: "hsla({0}, 80%, 50%, 0.0)".format(color)},
-                ]).toStyle()
-            )
-            .fillRect(0, 0, 32, 32);
+
+        this.setupNormal(color);
 
         this.on("enterframe", function(){
             this.rotation+=10;
@@ -55,9 +45,33 @@ tm.define("tds.Bullet", {
         this.beforeX = this.x;
         this.beforeY = this.y;
     },
-    onremoved: function() {
-        if (this.isVanish) {
-        }
+
+    //通常弾
+    setupNormal: function(color) {
+        var b = tm.display.Shape(32, 32).addChildTo(this);
+        var c = b.canvas;
+        c.setFillStyle(
+            tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
+                    {offset:0.5, color: "hsla({0}, 50%, 50%, 1.0)".format(color)},
+                    {offset:0.6, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
+                    {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
+                ]).toStyle()
+            )
+            .fillRect(0, 0, 32, 32);
+
+        var style = tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8)
+                    .addColorStopList([
+                        {offset:0.0, color: "hsla({0}, 70%, 70%, 1.0)".format(color)},
+                        {offset:0.5, color: "hsla({0}, 50%, 50%, 0.5)".format(color)},
+                        {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
+                    ]).toStyle();
+
+        var b = tm.display.Shape(16, 16).addChildTo(this).setPosition(2,2);
+        b.canvas.setFillStyle(style).fillRect(0, 0, 16, 16);
+        var b = tm.display.Shape(16, 16).addChildTo(this).setPosition(-2,-2);
+        b.canvas.setFillStyle(style).fillRect(0, 0, 16, 16);
     },
 });
 

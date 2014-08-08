@@ -8,7 +8,7 @@
 tds.enemyData = [];
 
 tds.enemyData['cube1'] = {
-    bulletPattern: "AIM_1",  //使用弾幕パターン
+    bulletPattern: "cube1",  //使用弾幕パターン
 
     width:  32,  //当り判定サイズ
     height: 32,
@@ -47,7 +47,7 @@ tds.enemyData['cube1'] = {
 };
 
 tds.enemyData['cube2'] = {
-    bulletPattern: "AIM_1",  //使用弾幕パターン
+    bulletPattern: "cube2",  //使用弾幕パターン
 
     width:  32,  //当り判定サイズ
     height: 32,
@@ -87,9 +87,51 @@ tds.enemyData['cube2'] = {
     },
 };
 
+tds.enemyData['glider1'] = {
+    bulletPattern: "basic-aim1",  //使用弾幕パターン
+
+    width:  32,  //当り判定サイズ
+    height: 32,
+
+    def: 3,     //耐久力
+    point: 300, //ポイント
+
+    layer: LAYER_OBJECT,   //表示レイヤー番号
+    type: ENEMY_NORMAL_SKY, //敵タイプ
+
+    isNear: false,
+
+    setup: function() {
+        var param = {
+            strokeStyle:"hsla(100, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(100, 50%, 50%, 0.3)",
+            lineWidth: 1,
+        };
+        tm.display.Shape(16, 40).addChildTo(this).renderRectangle(param);
+
+        var sh = tm.display.Shape(60, 10).addChildTo(this);
+        sh.renderRectangle(param);
+        sh.update = function() {
+            this.rotation += 30;
+        }
+    },
+
+    algorithm: function() {
+        if (!this.isNear) {
+            this.moveTo(this.player, 5, true);
+        } else {
+            this.x += this.vx;
+            this.y += this.vy;
+        }
+        var dis = distance(this, this.player);
+        if (dis < 300) {
+            this.isNear = true;
+        }
+    },
+};
 
 tds.enemyData['boss1'] = {
-    bulletPattern: "AIM_1",  //使用弾幕パターン
+    bulletPattern: "basic-aim1",  //使用弾幕パターン
 
     width:  256,  //当り判定サイズ
     height: 110,
