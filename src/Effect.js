@@ -8,7 +8,7 @@ tds.Effect = [];
 
 (function() {
 
-//パーティクル
+//ﾆ恥ﾂーﾆ弾ﾆ達ﾆ誰ﾆ停ｹ
 tm.define("tds.Effect.Particle", {
     superClass: "tm.display.Shape",
     layer: LAYER_EFFECT_UPPER,
@@ -57,7 +57,7 @@ tm.define("tds.Effect.Particle", {
     },
 });
 
-//オーラ用パーティクル
+//繧ｪ繝ｼ繝ｩ逕ｨ繝代�ｼ繝�繧｣繧ｯ繝ｫ
 tm.define("tds.Effect.Aura", {
     superClass: "tm.display.Shape",
     layer: LAYER_EFFECT_UPPER,
@@ -114,6 +114,54 @@ tm.define("tds.Effect.Aura", {
         }
         this.scaleX *= 0.98;
         this.scaleY *= 0.98;
+    },
+});
+
+tm.define("tds.Effect.BurnParticle", {
+    superClass: "tm.display.Shape",
+    layer: LAYER_EFFECT_UPPER,
+
+    alpha: 1.0,
+    alphaDecayRate: 0.85,
+    size: 0,
+
+    image: null,
+    isEffect: true,
+    isUpper: true,
+
+    init: function(size, initialAlpha, alphaDecayRate, color) {
+        size = size || 32;
+        color = color || 0;
+        this.superInit(size, size);
+
+        if (initialAlpha === undefined) initialAlpha = 1;
+        if (alphaDecayRate === undefined) alphaDecayRate = 0.9;
+
+        this.size = size;
+        this.alpha = initialAlpha;
+        this.alphaDecayRate = alphaDecayRate;
+        this.blendMode = "lighter";
+
+        var c = this.canvas;
+        c.setFillStyle(
+            tm.graphics.RadialGradient(size/2, size/2, 0, size/2, size/2, size/2)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla({0}, 50%, 30%, 1.0)".format(color)},
+                    {offset:0.5, color: "hsla({0}, 50%, 30%, 0.5)".format(color)},
+                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(color)},
+                ]).toStyle()
+            )
+            .fillRect(0, 0, size, size);
+
+        this.on("enterframe", function() {
+            this.alpha *= this.alphaDecayRate;
+            if (this.alpha < 0.01) {
+                this.remove();
+                return;
+            } else if (1.0 < this.alpha) {
+                this.alpha = 1.0;
+            }
+        }.bind(this));
     },
 });
 

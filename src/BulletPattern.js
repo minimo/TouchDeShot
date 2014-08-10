@@ -11,24 +11,24 @@ var $ = bulletml.dsl;
 
 $rank = 1;
 
-// ’eí
+//å¼¾ç¨®
 var RS = function(action) { return $.bullet(action, {pattern: "normal", color:320}); };
 var BS = function(action) { return $.bullet(action, {pattern: "normal", color:240}); };
 
-//”­ËŠÔŠu
+//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«
 var $interval = function(v) { return $.wait(v) };
 
-// ’e‘¬
+//å¼¾é€Ÿ
 var $spd = function(v) { v = v===undefined?1:v; return $.speed("$rank*0.1*"+v+"+v" ); };
 
-/** ©‹@‘_‚¢’e */
+//
 var $fireBS = function(spd) { return $.fire($.direction(0), $.speed(spd) || $spd, BS) };
 var $fireRS = function(spd) { return $.fire($.direction(0), $.speed(spd) || $spd, RS) };
 
-//‚È‚É‚à‚µ‚È‚¢
+//ä½•ã‚‚ã—ãªã„
 tds.bulletPattern["nop"] = new bulletml.Root({top: $.action([$.wait(10000)])});
 
-//©‹@‘_‚¢’e
+//è‡ªæ©Ÿç‹™ã„
 tds.bulletPattern["basic-aim1"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
@@ -49,7 +49,7 @@ tds.bulletPattern["basic-aim2"] = new bulletml.Root({
     ]),
 });
 
-//cubei‰æ–Êã’â‘ØŒ^j
+//cubeÂ1
 tds.bulletPattern["cube1"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
@@ -60,7 +60,7 @@ tds.bulletPattern["cube1"] = new bulletml.Root({
     ]),
 });
 
-//cubei“ËŒ‚Œ^j
+//cubeÂ2
 tds.bulletPattern["cube2"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
