@@ -14652,6 +14652,7 @@ tm.display = tm.display || {};
             c.strokeCircle(this.width/2, this.height/2, this.radius-Number(c.lineWidth)/2);
             
             c.restore();
+            return this;
         },
 
         /**
@@ -14673,6 +14674,7 @@ tm.display = tm.display || {};
             c.strokePolygon(this.width/2, this.height/2, this.radius-Number(c.lineWidth)/2, 3);
             
             c.restore();
+            return this;
         },
 
         /**
@@ -14696,6 +14698,7 @@ tm.display = tm.display || {};
             c.strokeRect(lw_half, lw_half, this.width-lw, this.height-lw);
             
             c.restore();
+            return this;
         },
         
         /**
@@ -14719,6 +14722,7 @@ tm.display = tm.display || {};
             c.strokeRoundRect(lw_half, lw_half, this.width-lw, this.height-lw, param.radius);
             
             c.restore();
+            return this;
         },
 
         /**
@@ -14745,6 +14749,7 @@ tm.display = tm.display || {};
             c.strokeStar(this.width/2, this.height/2, this.radius-Number(c.lineWidth)/2, sides, sideIndent, offsetAngle);
             
             c.restore();
+            return this;
         },
 
         /**
@@ -14773,6 +14778,7 @@ tm.display = tm.display || {};
             c.strokePolygon(this.width/2, this.height/2, this.radius-Number(c.lineWidth)/2, sides, offsetAngle);
             
             c.restore();
+            return this;
         },
 
         /**
@@ -14794,6 +14800,7 @@ tm.display = tm.display || {};
             c.strokeHeart(this.width/2, this.height/2, this.radius-Number(c.lineWidth)/2, param.angle);
             
             c.restore();
+            return this;
         },
 
         /**
@@ -14818,6 +14825,7 @@ tm.display = tm.display || {};
             c.fillText(param.text, this.width/2, this.height/2);
             
             c.restore();
+            return this;
         },
         
     });
