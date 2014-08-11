@@ -8,7 +8,7 @@ tds.Effect = [];
 
 (function() {
 
-//ƒp[ƒeƒBƒNƒ‹
+//汎用パーティクル
 tm.define("tds.Effect.Particle", {
     superClass: "tm.display.Shape",
     layer: LAYER_EFFECT_UPPER,
@@ -117,6 +117,7 @@ tm.define("tds.Effect.Aura", {
     },
 });
 
+//爆発用パーティクル
 tm.define("tds.Effect.BurnParticle", {
     superClass: "tm.display.Shape",
     layer: LAYER_EFFECT_UPPER,

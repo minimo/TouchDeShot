@@ -7,6 +7,7 @@
 
 (function() {
 
+//爆発パーティクル（小）
 tds.burnParticleSmall = function(x, y, color) {
     color = color || 0;
 
@@ -27,6 +28,7 @@ tds.burnParticleSmall = function(x, y, color) {
     return base;
 }
 
+//爆発パーティクル（大）
 tds.burnParticleLarge = function(x, y, color) {
     color = color || 310;
 

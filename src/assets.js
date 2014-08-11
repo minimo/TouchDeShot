@@ -6,6 +6,7 @@
  */
 (function() {
 
+//アセット一覧
 tds.assets = {
     //images
     "mask":         "assets/mask.png",

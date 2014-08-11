@@ -5,6 +5,8 @@
  *  This Program is MIT license.
  */
 (function() {
+
+//敵小隊単位定義
 tds.enemyUnit = {
 
 "cube1-left": [

@@ -15,20 +15,18 @@ $rank = 1;
 var RS = function(action) { return $.bullet(action, {pattern: "normal", color:320}); };
 var BS = function(action) { return $.bullet(action, {pattern: "normal", color:240}); };
 
-//インターバル
 var $interval = function(v) { return $.wait(v) };
 
-//弾速
+//速度
 var $spd = function(v) { v = v===undefined?1:v; return $.speed("$rank*0.1*"+v+"+v" ); };
 
-//
 var $fireBS = function(spd) { return $.fire($.direction(0), $.speed(spd) || $spd, BS) };
 var $fireRS = function(spd) { return $.fire($.direction(0), $.speed(spd) || $spd, RS) };
 
-//何もしない
+//no operation
 tds.bulletPattern["nop"] = new bulletml.Root({top: $.action([$.wait(10000)])});
 
-//自機狙い
+//Basic aim bullet
 tds.bulletPattern["basic-aim1"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
@@ -49,7 +47,7 @@ tds.bulletPattern["basic-aim2"] = new bulletml.Root({
     ]),
 });
 
-//cube1
+//cube1
 tds.bulletPattern["cube1"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
@@ -60,7 +58,7 @@ tds.bulletPattern["cube1"] = new bulletml.Root({
     ]),
 });
 
-//cube2
+//cube2
 tds.bulletPattern["cube2"] = new bulletml.Root({
     top: $.action([
         $.wait(60),

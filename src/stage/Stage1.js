@@ -6,6 +6,7 @@
  */
 (function() {
 
+//ステージ１
 tm.define("tds.Stage1", {
     superClass: "tds.StageController",
 
