@@ -57,12 +57,14 @@ tm.define("tds.Enemy", {
             this.nowBulletPattern = this.bulletPattern;
         }
 
+        this.parentScene = app.currentScene;
+        this.player = app.player;
         this.setup();
 
         var params = {
-            target: app.player,
+            target: this.player,
             createNewBullet: function(runner, attr) {
-                tds.Bullet(runner, attr).addChildTo(app.currentScene);
+                tds.Bullet(runner, attr).addChildTo(this.parentScene);
             }.bind(this)
         };
         this.startDanmaku(tds.bulletPattern[this.nowBulletPattern], params);

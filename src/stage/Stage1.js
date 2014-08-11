@@ -15,26 +15,7 @@ tm.define("tds.Stage1", {
 
         //Stage data
         this.add( 10, "cube1-left");
-        this.add(20, "cube1-right");
-        this.add( 10, "cube2-left");
-        this.add(20, "cube2-right");
-        this.add( 10, "cube2-left");
-        this.add(20, "cube2-right");
-        this.add( 10, "cube1-left");
-        this.add(20, "cube1-right");
-
-        this.add(120, "boss1");
-
-        this.add(20, "cube2-right");
-        this.add( 10, "cube2-left");
-        this.add(20, "cube2-right");
-        this.add( 10, "cube1-left");
-        this.add(20, "cube1-right");
-        this.add(20, "cube2-right");
-        this.add( 10, "cube2-left");
-        this.add(20, "cube2-right");
-        this.add( 10, "cube1-left");
-        this.add(20, "cube1-right");
+        this.add( 20, "cube1-right");
     },
 });
 

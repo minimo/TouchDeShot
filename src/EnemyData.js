@@ -73,17 +73,12 @@ tds.enemyData['cube2'] = {
         sh.update = function() {
             this.rotation += 30;
         }
+        this.moveTo(this.player, 5, true);
     },
 
     algorithm: function() {
-        if (!this.isNear) {
-            this.moveTo(this.player, 5, true);
-        } else {
-            this.x += this.vx;
-            this.y += this.vy;
-        }
-        var dis = distance(this, this.player);
-        if (dis < 200) this.isNear = true;
+        this.x += this.vx;
+        this.y += this.vy;
     },
 };
 
@@ -94,39 +89,15 @@ tds.enemyData['glider1'] = {
     height: 32,
 
     def: 3,     //耐久力
-    point: 300, //ポイント
+    point: 500, //ポイント
 
     layer: LAYER_OBJECT,   //表示レイヤー番号
     type: ENEMY_NORMAL_SKY, //敵タイプ
 
-    isNear: false,
-
     setup: function() {
-        var param = {
-            strokeStyle:"hsla(100, 50%, 70%, 1.0)",
-            fillStyle:  "hsla(100, 50%, 50%, 0.3)",
-            lineWidth: 1,
-        };
-        tm.display.Shape(16, 40).addChildTo(this).renderRectangle(param);
-
-        var sh = tm.display.Shape(60, 10).addChildTo(this);
-        sh.renderRectangle(param);
-        sh.update = function() {
-            this.rotation += 30;
-        }
     },
 
     algorithm: function() {
-        if (!this.isNear) {
-            this.moveTo(this.player, 5, true);
-        } else {
-            this.x += this.vx;
-            this.y += this.vy;
-        }
-        var dis = distance(this, this.player);
-        if (dis < 300) {
-            this.isNear = true;
-        }
     },
 };
 
@@ -151,43 +122,47 @@ tds.enemyData['boss1'] = {
         tm.display.Shape(200, 100).addChildTo(this).renderRectangle(param);
         tm.display.Shape(240,  80).addChildTo(this).renderRectangle(param);
 
-        tm.display.Shape(64, 128).addChildTo(this).setPosition( 138, 0).renderRectangle(param);
-        tm.display.Shape(54, 118).addChildTo(this).setPosition( 138, 0).renderRectangle(param);
+        var r1 = tm.display.Shape(64, 128).addChildTo(this).setPosition( 138, 0).renderRectangle(param);
+        var r2 = tm.display.Shape(54, 118).addChildTo(this).setPosition( 138, 0).renderRectangle(param);
 
-        tm.display.Shape(64, 128).addChildTo(this).setPosition(-138, 0).renderRectangle(param);
-        tm.display.Shape(54, 118).addChildTo(this).setPosition(-138, 0).renderRectangle(param);
+        var l1 = tm.display.Shape(64, 128).addChildTo(this).setPosition(-138, 0).renderRectangle(param);
+        var l2 = tm.display.Shape(54, 118).addChildTo(this).setPosition(-138, 0).renderRectangle(param);
 
         //ローター
-        tm.display.Shape(16, 16).addChildTo(this).setPosition(-100, 0).renderRectangle(param);
-        var sh = tm.display.Shape(110, 20).addChildTo(this).setPosition(-100, 0);
+        tm.display.Shape(16, 16).addChildTo(r1).renderRectangle(param);
+        var sh = tm.display.Shape(110, 20).addChildTo(r1);
         sh.renderRectangle(param);
         sh.update = function() {
             this.rotation += 10;
         }
-        var sh = tm.display.Shape(110, 20).addChildTo(this).setPosition(-100, 0);
+        var sh = tm.display.Shape(110, 20).addChildTo(r1);
         sh.renderRectangle(param);
         sh.rotation = 90;
         sh.update = function() {
             this.rotation += 10;
         }
 
-        tm.display.Shape(16, 16).addChildTo(this).setPosition( 100, 0).renderRectangle(param);
-        var sh = tm.display.Shape(110, 20).addChildTo(this).setPosition( 100, 0);
+        tm.display.Shape(16, 16).addChildTo(l1).renderRectangle(param);
+        var sh = tm.display.Shape(110, 20).addChildTo(l1);
         sh.renderRectangle(param);
         sh.update = function() {
             this.rotation -= 10;
         }
-        var sh = tm.display.Shape(110, 20).addChildTo(this).setPosition( 100, 0);
+        var sh = tm.display.Shape(110, 20).addChildTo(l1);
         sh.renderRectangle(param);
         sh.rotation = 90;
         sh.update = function() {
             this.rotation -= 10;
         }
 
-        this.tweener.moveBy(0, 300, 3000).wait(2000);
+        this.phase = 0;
+        this.tweener.moveBy(0, 300, 3000).wait(2000).call(function(){this.phase++}.bind(this));
     },
 
     algorithm: function() {
+        if (this.phase == 1) {
+            this.x += Math.sin(this.time*toRad);
+        }
     },
 };
 

@@ -107,6 +107,7 @@ tm.define("tds.Player", {
         bit.x = 32; bit.y = 8;
         var bit = this.bit = tds.PlayerBit().addChildTo(this);
         bit.x = -32; bit.y = 8;
+
     },
     update: function() {
         //操作系
