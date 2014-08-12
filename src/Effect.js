@@ -166,4 +166,40 @@ tm.define("tds.Effect.BurnParticle", {
     },
 });
 
+//衝撃波
+tm.define("tds.Effect.ShockWave", {
+    superClass: "tm.display.Shape",
+    layer: LAYER_EFFECT_UPPER,
+
+    init: function(size, alphaDecayRate) {
+        size = size || 64;
+        this.superInit(size, size);
+
+        if (alphaDecayRate === undefined) alphaDecayRate = 0.9;
+
+        this.width = this.height = this.size = size;
+        this.alphaDecayRate = alphaDecayRate;
+        this.blendMode = "lighter";
+
+        var c = this.canvas;
+        c.setFillStyle(
+            tm.graphics.RadialGradient(size/2, size/2, 0, size/2, size/2, size/2)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla(0, 100%, 100%, 0.0)"},
+                    {offset:0.8, color: "hsla(0, 100%, 100%, 1.0)"},
+                    {offset:1.0, color: "hsla(0, 100%, 100%, 0.0)"},
+                ]).toStyle()
+            ).fillRect(0, 0, size, size);
+    },
+
+    update: function() {
+        if (this.alpha < 0.01) {
+            this.remove();
+            return;
+        } else if (1.0 < this.alpha) {
+            this.alpha = 1.0;
+        }
+    },
+});
+
 })();

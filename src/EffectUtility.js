@@ -49,4 +49,8 @@ tds.burnParticleLarge = function(x, y, color) {
     return base;
 }
 
+//衝撃波
+tds.ShockWave = function(size, x, y) {
+}
+
 })();
