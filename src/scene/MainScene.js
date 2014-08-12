@@ -44,8 +44,7 @@ tm.define("tds.MainScene", {
 
         //プレイヤー
         this.player = tds.Player().addChildTo(this);
-        this.player.setPosition(SC_W/2, SC_H/2);
-        this.player.setScale(2.0);
+        this.player.setPosition(SC_W*0.5, SC_H*0.8);
         app.player = this.player;
 
         //ステージ制御
