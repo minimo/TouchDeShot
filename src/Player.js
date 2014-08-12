@@ -193,7 +193,7 @@ tm.define("tds.Player", {
             this.power = 0;
             this.level = 0;
             this.shotInterval = 10;
-            this.radius = 32;
+            this.radius = 48;
             this.rollingBit();
         }
 
@@ -266,10 +266,10 @@ tm.define("tds.Player", {
     closeBit: function() {
         if (this.bits.status == 0) return;
         this.bits.status = 0;
-        this.bits[0].tweener.clear().to({ x:0, y: 0, alpha:1}, 300);
-        this.bits[1].tweener.clear().to({ x:0, y: 0, alpha:1}, 300);
-        this.bits[2].tweener.clear().to({ x:0, y: 0, alpha:1}, 300);
-        this.bits[3].tweener.clear().to({ x:0, y: 0, alpha:1}, 300);
+        this.bits[0].tweener.clear().to({ x:0, y: 0, alpha:0}, 300);
+        this.bits[1].tweener.clear().to({ x:0, y: 0, alpha:0}, 300);
+        this.bits[2].tweener.clear().to({ x:0, y: 0, alpha:0}, 300);
+        this.bits[3].tweener.clear().to({ x:0, y: 0, alpha:0}, 300);
     },
 
     rollingBit: function() {
