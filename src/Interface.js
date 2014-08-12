@@ -15,16 +15,16 @@ tm.define("tds.PowerGauge", {
     active: false,
 
     //最小値
-    min: 50,
+    min: 0,
 
     //中央値
     center: 100,
 
     //最大値
-    max: 200,
+    max: 180,
 
     //現在値
-    _value: 100,
+    _value: 0,
 
     init: function() {
         this.superInit();
@@ -42,24 +42,14 @@ tm.define("tds.PowerGauge", {
     },
 
     draw: function(canvas) {
-        canvas.lineWidth = 30;
+        canvas.lineWidth = 10;
         canvas.globalCompositeOperation = "lighter";
 
-        var rad = 0;
-        var value = (this._value-this.center);
         var clock = true;
         var color = 'lime'
-        if (value < 0) {
-            clock = false;
-            color = 'blue';
-            var u = this.center - this.min;
-            rad = (360/u)*toRad*value;
-        } else {
-            var u = this.max - this.center;
-            rad = (360/u)*toRad*value;
-        }
+        var rad = this._value*toRad*2;
 
-        canvas.strokeStyle = 'red';
+        canvas.strokeStyle = 'blue';
         canvas.strokeArc(0, 0, 40, Math.PI*2, rad, clock);
 
         canvas.strokeStyle = color;
