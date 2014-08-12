@@ -89,8 +89,8 @@ tm.define("tds.Player", {
 
         //ビット
         this.bits = [];
-        this.bits.open1 = false;
-        this.bits.open2 = false;
+        this.bits.status = 0; //0:close 1:open1 2:open2 3:rollingStanby 4:rollingReady
+        this.bits.roll = 0;
         this.bits[0] = tds.PlayerBit().addChildTo(this);
         this.bits[1] = tds.PlayerBit().addChildTo(this);
         this.bits[2] = tds.PlayerBit().addChildTo(this);
@@ -149,23 +149,29 @@ tm.define("tds.Player", {
         this.x = Math.clamp(this.x, 16, SC_W-16);
         this.y = Math.clamp(this.y, 16, SC_H-16);
 
-        //オーラ処理
-        if (this.mouseON && this.time % 3 == 0) {
-            this.tweener.clear().to({alpha:1},200);
-            for (var i = 0; i < this.level+1; i++) {
-                var rad = rand(0, 628) / 100;
-                var dis = rand(10, 150);
-                var x = Math.cos(rad)*dis;
-                var y = Math.sin(rad)*dis;
-                var s = rand(50, 150);
-                var p = tds.Effect.Aura(this, s, 0.99).addChildTo(this.parent);
-                p.setPosition(x+this.x, y+this.y);
-                p.vx = -x / 50;
-                p.vy = -y / 50;
+        //タッチorクリック中
+        if (this.mouseON) {
+            //ショット
+            if (this.shotON && this.time % this.shotInterval == 0) {
+                this.enterShot();
             }
-        }
 
-        if(this.mouseON) {
+            //オーラ処理
+            if (this.time % 3 == 0) {
+                for (var i = 0; i < this.level+1; i++) {
+                    var rad = rand(0, 628) / 100;
+                    var dis = rand(10, 150);
+                    var x = Math.cos(rad)*dis;
+                    var y = Math.sin(rad)*dis;
+                    var s = rand(50, 150);
+                    var p = tds.Effect.Aura(this, s, 0.99).addChildTo(this.parent);
+                    p.setPosition(x+this.x, y+this.y);
+                    p.vx = -x / 50;
+                    p.vy = -y / 50;
+                }
+            }
+
+            //パワーチャージ
             this.power++;
             if (this.power > this.powerMax) {
                 this.level++;
@@ -176,28 +182,24 @@ tm.define("tds.Player", {
                     this.power = this.powerMax;
                 }
             }
-        }
 
-        //ショット
-        if (this.mouseON && this.shotON && this.time % this.shotInterval == 0) {
-            this.enterShot();
-            if (this.level > 0) {
-                this.bits[0].enterShot();
-                this.bits[1].enterShot();
+            //初回検出
+            if (!this.beforeMouseON) {
+                this.closeBit();
             }
-        }
-
-        //タッチされてないのでパワーとレベルを初期状態にする
-        if (!this.mouseON) {
+            this.radius = 2;
+        } else {
+            //タッチされてないのでパワーとレベルを初期状態にする
             this.power = 0;
             this.level = 0;
-            this.tweener.clear().to({alpha:0.3},200);
             this.shotInterval = 10;
-            this.closeBit();
+            this.radius = 32;
+            this.rollingBit();
         }
 
         this.bx = this.x;
         this.by = this.y;
+        this.beforeMouseON = this.mouseON;
         this.time++;
     },
 
@@ -230,35 +232,66 @@ tm.define("tds.Player", {
             tds.ShotBullet(-5, shotPower).addChildTo(this.parentScene).setPosition(this.x-16, this.y-16);
         }
         if (this.level > 0) {
-            this.bits[0].enterShot(shotPower);
-            this.bits[1].enterShot(shotPower);
+            var x = this.x + this.bits[0].x;
+            var y = this.y + this.bits[0].y;
+            tds.ShotBullet( 10, shotPower).addChildTo(this.parentScene).setPosition(x, y-8);
+            var x = this.x + this.bits[1].x;
+            var y = this.y + this.bits[1].y;
+            tds.ShotBullet(-10, shotPower).addChildTo(this.parentScene).setPosition(x, y-8);
+        }
+        if (this.level > 1) {
+            var x = this.x + this.bits[2].x;
+            var y = this.y + this.bits[2].y;
+            tds.ShotBullet( 10, shotPower).addChildTo(this.parentScene).setPosition(x, y-8);
+            var x = this.x + this.bits[3].x;
+            var y = this.y + this.bits[3].y;
+            tds.ShotBullet(-10, shotPower).addChildTo(this.parentScene).setPosition(x, y-8);
         }
     },
 
     //ビット展開１段階目
     openBit1: function() {
-        if (this.bits.open1) return;
-        this.bits.open1 = true;
+        this.bits.status = 1;
         this.bits[0].tweener.clear().to({ x: 48, y: 16, alpha:1}, 300);
         this.bits[1].tweener.clear().to({ x:-48, y: 16, alpha:1}, 300);
     },
 
     //ビット展開２段階目
     openBit2: function() {
-        if (this.bits.open2) return;
-        this.bits.open2 = true;
+        this.bits.status = 2;
         this.bits[2].tweener.clear().to({ x: 80, y: 32, alpha:1}, 300);
         this.bits[3].tweener.clear().to({ x:-80, y: 32, alpha:1}, 300);
     },
 
     closeBit: function() {
-        if (!this.bits.open1) return;
-        this.bits.open1 = false;
-        this.bits.open2 = false;
-        this.bits[0].tweener.clear().to({ x: 0, y: 0, alpha:0}, 300);
-        this.bits[1].tweener.clear().to({ x: 0, y: 0, alpha:0}, 300);
-        this.bits[2].tweener.clear().to({ x: 0, y: 0, alpha:0}, 300);
-        this.bits[3].tweener.clear().to({ x: 0, y: 0, alpha:0}, 300);
+        if (this.bits.status == 0) return;
+        this.bits.status = 0;
+        this.bits[0].tweener.clear().to({ x:0, y: 0, alpha:1}, 300);
+        this.bits[1].tweener.clear().to({ x:0, y: 0, alpha:1}, 300);
+        this.bits[2].tweener.clear().to({ x:0, y: 0, alpha:1}, 300);
+        this.bits[3].tweener.clear().to({ x:0, y: 0, alpha:1}, 300);
+    },
+
+    rollingBit: function() {
+        if (this.bits.status < 3) {
+            this.bits[0].tweener.clear().to({ x:  0, y: -48, alpha:1}, 200).call(function(){this.bits.status = 5}.bind(this));
+            this.bits[1].tweener.clear().to({ x: 48, y:   0, alpha:1}, 200);
+            this.bits[2].tweener.clear().to({ x:  0, y:  48, alpha:1}, 200);
+            this.bits[3].tweener.clear().to({ x:-48, y:   0, alpha:1}, 200);
+            this.bits.status = 4;
+        }
+        if (this.bits.status == 5) {
+            this.bits.roll+=10;
+            var rad = this.bits.roll*toRad;
+            this.bits[0].x = Math.cos(rad)*48;
+            this.bits[0].y = Math.sin(rad)*48;
+            this.bits[1].x = Math.cos(rad+1.57)*48;
+            this.bits[1].y = Math.sin(rad+1.57)*48;
+            this.bits[2].x = Math.cos(rad+3.14)*48;
+            this.bits[2].y = Math.sin(rad+3.14)*48;
+            this.bits[3].x = Math.cos(rad+4.71)*48;
+            this.bits[3].y = Math.sin(rad+4.71)*48;
+        }
     },
 
     //プレイヤー投入時演出
@@ -301,7 +334,7 @@ tm.define("tds.PlayerBit", {
         this.superInit(16, 16);
         this.parentScene = app.currentScene;
 
-        this.alpha = 0;
+        this.alpha = 1;
 
         var param = {
             strokeStyle:"hsla(200, 50%, 50%, 1.0)",
@@ -318,12 +351,6 @@ tm.define("tds.PlayerBit", {
             tds.Effect.Aura(this, 10, 0.99).addChildTo(this.parentScene);
         }
         this.time++;
-    },
-
-    enterShot: function(power) {
-        var x = this.parent.x + this.x;
-        var y = this.parent.y + this.y;
-        tds.ShotBullet(0, power).addChildTo(this.parentScene).setPosition(x, y-8);
     },
 });
 

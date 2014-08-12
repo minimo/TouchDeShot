@@ -33,7 +33,7 @@ tm.define("tds.Bullet", {
             this.rotation+=10;
 
             //自機との当り判定チェック
-            if (this.player.mouseON && this.isHitElement(this.player)) {
+            if (this.isHitElement(this.player)) {
                 this.player.damage();
                 this.remove();
             }
