@@ -115,7 +115,13 @@ tm.define("tds.ShotBullet", {
 
         //当り判定設定
         this.boundingType = "circle";
-        this.radius = 2;
+        this.radius = 12;
+
+        //威力により大きさと判定を変更
+        if (power > 10) {
+            this.setScale(2);
+            this.radius = 24;
+        }
 
         this.beforeX = this.x;
         this.beforeY = this.y;
