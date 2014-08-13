@@ -345,10 +345,13 @@ tm.define("tds.PlayerBit", {
 
         this.time = 0;
     },
+
     update: function() {
-        this.rotation+=10;
-        if (this.active) {
-            tds.Effect.Aura(this, 10, 0.99).addChildTo(this.parentScene);
+        this.rotation+=4;
+        if (this.alpha == 1 && this.time % 2 == 0) {
+            var x = this.x + this.parent.x;
+            var y = this.y + this.parent.y;
+            tds.Effect.Particle(32, 1, 0.9, 200).addChildTo(app.currentScene).setPosition(x, y);
         }
         this.time++;
     },
