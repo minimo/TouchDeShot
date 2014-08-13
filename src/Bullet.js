@@ -24,10 +24,22 @@ tm.define("tds.Bullet", {
         this.boundingType = "circle";
         this.radius = 2;
 
+        this.param = param;
         var color = param.color || 200;
         this.removeChildren();
 
-        this.setupNormal(color);
+        //弾種別グラフィック
+        switch (param.type) {
+            case "normal":
+                this.setupNormalBullet(color);
+                break;
+            case "large":
+                this.setupNormalBullet(color, 64);
+                break;
+            default:
+                this.setupNormal(color);
+                break;
+        }
 
         this.on("enterframe", function(){
             this.rotation+=10;
@@ -42,16 +54,24 @@ tm.define("tds.Bullet", {
             }
         }.bind(this) );
 
+        this.on("removed", function(){
+//            tds.EffectBulletVanish(this);
+        }.bind(this));
+
         this.beforeX = this.x;
         this.beforeY = this.y;
     },
 
     //通常弾
-    setupNormal: function(color) {
-        var b = tm.display.Shape(32, 32).addChildTo(this);
+    setupNormalBullet: function(color, size) {
+        size = size || 32;
+        var size_h = size/2;
+        var size_q = size/4;
+        var size_z = size/16;
+        var b = tm.display.Shape(size, size).addChildTo(this);
         var c = b.canvas;
         c.setFillStyle(
-            tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+            tm.graphics.RadialGradient(size_h, size_h, 0, size_h, size_h, size_h)
                 .addColorStopList([
                     {offset:0.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
                     {offset:0.5, color: "hsla({0}, 50%, 50%, 1.0)".format(color)},
@@ -59,19 +79,19 @@ tm.define("tds.Bullet", {
                     {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
                 ]).toStyle()
             )
-            .fillRect(0, 0, 32, 32);
+            .fillRect(0, 0, size, size);
 
-        var style = tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8)
+        var style = tm.graphics.RadialGradient(size_q, size_q, 0, size_q, size_q, size_q)
                     .addColorStopList([
                         {offset:0.0, color: "hsla({0}, 70%, 70%, 1.0)".format(color)},
                         {offset:0.5, color: "hsla({0}, 50%, 50%, 0.5)".format(color)},
                         {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
                     ]).toStyle();
 
-        var b = tm.display.Shape(16, 16).addChildTo(this).setPosition(2,2);
-        b.canvas.setFillStyle(style).fillRect(0, 0, 16, 16);
-        var b = tm.display.Shape(16, 16).addChildTo(this).setPosition(-2,-2);
-        b.canvas.setFillStyle(style).fillRect(0, 0, 16, 16);
+        var b = tm.display.Shape(size_h, size_h).addChildTo(this).setPosition(size_z, size_z);
+        b.canvas.setFillStyle(style).fillRect(0, 0, size_h, size_h);
+        var b = tm.display.Shape(size_h, size_h).addChildTo(this).setPosition(-size_z, -size_z);
+        b.canvas.setFillStyle(style).fillRect(0, 0, size_h, size_h);
     },
 });
 
