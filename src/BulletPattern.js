@@ -12,8 +12,10 @@ var $ = bulletml.dsl;
 $rank = 1;
 
 //弾種
-var RS = function(action) { return $.bullet(action, {pattern: "normal", color:320}); };
-var BS = function(action) { return $.bullet(action, {pattern: "normal", color:240}); };
+var RS = function(action) { return $.bullet(action, {type: "normal", color:320}); };
+var BS = function(action) { return $.bullet(action, {type: "normal", color:240}); };
+var RL = function(action) { return $.bullet(action, {type: "large", color:320}); };
+var BL = function(action) { return $.bullet(action, {type: "large", color:240}); };
 
 var $interval = function(v) { return $.wait(v) };
 
