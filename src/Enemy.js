@@ -110,6 +110,7 @@ tm.define("tds.Enemy", {
         this.def -= power;
         if (this.def < 1) {
             this.dead();
+            app.score += this.data.point;
         }
     },
 

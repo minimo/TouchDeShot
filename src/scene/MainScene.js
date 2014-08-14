@@ -50,6 +50,14 @@ tm.define("tds.MainScene", {
         //ステージ制御
         this.stage = tds.Stage1(this, this.player);
 
+        //スコア表示ラベル
+        app.score = 0;
+        var sc = this.scoreLabel = tm.display.OutlineLabel("SCORE:0", 30).addChildTo(this);
+        sc.fontFamily = "'Orbitron'"; sc.align = "left"; sc.baseline  = "top"; sc.fontWeight = 700; sc.outlineWidth = 2;
+        sc.update = function() {
+            this.text = "SCORE:"+app.score;
+        };
+
         this.time = 0;
     },
 

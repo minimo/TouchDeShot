@@ -21,6 +21,8 @@ tds.TouchShooter = tm.createClass({
 
     mainScene: null,
 
+    score: 0,
+
     init: function(id) {
         this.superInit(id);
 
