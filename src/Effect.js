@@ -211,7 +211,7 @@ tm.define("tds.Effect.BulletVanish", {
         }.bind(this));
 
         this.tweener.clear()
-            .to({scaleX: 5, scaleY: 5, alpha: 0.0}, 800, "easeOutQuad")
+            .to({scaleX: 3, scaleY: 3, alpha: 0.0}, 800, "easeOutQuad")
             .call(function() {
                 this.remove();
             }.bind(this));
