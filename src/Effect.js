@@ -42,8 +42,7 @@ tm.define("tds.Effect.Particle", {
                     {offset:0.5, color: "hsla({0}, 60%, 50%, 0.5)".format(color)},
                     {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(color)},
                 ]).toStyle()
-            )
-            .fillRect(0, 0, size, size);
+            ).fillRect(0, 0, size, size);
 
         this.on("enterframe", function() {
             this.alpha *= this.alphaDecayRate;
@@ -63,9 +62,8 @@ tm.define("tds.Effect.Aura", {
     layer: LAYER_EFFECT_UPPER,
 
     init: function(target, size, alphaDecayRate) {
-        this.superInit();
-
         size = size || 100;
+        this.superInit();
         if (alphaDecayRate === undefined) alphaDecayRate = 0.9;
 
         this.width = this.height = this.size = size;
@@ -163,6 +161,60 @@ tm.define("tds.Effect.BurnParticle", {
                 this.alpha = 1.0;
             }
         }.bind(this));
+    },
+});
+
+//敵弾消滅パーティクル
+tm.define("tds.Effect.BulletVanish", {
+    superClass: "tm.display.Shape",
+    layer: LAYER_EFFECT_UPPER,
+
+    alpha: 1.0,
+    alphaDecayRate: 0.9,
+    size: 0,
+
+    image: null,
+    isEffect: true,
+    isUpper: true,
+
+    deltaX: 0.0,    //水平方向速度
+    deltaY: 0.0,    //垂直方向速度
+    deltaA: 1.0,    //速度減衰率
+
+    init: function(bullet) {
+        var size = bullet.size || 32;
+        var color = bullet.param.color || 0;
+        this.superInit(size, size);
+
+        this.size = size;
+        this.blendMode = "lighter";
+        this.deltaX = bullet.runner.deltaX;
+        this.deltaY = bullet.runner.deltaY;
+        this.deltaA = 0.5;
+        this.setPosition(bullet.x, bullet.y);
+
+        var c = this.canvas;
+        c.setFillStyle(
+            tm.graphics.RadialGradient(size/2, size/2, 0, size/2, size/2, size/2)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla({0}, 60%, 50%, 0.0)".format(color)},
+                    {offset:0.9, color: "hsla({0}, 60%, 50%, 1.0)".format(color)},
+                    {offset:1.0, color: "hsla({0}, 60%, 50%, 0.0)".format(color)},
+                ]).toStyle()
+            ).fillRect(0, 0, size, size);
+
+        this.on("enterframe", function() {
+            this.x += this.deltaX;
+            this.y += this.deltaY;
+            this.deltaX *= this.deltaA;
+            this.deltaY *= this.deltaA;
+        }.bind(this));
+
+        this.tweener.clear()
+            .to({scaleX: 5, scaleY: 5, alpha: 0.0}, 800, "easeOutQuad")
+            .call(function() {
+                this.remove();
+            }.bind(this));
     },
 });
 

@@ -55,7 +55,7 @@ tm.define("tds.Bullet", {
         }.bind(this) );
 
         this.on("removed", function(){
-//            tds.EffectBulletVanish(this);
+            tds.Effect.BulletVanish(this).addChildTo(app.currentScene);
         }.bind(this));
 
         this.beforeX = this.x;
@@ -64,27 +64,26 @@ tm.define("tds.Bullet", {
 
     //通常弾
     setupNormalBullet: function(color, size) {
-        size = size || 32;
+        size = size || 16;
+        this.size = size;
         var size_h = size/2;
         var size_q = size/4;
-        var size_z = size/16;
+        var size_z = size/8;
         var b = tm.display.Shape(size, size).addChildTo(this);
         var c = b.canvas;
         c.setFillStyle(
             tm.graphics.RadialGradient(size_h, size_h, 0, size_h, size_h, size_h)
                 .addColorStopList([
                     {offset:0.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
-                    {offset:0.5, color: "hsla({0}, 50%, 50%, 1.0)".format(color)},
-                    {offset:0.6, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
+                    {offset:0.9, color: "hsla({0}, 50%, 50%, 1.0)".format(color)},
                     {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
                 ]).toStyle()
-            )
-            .fillRect(0, 0, size, size);
+            ).fillRect(0, 0, size, size);
 
         var style = tm.graphics.RadialGradient(size_q, size_q, 0, size_q, size_q, size_q)
                     .addColorStopList([
                         {offset:0.0, color: "hsla({0}, 70%, 70%, 1.0)".format(color)},
-                        {offset:0.5, color: "hsla({0}, 50%, 50%, 0.5)".format(color)},
+                        {offset:0.9, color: "hsla({0}, 50%, 50%, 0.5)".format(color)},
                         {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
                     ]).toStyle();
 
