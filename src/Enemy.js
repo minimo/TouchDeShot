@@ -91,6 +91,12 @@ tm.define("tds.Enemy", {
             this.remove();
             this.isCollision = false;
         }
+
+        //自機との当り判定チェック
+        if (this.isCollision && this.isHitElement(this.player)) {
+            this.player.damage();
+        }
+
         this.beforeX = this.x;
         this.beforeY = this.y;
         this.time++;
