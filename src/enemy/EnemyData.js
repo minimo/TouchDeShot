@@ -83,18 +83,22 @@ tds.enemyData['cube2'] = {
 };
 
 tds.enemyData['square1'] = {
-    bulletPattern: "basic-aim1",  //使用弾幕パターン
+    bulletPattern: "square1",  //使用弾幕パターン
 
     width:  64,  //当り判定サイズ
     height: 64,
 
-    def: 100,   //耐久力
+    def: 150,   //耐久力
     point: 500, //ポイント
 
     layer: LAYER_OBJECT,   //表示レイヤー番号
     type: ENEMY_NORMAL_SKY, //敵タイプ
 
     setup: function() {
+
+        this.phase = 0;
+        this.rotation = 45;
+
         var param = {
             strokeStyle:"hsla(180, 50%, 70%, 1.0)",
             fillStyle:  "hsla(180, 50%, 50%, 0.5)",
@@ -102,26 +106,29 @@ tds.enemyData['square1'] = {
         };
         tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
 
-        var c = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition(-32,-32);
-        c.tweener.wait(1000).moveBy(-8, -8, 1000);
-        var c = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition( 32,-32);
-        c.tweener.wait(1000).moveBy(8, -8, 1000);
-        var c = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition(-32, 32);
-        c.tweener.wait(1000).moveBy(-8, 8, 1000);
-        var c = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition( 32, 32);
-        c.tweener.wait(1000).moveBy(8, 8, 1000);
+        var that = this;
+        this.c1 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition(-32,-32);
+        this.c1.update = function() {if (that.phase ==1) this.rotation = -that.rotation+45;}
+        this.c2 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition( 32,-32);
+        this.c2.update = function() {if (that.phase ==1) this.rotation = -that.rotation+45;}
+        this.c3 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition(-32, 32);
+        this.c3.update = function() {if (that.phase ==1) this.rotation = -that.rotation+45;}
+        this.c4 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition( 32, 32);
+        this.c4.update = function() {if (that.phase ==1) this.rotation = -that.rotation+45;}
 
-        this.tweener.moveBy(0, 300, 3000, "easeOutQuart")
+        this.tweener.moveBy(0, 300, 4000, "easeOutQuart")
             .call(function(){
                 if (this.x < SC_W*0.5) {
                     this.tweener.clear().moveBy(SC_W*0.5, 0, 3000, "easeInOutQuart").moveBy(-SC_W*0.5, 0, 3000, "easeInOutQuart").setLoop(true);
                 } else {
                     this.tweener.clear().moveBy(-SC_W*0.5, 0, 3000, "easeInOutQuart").moveBy(SC_W*0.5, 0, 3000, "easeInOutQuart").setLoop(true);
                 }
+                this.phase++;
             }.bind(this));
     },
 
     algorithm: function() {
+        if (this.phase == 1) this.rotation-=2;
     },
 };
 
