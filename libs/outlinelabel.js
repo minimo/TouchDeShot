@@ -241,4 +241,26 @@ tm.display = tm.display || {};
         }
     });
 
+    /**
+     * @property    shadowBlur
+     */
+    tm.display.OutlineLabel.prototype.accessor("shadowBlur", {
+        "get": function() { return this.labels[4].shadowBlur; },
+        "set": function(shadowBlur) {
+           for (var i = 0; i < 9; i++)this.labels[i].shadowBlur = shadowBlur;
+//           this.labels[4].shadowBlur = shadowBlur;
+        }
+    });
+
+    /**
+     * @property    shadowColoe
+     */
+    tm.display.OutlineLabel.prototype.accessor("shadowColor", {
+        "get": function() { return this.labels[4].shadowColor; },
+        "set": function(shadowColor) {
+            for (var i = 0; i < 9; i++)this.labels[i].shadowColor = shadowColor;
+//            this.labels[4].shadowColor = shadowColor;
+        }
+    });
+
 })();
