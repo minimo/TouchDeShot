@@ -14,8 +14,9 @@ tm.define("tds.Stage1", {
         this.superInit(parent, player);
 
         //Stage data
-        this.add( 10, "cube1-left");
-        this.add( 20, "cube1-right");
+        this.add(  10, "cube1-left");
+        this.add(  20, "cube1-right");
+        this.add( 120, "cube1-center");
     },
 });
 

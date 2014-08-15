@@ -33,7 +33,7 @@ tds.enemyData['cube1'] = {
             this.rotation += 30;
         }
 
-        this.tweener.moveBy(0, 300, 1000, "easeOutQuart").wait(2000).moveBy(0, -300, 1000).call(function(){this.remove();}.bind(this));
+        this.tweener.moveBy(0, 300, 1000, "easeOutQuart").wait(1000).moveBy(0, -300, 3000).call(function(){this.remove();}.bind(this));
     },
 
     algorithm: function() {
