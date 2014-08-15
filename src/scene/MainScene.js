@@ -82,7 +82,7 @@ tm.define("tds.MainScene", {
         var len = unit.length;
         for (var i = 0; i < len; i++) {
             var e = unit[i];
-            tds.Enemy(e.name).addChildTo(this).setPosition(e.x, e.y);
+            tds.Enemy(e.name,e.x, e.y).addChildTo(this);
         }
     },
 

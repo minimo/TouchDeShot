@@ -31,8 +31,9 @@ tm.define("tds.Enemy", {
     beforeX: 0,
     beforeY: 0,
 
-    init: function(name) {
+    init: function(name, x, y) {
         this.superInit();
+        this.setPosition(x, y);
 
         this.name = name;
         var d = this.data = tds.enemyData[name];

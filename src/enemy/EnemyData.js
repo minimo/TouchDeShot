@@ -82,13 +82,13 @@ tds.enemyData['cube2'] = {
     },
 };
 
-tds.enemyData['square'] = {
+tds.enemyData['square1'] = {
     bulletPattern: "basic-aim1",  //使用弾幕パターン
 
-    width:  32,  //当り判定サイズ
-    height: 32,
+    width:  64,  //当り判定サイズ
+    height: 64,
 
-    def: 3,     //耐久力
+    def: 100,   //耐久力
     point: 500, //ポイント
 
     layer: LAYER_OBJECT,   //表示レイヤー番号
@@ -96,12 +96,29 @@ tds.enemyData['square'] = {
 
     setup: function() {
         var param = {
-            strokeStyle:"hsla(120, 50%, 70%, 1.0)",
-            fillStyle:  "hsla(120, 50%, 50%, 0.3)",
+            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
             lineWidth: 1,
         };
         tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
-        this.tweener.moveBy(0, 300, 1000, "easeOutQuart");
+
+        var c = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition(-32,-32);
+        c.tweener.wait(1000).moveBy(-8, -8, 1000);
+        var c = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition( 32,-32);
+        c.tweener.wait(1000).moveBy(8, -8, 1000);
+        var c = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition(-32, 32);
+        c.tweener.wait(1000).moveBy(-8, 8, 1000);
+        var c = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition( 32, 32);
+        c.tweener.wait(1000).moveBy(8, 8, 1000);
+
+        this.tweener.moveBy(0, 300, 3000, "easeOutQuart")
+            .call(function(){
+                if (this.x < SC_W*0.5) {
+                    this.tweener.clear().moveBy(SC_W*0.5, 0, 3000, "easeInOutQuart").moveBy(-SC_W*0.5, 0, 3000, "easeInOutQuart").setLoop(true);
+                } else {
+                    this.tweener.clear().moveBy(-SC_W*0.5, 0, 3000, "easeInOutQuart").moveBy(SC_W*0.5, 0, 3000, "easeInOutQuart").setLoop(true);
+                }
+            }.bind(this));
     },
 
     algorithm: function() {

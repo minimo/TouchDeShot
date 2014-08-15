@@ -46,6 +46,14 @@ tds.enemyUnit = {
     { "name": "cube2", "x":SC_W*0.9, "y":-120 },
 ],
 
+"square1-left": [
+    { "name": "square1", "x":SC_W*0.3, "y":-100 },
+],
+
+"square1-right": [
+    { "name": "square1", "x":SC_W*0.7, "y":-100 },
+],
+
 "boss1": [
     { "name": "boss1", "x":SC_W*0.5, "y":-100 },
 ],
