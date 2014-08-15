@@ -82,7 +82,7 @@ tds.enemyData['cube2'] = {
     },
 };
 
-tds.enemyData['glider1'] = {
+tds.enemyData['square'] = {
     bulletPattern: "basic-aim1",  //使用弾幕パターン
 
     width:  32,  //当り判定サイズ
@@ -95,6 +95,13 @@ tds.enemyData['glider1'] = {
     type: ENEMY_NORMAL_SKY, //敵タイプ
 
     setup: function() {
+        var param = {
+            strokeStyle:"hsla(120, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(120, 50%, 50%, 0.3)",
+            lineWidth: 1,
+        };
+        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
+        this.tweener.moveBy(0, 300, 1000, "easeOutQuart");
     },
 
     algorithm: function() {
