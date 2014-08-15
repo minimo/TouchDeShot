@@ -124,7 +124,12 @@ tm.define("tds.Enemy", {
             this.alpha *= 0.9;
             if (this.alpha < 0.02) this.remove();
         }.bind(this));
-        tds.burnParticleSmall().addChildTo(this.parentScene).setPosition(this.x, this.y);
+        var area = this.width*this.height;
+        if (area < 1025) {
+            tds.burnParticleSmall().addChildTo(this.parentScene).setPosition(this.x, this.y);
+        } else {
+            tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
+        }
     },
 
     //指定ターゲットの方向を向く
