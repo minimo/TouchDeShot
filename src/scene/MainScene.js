@@ -31,7 +31,7 @@ tm.define("tds.MainScene", {
 
     init: function() {
         this.superInit();
-//        this.background = "rgba(255, 0, 0, 1.0)";
+        this.background = "rgba(0, 0, 0, 1.0)";
 
         //マルチタッチ初期化
         this.touches = tm.input.TouchesEx(this);
