@@ -34,7 +34,7 @@ tm.define("tds.Bullet", {
                 this.setupNormalBullet(color);
                 break;
             case "large":
-                this.setupNormalBullet(color, 64);
+                this.setupNormalBullet(color, 24);
                 break;
             default:
                 this.setupNormal(color);
