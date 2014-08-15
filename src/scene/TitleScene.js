@@ -13,14 +13,12 @@ tm.define("tds.TitleScene", {
         this.superInit();
         app.background = "rgba(0, 0, 0, 1.0)";
 
-        var baseY = 200;
-
         var t1 = this.title1 = tm.display.OutlineLabel("BulletSimulator", 30).addChildTo(this);
-        t1.x = 320; t1.y = baseY;
+        t1.x = SC_W*0.5; t1.y = SC_H*0.2;
         t1.fontFamily = "'UbuntuMono'"; t1.align = "center"; t1.baseline  = "middle"; t1.fontWeight = 300; t1.outlineWidth = 2;
 
         var t2 = this.title2 = tm.display.OutlineLabel("Touch de SHOT!!", 60).addChildTo(this);
-        t2.x = 320; t2.y = baseY+100;
+        t2.x = SC_W*0.5; t2.y = SC_H*0.5;
         t2.fontFamily = "'Orbitron'"; t2.align = "center"; t2.baseline  = "middle"; t2.fontWeight = 800; t2.outlineWidth = 2;
         t2.fillStyle = tm.graphics.LinearGradient(-SC_W*0.5, 0, SC_W*0.5, 64)
             .addColorStopList([
@@ -31,7 +29,7 @@ tm.define("tds.TitleScene", {
         t2.shadowColor = "blue";
         t2.shadowBlur = 10;
         var ct = this.clickortouch = tm.display.OutlineLabel("Click or Touch", 30).addChildTo(this);
-        ct.x = 320; ct.y = 500;
+        ct.x = SC_W*0.5; ct.y = SC_H*0.8;
         ct.fontFamily = "'UbuntuMono'"; ct.align = "center"; ct.baseline  = "middle"; ct.fontWeight = 500; ct.outlineWidth = 2;
 
         this.time = 0;
