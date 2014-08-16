@@ -85,11 +85,11 @@ tds.enemyData['cube2'] = {
 tds.enemyData['square1'] = {
     bulletPattern: "square1",  //使用弾幕パターン
 
-    width:  64,  //当り判定サイズ
+    width:  64,     //当り判定サイズ
     height: 64,
 
-    def: 150,   //耐久力
-    point: 500, //ポイント
+    def: 150,       //耐久力
+    point: 5000,    //ポイント
 
     layer: LAYER_OBJECT,   //表示レイヤー番号
     type: ENEMY_NORMAL_SKY, //敵タイプ
@@ -119,9 +119,9 @@ tds.enemyData['square1'] = {
         this.tweener.moveBy(0, 300, 4000, "easeOutQuart")
             .call(function(){
                 if (this.x < SC_W*0.5) {
-                    this.tweener.clear().moveBy(SC_W*0.5, 0, 3000, "easeInOutQuart").moveBy(-SC_W*0.5, 0, 3000, "easeInOutQuart").setLoop(true);
+                    this.tweener.clear().moveBy(SC_W*0.5, 10, 3000, "easeInOutCubic").moveBy(-SC_W*0.5, 10, 3000, "easeInOutCubic").setLoop(true);
                 } else {
-                    this.tweener.clear().moveBy(-SC_W*0.5, 0, 3000, "easeInOutQuart").moveBy(SC_W*0.5, 0, 3000, "easeInOutQuart").setLoop(true);
+                    this.tweener.clear().moveBy(-SC_W*0.5, 10, 3000, "easeInOutCubic").moveBy(SC_W*0.5, 10, 3000, "easeInOutCubic").setLoop(true);
                 }
                 this.phase++;
             }.bind(this));

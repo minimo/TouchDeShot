@@ -124,10 +124,22 @@ tds.bulletPattern["cube2"] = new bulletml.Root({
 //square
 tds.bulletPattern["square1"] = new bulletml.Root({
     top: $.action([
-        $.wait(240),
-        $.repeat(3, [
-            $absoluteNway(10, 90, 270, $spd(3), RL, 0, 0),
-            $.wait("$rand * 60"),
+        $.wait(180),
+        $.repeat(999, [
+            $.fire($.direction(-40), $spd(3), RL),
+            $.repeat(4, [
+                $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                $.fire($.direction( 10, "sequence"), $spd(3), RL),
+//                $absoluteNway(10, 90, 270, $spd(3), RL, 0, 0),
+                $interval(10),
+            ]),
+            $interval(60),
         ]),
     ]),
 });
