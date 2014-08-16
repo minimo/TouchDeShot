@@ -14,7 +14,7 @@ tm.define("tds.TitleScene", {
         app.background = "rgba(0, 0, 0, 1.0)";
 
         var t1 = this.title1 = tm.display.OutlineLabel("BulletSimulator", 30).addChildTo(this);
-        t1.x = SC_W*0.5; t1.y = SC_H*0.2;
+        t1.x = SC_W*0.5; t1.y = SC_H*0.4;
         t1.fontFamily = "'UbuntuMono'"; t1.align = "center"; t1.baseline  = "middle"; t1.fontWeight = 300; t1.outlineWidth = 2;
 
         var t2 = this.title2 = tm.display.OutlineLabel("Touch de SHOT!!", 60).addChildTo(this);
