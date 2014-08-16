@@ -12,6 +12,10 @@ tds.assets = {
     "mask":         "assets/mask.png",
     "gunship1":     "assets/gunship1.png",
     "shot":         "assets/shot.png",
+
+    //SE
+    "smallExplode": "assets/sen_ge_taihou03.mp3", 
+    "playerExplode": "assets/ta_ta_zuban_d01.mp3", 
 }
 
 })();
