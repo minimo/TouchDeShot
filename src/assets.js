@@ -15,6 +15,7 @@ tds.assets = {
 
     //SE
     "smallExplode": "assets/sen_ge_taihou03.mp3", 
+    "largeExplode": "assets/sen_ge_hasai01.mp3", 
     "playerExplode": "assets/ta_ta_zuban_d01.mp3", 
 }
 
