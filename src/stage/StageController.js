@@ -16,8 +16,8 @@ tm.define("tds.StageController", {
     seq: null,
     index: 0,
 
-    init: function(parent, player) {
-        this.parentScene = parent;
+    init: function(scene, player) {
+        this.parentScene = scene;
         this.player = player;
 
         this.seq = [];
