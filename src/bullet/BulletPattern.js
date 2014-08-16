@@ -123,23 +123,46 @@ tds.bulletPattern["cube2"] = new bulletml.Root({
 
 //square
 tds.bulletPattern["square1"] = new bulletml.Root({
-    top: $.action([
+    top1: $.action([
         $.wait(180),
+        $.fire($.direction(  0), $spd(3), RL),
         $.repeat(999, [
-            $.fire($.direction(-40), $spd(3), RL),
-            $.repeat(4, [
-                $.fire($.direction( 10, "sequence"), $spd(3), RL),
-                $.fire($.direction( 10, "sequence"), $spd(3), RL),
-                $.fire($.direction( 10, "sequence"), $spd(3), RL),
-                $.fire($.direction( 10, "sequence"), $spd(3), RL),
-                $.fire($.direction( 10, "sequence"), $spd(3), RL),
-                $.fire($.direction( 10, "sequence"), $spd(3), RL),
-                $.fire($.direction( 10, "sequence"), $spd(3), RL),
-                $.fire($.direction( 10, "sequence"), $spd(3), RL),
-//                $absoluteNway(10, 90, 270, $spd(3), RL, 0, 0),
-                $interval(10),
-            ]),
-            $interval(60),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $interval(30),
+        ]),
+    ]),
+    top2: $.action([
+        $.wait(180),
+        $.fire($.direction(120), $spd(3), RL),
+        $.repeat(999, [
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $interval(30),
+        ]),
+    ]),
+    top3: $.action([
+        $.wait(180),
+        $.fire($.direction(240), $spd(3), RL),
+        $.repeat(999, [
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $.fire($.direction( 10, "sequence"), $spd(3), RL),
+            $interval(30),
         ]),
     ]),
 });
