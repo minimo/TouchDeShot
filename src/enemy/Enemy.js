@@ -128,9 +128,10 @@ tm.define("tds.Enemy", {
         var area = this.width*this.height;
         if (area < 1025) {
             tds.burnParticleSmall().addChildTo(this.parentScene).setPosition(this.x, this.y);
-            app.playSE("smallExplode")
+            app.playSE("smallExplode");
         } else {
             tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
+            app.playSE("largeExplode");
         }
     },
 
