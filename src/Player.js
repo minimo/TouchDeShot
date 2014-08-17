@@ -193,7 +193,7 @@ tm.define("tds.Player", {
             this.power = 0;
             this.level = 0;
             this.shotInterval = 10;
-            this.radius = 48;
+            this.radius = 2;
             this.rollingBit();
         }
 
@@ -204,6 +204,9 @@ tm.define("tds.Player", {
     },
 
     damage: function() {
+        app.playSE("playerExplode");
+        this.x = SC_W*0.5;
+        this.y = SC_H*2.0;
     },
 
     levelUp: function() {

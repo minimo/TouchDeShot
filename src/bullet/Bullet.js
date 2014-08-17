@@ -46,7 +46,7 @@ tm.define("tds.Bullet", {
 
             //自機との当り判定チェック
             if (this.isHitElement(this.player)) {
-                this.player.damage();
+                if (this.player.mouseON) this.player.damage();
                 this.remove();
             }
             if (this.x < -20 || this.x > SC_W+20 || this.y < -20 || this.y > SC_H+20) {
