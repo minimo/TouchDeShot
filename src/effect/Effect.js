@@ -190,7 +190,7 @@ tm.define("tds.Effect.BulletVanish", {
         this.blendMode = "lighter";
         this.deltaX = bullet.runner.deltaX;
         this.deltaY = bullet.runner.deltaY;
-        this.deltaA = 0.5;
+        this.deltaA = 0.9;
         this.setPosition(bullet.x, bullet.y);
 
         var c = this.canvas;

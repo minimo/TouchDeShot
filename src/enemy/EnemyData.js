@@ -95,7 +95,6 @@ tds.enemyData['square1'] = {
     type: ENEMY_NORMAL_SKY, //敵タイプ
 
     setup: function() {
-
         this.phase = 0;
         this.rotation = 45;
 
@@ -129,6 +128,36 @@ tds.enemyData['square1'] = {
 
     algorithm: function() {
         if (this.phase == 1) this.rotation-=2;
+    },
+};
+
+tds.enemyData['triangle1'] = {
+    bulletPattern: "triangle1",  //使用弾幕パターン
+
+    width:  16,     //当り判定サイズ
+    height: 48,
+
+    def: 150,       //耐久力
+    point: 3000,    //ポイント
+
+    layer: LAYER_OBJECT,   //表示レイヤー番号
+    type: ENEMY_NORMAL_SKY, //敵タイプ
+
+    setup: function() {
+
+        this.phase = 0;
+        this.rotation = 0;
+
+        var param = {
+            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
+            lineWidth: 1,
+        };
+        tm.display.Shape(16, 48).addChildTo(this).renderTriangle(param);
+    },
+
+    algorithm: function() {
+        this.y += 1;
     },
 };
 

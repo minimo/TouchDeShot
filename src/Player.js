@@ -157,7 +157,7 @@ tm.define("tds.Player", {
             }
 
             //オーラ処理
-            if (this.time % 3 == 0) {
+            if (this.time % 6 == 0) {
                 for (var i = 0; i < this.level+1; i++) {
                     var rad = rand(0, 628) / 100;
                     var dis = rand(10, 150);

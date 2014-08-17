@@ -111,7 +111,12 @@ tm.define("tds.Enemy", {
         this.def -= power;
         if (this.def < 1) {
             this.dead();
-            app.score += this.data.point;
+            var pow = Math.clamp(this.player.level, 1, 10);
+            app.score += this.data.point*pow;
+
+            var sc = tm.display.OutlineLabel(this.data.point+"x"+pow, 30).addChildTo(this.parentScene).setPosition(this.x, this.y);
+            sc.fontFamily = "'UbuntuMono'"; sc.align = "center"; sc.baseline  = "middle"; sc.fontWeight = 300; sc.outlineWidth = 2;
+            sc.tweener.to({x: this.x, y: this.y-50, alpha:0}, 1000).call(function(){this.remove()}.bind(sc));
         }
     },
 

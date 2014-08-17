@@ -54,6 +54,10 @@ tds.enemyUnit = {
     { "name": "square1", "x":SC_W*0.7, "y":-100 },
 ],
 
+"triangle1-center": [
+    { "name": "triangle1", "x":SC_W*0.5, "y":-100 },
+],
+
 "boss1": [
     { "name": "boss1", "x":SC_W*0.5, "y":-100 },
 ],

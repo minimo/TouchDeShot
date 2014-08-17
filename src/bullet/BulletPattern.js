@@ -167,6 +167,16 @@ tds.bulletPattern["square1"] = new bulletml.Root({
     ]),
 });
 
+tds.bulletPattern["triangle1"] = new bulletml.Root({
+    top: $.action([
+        $.wait(60),
+        $.repeat(999, [
+            $fireRS(6),
+            $.wait("$rand * 60"),
+        ]),
+    ]),
+});
+
 //square1-child
 tds.bulletPattern["square1-child"] = new bulletml.Root({
     top: $.action([
