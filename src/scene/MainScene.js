@@ -45,6 +45,7 @@ tm.define("tds.MainScene", {
         //プレイヤー
         this.player = tds.Player().addChildTo(this);
         this.player.setPosition(SC_W*0.5, SC_H*0.8);
+        this.player.stageStartup();
         app.player = this.player;
 
         //ステージ制御
@@ -85,6 +86,14 @@ tm.define("tds.MainScene", {
             tds.Enemy(e.name,e.x, e.y).addChildTo(this);
         }
     },
+
+    //弾の消去
+    clearBullet: function(target) {
+        this.layers[LAYER_BULLET].children.each(function(a) {
+            a.isVanish = true;
+            a.remove();
+        });
+     },
 
     //タッチorクリック開始処理
     ontouchesstart: function(e) {

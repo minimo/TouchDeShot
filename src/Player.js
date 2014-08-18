@@ -13,6 +13,9 @@ tm.define("tds.Player", {
     control: true,  //操作可能フラグ
     shotON: true,   //ショットフラグ
     mouseON: false, //マウス操作中フラグ
+    shieldON: false,//シールド有効フラグ
+
+    isCollision: false, //当り判定有効フラグ
 
     speed: 7,       //移動速度
     type: 0,        //自機タイプ
@@ -41,10 +44,15 @@ tm.define("tds.Player", {
         this.radius = 2;
         this.checkHierarchy = true;
 
-        //シールド
+        //シールド当り判定
         this.shield = tm.app.Object2D().addChild(this);
         this.shield.boundingType = "circle";
         this.shield.radius = 48;
+
+        //コア当り判定
+        this.core = tm.app.Object2D().addChild(this);
+        this.core.boundingType = "circle";
+        this.core.radius = 2;
 
         this.time = 0;
         return this;
@@ -102,7 +110,7 @@ tm.define("tds.Player", {
         this.bits[3] = tds.PlayerBit().addChildTo(this);
 
         //コア
-        var core = tm.display.Shape(32, 32).addChildTo(this);
+        core = tm.display.Shape(32, 32).addChildTo(this);
         core.canvas.setFillStyle(
             tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
                 .addColorStopList([
@@ -155,12 +163,18 @@ tm.define("tds.Player", {
         this.y = Math.clamp(this.y, 16, SC_H-16);
 
         //タッチorクリック中
-        if (this.mouseON) {
+        if (this.mouseON && this.control) {
+            this.shieldON = true;
+        } else {
+            this.shieldON = false;
+
             //ショット
             if (this.shotON && this.time % this.shotInterval == 0) {
                 this.enterShot();
             }
+        }
 
+        if (!this.shieldON) {
             //オーラ処理
             if (this.time % 6 == 0) {
                 for (var i = 0; i < (this.level+1)/2; i++) {
@@ -189,7 +203,7 @@ tm.define("tds.Player", {
             }
 
             //初回検出
-            if (!this.beforeMouseON) {
+            if (!this.beforeShieldON) {
                 this.closeBit();
             }
         } else {
@@ -202,14 +216,21 @@ tm.define("tds.Player", {
 
         this.bx = this.x;
         this.by = this.y;
-        this.beforeMouseON = this.mouseON;
+        this.beforeShieldON = this.shieldON;
         this.time++;
     },
 
     damage: function() {
-        app.playSE("playerExplode");
-        this.x = SC_W*0.5;
-        this.y = SC_H*2.0;
+        app.playSE("explodePlayer");
+        if (MUTEKI) return;
+
+        this.power = 0;
+        this.level = 0;
+        this.shotInterval = 10;
+        this.bits.status = 0;
+        this.rollingBit();
+        this.startup();
+        this.parentScene.clearBullet();
     },
 
     levelUp: function() {
@@ -304,29 +325,33 @@ tm.define("tds.Player", {
     startup: function() {
         this.x = SC_W/2;
         this.y = SC_H+32;
-        this.tweener.
-            to({x: SC_W/2, y: SC_H-64}, 1000, "easeOutQuint").
-            call(function(){
+        this.tweener.clear()
+            .to({x: SC_W/2, y: SC_H-64}, 1000, "easeOutQuint")
+            .call(function(){
                 this.shotON = true;
                 this.control = true;
+                this.isCollision = true;
             }.bind(this));
         this.shotON = false;
         this.control = false;
+        this.isCollision = false;
     },
 
     //ステージ開始時演出
     stageStartup: function() {
         this.x = SC_W/2;
         this.y = SC_H+32;
-        this.tweener.
-            to({x: SC_W/2, y: SC_H/2+32}, 1000, "easeOutQuint").
-            to({x: SC_W/2, y: SC_H-64  }, 1000).
-            call(function(){
+        this.tweener.clear()
+            .to({x: SC_W/2, y: SC_H/2+32}, 1000, "easeOutCubic")
+            .to({x: SC_W/2, y: SC_H-64  }, 1000)
+            .call(function(){
                 this.shotON = true;
                 this.control = true;
+                this.isCollision = true;
             }.bind(this));
         this.shotON = false;
         this.control = false;
+        this.isCollision = false;
     },
 });
 

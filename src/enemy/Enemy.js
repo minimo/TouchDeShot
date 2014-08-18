@@ -94,7 +94,7 @@ tm.define("tds.Enemy", {
         }
 
         //自機との当り判定チェック
-        if (this.isCollision && this.isHitElement(this.player)) {
+        if (this.isCollision && this.player.isCollision && this.isHitElement(this.player.core)) {
             this.player.damage();
         }
 
@@ -133,10 +133,10 @@ tm.define("tds.Enemy", {
         var area = this.width*this.height;
         if (area < 1025) {
             tds.burnParticleSmall().addChildTo(this.parentScene).setPosition(this.x, this.y);
-            app.playSE("smallExplode");
+            app.playSE("explodeSmall");
         } else {
             tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
-            app.playSE("largeExplode");
+            app.playSE("explodeLarge");
         }
     },
 

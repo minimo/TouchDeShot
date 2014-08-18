@@ -44,18 +44,20 @@ tm.define("tds.Bullet", {
             this.rotation+=10;
 
             //自機との当り判定チェック
-            if (this.player.mouseON) {
-                //自機着弾
-                if (this.isHitElement(this.player) ) {
-                    this.player.damage();
-                    this.isVanish = true;
-                    this.remove();
-                }
-            } else {
-                //シールド着弾
-                if (this.isHitElement(this.player.shield) ) {
-                    this.isVanish = true;
-                    this.remove();
+            if (this.player.isCollision) {
+                if (this.player.mouseON) {
+                    //自機着弾
+                    if (this.isHitElement(this.player.core) ) {
+                        this.player.damage();
+                        this.isVanish = true;
+                        this.remove();
+                    }
+                } else {
+                    //シールド着弾
+                    if (this.isHitElement(this.player.shield) ) {
+                        this.isVanish = true;
+                        this.remove();
+                    }
                 }
             }
 
