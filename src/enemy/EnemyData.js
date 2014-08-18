@@ -16,8 +16,9 @@ tds.enemyData['cube1'] = {
     def: 3,     //耐久力
     point: 300, //ポイント
 
-    layer: LAYER_OBJECT,   //表示レイヤー番号
-    type: ENEMY_NORMAL_SKY, //敵タイプ
+    layer: LAYER_OBJECT,    //表示レイヤー番号
+    type: ENEMY_SMALL,      //敵タイプ
+    isGround: false,
 
     setup: function() {
         var param = {
@@ -55,8 +56,9 @@ tds.enemyData['cube2'] = {
     def: 3,     //耐久力
     point: 300, //ポイント
 
-    layer: LAYER_OBJECT,   //表示レイヤー番号
-    type: ENEMY_NORMAL_SKY, //敵タイプ
+    layer: LAYER_OBJECT,    //表示レイヤー番号
+    type: ENEMY_SMALL,      //敵タイプ
+    isGround: false,
 
     isNear: false,
 
@@ -91,8 +93,9 @@ tds.enemyData['square1'] = {
     def: 150,       //耐久力
     point: 5000,    //ポイント
 
-    layer: LAYER_OBJECT,   //表示レイヤー番号
-    type: ENEMY_NORMAL_SKY, //敵タイプ
+    layer: LAYER_OBJECT,    //表示レイヤー番号
+    type: ENEMY_MIDDLE,     //敵タイプ
+    isGround: false,
 
     setup: function() {
         this.phase = 0;
@@ -140,8 +143,9 @@ tds.enemyData['triangle1'] = {
     def: 150,       //耐久力
     point: 3000,    //ポイント
 
-    layer: LAYER_OBJECT,   //表示レイヤー番号
-    type: ENEMY_NORMAL_SKY, //敵タイプ
+    layer: LAYER_OBJECT,    //表示レイヤー番号
+    type: ENEMY_SMALL,      //敵タイプ
+    isGround: false,
 
     setup: function() {
 
@@ -170,8 +174,9 @@ tds.enemyData['boss1'] = {
     def: 500,      //耐久力
     point: 100000, //ポイント
 
-    layer: LAYER_OBJECT,   //表示レイヤー番号
-    type: ENEMY_NORMAL_SKY, //敵タイプ
+    layer: LAYER_OBJECT,    //表示レイヤー番号
+    type: ENEMY_BOSS,       //敵タイプ
+    isGround: false,
 
     setup: function() {
         var param = {

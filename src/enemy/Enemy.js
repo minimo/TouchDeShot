@@ -18,6 +18,7 @@ tm.define("tds.Enemy", {
     isMuteki: false,    //無敵
     isBoss: false,      //ボス
     isOnscreen: false,  //画面内に入った
+    isGround: false,    //地上フラグ
 
     //キャラクタ情報
     name: null,
@@ -25,6 +26,7 @@ tm.define("tds.Enemy", {
     defMax: 0,
     bulletPattern: null,
     nowBulletPattern: null,
+    id: -1,
 
     data: null,
 
@@ -65,7 +67,7 @@ tm.define("tds.Enemy", {
         var params = {
             target: this.player,
             createNewBullet: function(runner, attr) {
-                tds.Bullet(runner, attr).addChildTo(this.parentScene);
+                tds.Bullet(runner, attr, this.id).addChildTo(this.parentScene);
             }.bind(this)
         };
         this.startDanmaku(tds.bulletPattern[this.nowBulletPattern], params);
@@ -118,6 +120,12 @@ tm.define("tds.Enemy", {
             var sc = tm.display.OutlineLabel(this.data.point+"x"+pow, 30).addChildTo(this.parentScene).setPosition(this.x, this.y);
             sc.fontFamily = "'UbuntuMono'"; sc.align = "center"; sc.baseline  = "middle"; sc.fontWeight = 300; sc.outlineWidth = 2;
             sc.tweener.to({x: this.x, y: this.y-50, alpha:0}, 1000).call(function(){this.remove()}.bind(sc));
+
+            if (this.data.type == ENEMY_MIDDLE) {
+                this.parentScene.eraseBullet(this);
+            } else if (this.data.type == ENEMY_LARGE) {
+                this.parentScene.eraseBullet();
+            }
         }
     },
 

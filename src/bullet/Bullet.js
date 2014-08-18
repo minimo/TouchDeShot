@@ -13,11 +13,12 @@ tm.define("tds.Bullet", {
     player: null,
 
     param: null,
+    id: -1,
 
     isVanish: false,
     isVanishEffect: true,
 
-    init: function(runner, param) {
+    init: function(runner, param, id) {
         this.superInit(runner);
 
         //当り判定設定
@@ -25,10 +26,11 @@ tm.define("tds.Bullet", {
         this.radius = 2;
 
         this.param = param;
-        var color = param.color || 200;
-        this.removeChildren();
+        this.id = id || -1;
 
         //弾種別グラフィック
+        var color = param.color || 200;
+        this.removeChildren();
         switch (param.type) {
             case "normal":
                 this.setupNormalBullet(color);
