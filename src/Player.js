@@ -39,7 +39,13 @@ tm.define("tds.Player", {
         //当り判定設定
         this.boundingType = "circle";
         this.radius = 2;
-        
+        this.checkHierarchy = true;
+
+        //シールド
+        this.shield = tm.app.Object2D().addChild(this);
+        this.shield.boundingType = "circle";
+        this.shield.radius = 48;
+
         this.time = 0;
         return this;
     },
@@ -53,7 +59,6 @@ tm.define("tds.Player", {
         c.setLineStyle(3);
         var path = [
             [32,0], [22,48], [32,64], [42,48],
-//            [32,0], [22,48], [32,64], [42,48],
         ];
         c.beginPath();
         c.moveTo(path[0][0], path[0][1]);
@@ -158,7 +163,7 @@ tm.define("tds.Player", {
 
             //オーラ処理
             if (this.time % 6 == 0) {
-                for (var i = 0; i < this.level+1; i++) {
+                for (var i = 0; i < (this.level+1)/2; i++) {
                     var rad = rand(0, 628) / 100;
                     var dis = rand(10, 150);
                     var x = Math.cos(rad)*dis;
@@ -187,13 +192,11 @@ tm.define("tds.Player", {
             if (!this.beforeMouseON) {
                 this.closeBit();
             }
-            this.radius = 2;
         } else {
             //タッチされてないのでパワーとレベルを初期状態にする
             this.power = 0;
             this.level = 0;
             this.shotInterval = 10;
-            this.radius = 2;
             this.rollingBit();
         }
 

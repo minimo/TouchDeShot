@@ -15,7 +15,6 @@ tm.define("tds.Bullet", {
     param: null,
 
     isVanish: false,
-    isShot: false,
 
     init: function(runner, param) {
         this.superInit(runner);
@@ -45,17 +44,29 @@ tm.define("tds.Bullet", {
             this.rotation+=10;
 
             //自機との当り判定チェック
-            if (this.isHitElement(this.player)) {
-                if (this.player.mouseON) this.player.damage();
-                this.remove();
+            if (this.player.mouseON) {
+                //自機着弾
+                if (this.isHitElement(this.player) ) {
+                    this.player.damage();
+                    this.isVanish = true;
+                    this.remove();
+                }
+            } else {
+                //シールド着弾
+                if (this.isHitElement(this.player.shield) ) {
+                    this.isVanish = true;
+                    this.remove();
+                }
             }
-            if (this.x < -20 || this.x > SC_W+20 || this.y < -20 || this.y > SC_H+20) {
+
+            //画面範囲外
+            if (this.x<-32 || this.x>SC_W+32 || this.y<-32 || this.y>SC_H+323) {
                 this.remove();
             }
         }.bind(this) );
 
         this.on("removed", function(){
-            tds.Effect.BulletVanish(this).addChildTo(app.currentScene);
+            if (this.isVanish) tds.Effect.BulletVanish(this).addChildTo(app.currentScene);
         }.bind(this));
 
         this.beforeX = this.x;
