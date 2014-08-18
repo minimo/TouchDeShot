@@ -15,6 +15,7 @@ tm.define("tds.Bullet", {
     param: null,
 
     isVanish: false,
+    isVanishEffect: true,
 
     init: function(runner, param) {
         this.superInit(runner);
@@ -50,7 +51,6 @@ tm.define("tds.Bullet", {
                     this.player.radius = 48;
                     if (this.isHitElement(this.player) ) {
                         this.isVanish = true;
-                        this.remove();
                     }
                 } else {
                     //自機着弾
@@ -58,19 +58,22 @@ tm.define("tds.Bullet", {
                     if (this.isHitElement(this.player) ) {
                         this.player.damage();
                         this.isVanish = true;
-                        this.remove();
                     }
                 }
             }
 
             //画面範囲外
             if (this.x<-32 || this.x>SC_W+32 || this.y<-32 || this.y>SC_H+323) {
-                this.remove();
+                this.isVanish = true;
+                this.isVanishEffect = false;
             }
+
+            if (this.isVanish) this.remove();
         }.bind(this) );
 
+        //リムーブ時
         this.on("removed", function(){
-            if (this.isVanish) tds.Effect.BulletVanish(this).addChildTo(app.currentScene);
+            if (this.isVanishEffect) tds.Effect.BulletVanish(this).addChildTo(app.currentScene);
         }.bind(this));
 
         this.beforeX = this.x;
