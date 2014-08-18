@@ -44,16 +44,6 @@ tm.define("tds.Player", {
         this.radius = 2;
         this.checkHierarchy = true;
 
-        //シールド当り判定
-        this.shield = tm.app.Object2D().addChild(this);
-        this.shield.boundingType = "circle";
-        this.shield.radius = 48;
-
-        //コア当り判定
-        this.core = tm.app.Object2D().addChild(this);
-        this.core.boundingType = "circle";
-        this.core.radius = 2;
-
         this.time = 0;
         return this;
     },

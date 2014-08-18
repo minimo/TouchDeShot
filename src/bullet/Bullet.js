@@ -45,16 +45,18 @@ tm.define("tds.Bullet", {
 
             //自機との当り判定チェック
             if (this.player.isCollision) {
-                if (this.player.mouseON) {
-                    //自機着弾
-                    if (this.isHitElement(this.player.core) ) {
-                        this.player.damage();
+                if (this.player.shieldON) {
+                    //シールド着弾
+                    this.player.radius = 48;
+                    if (this.isHitElement(this.player) ) {
                         this.isVanish = true;
                         this.remove();
                     }
                 } else {
-                    //シールド着弾
-                    if (this.isHitElement(this.player.shield) ) {
+                    //自機着弾
+                    this.player.radius = 2;
+                    if (this.isHitElement(this.player) ) {
+                        this.player.damage();
                         this.isVanish = true;
                         this.remove();
                     }

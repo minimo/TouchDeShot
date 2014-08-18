@@ -94,7 +94,8 @@ tm.define("tds.Enemy", {
         }
 
         //自機との当り判定チェック
-        if (this.isCollision && this.player.isCollision && this.isHitElement(this.player.core)) {
+        this.player.radius = 2;
+        if (this.isCollision && this.player.isCollision && this.isHitElement(this.player)) {
             this.player.damage();
         }
 
