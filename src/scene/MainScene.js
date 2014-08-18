@@ -36,6 +36,9 @@ tm.define("tds.MainScene", {
         //マルチタッチ初期化
         this.touches = tm.input.TouchesEx(this);
 
+        this.mask = tm.display.Shape(SC_W, SC_H).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        this.mask.renderRectangle({fillStyle: "rgba(0,0,0,1.0)", strokeStyle: "rgba(0,0,0,1.0)"});
+
         //レイヤー作成
         this.layers = [];
         for (var i = 0; i < LAYER_SYSTEM+1; i++) {
@@ -87,10 +90,18 @@ tm.define("tds.MainScene", {
     },
 
     //弾の消去
-    clearBullet: function(target) {
-        this.layers[LAYER_BULLET].children.each(function(a) {
-            a.isVanish = true;
-        });
+    eraseBullet: function(target) {
+        if (target) {
+            //個別弾消し
+            this.layers[LAYER_BULLET].children.each(function(a) {
+                if (target.id == a.id) a.isVanish = true;
+            });
+        } else {
+            //全消し
+            this.layers[LAYER_BULLET].children.each(function(a) {
+                a.isVanish = true;
+            });
+        }
      },
 
     //タッチorクリック開始処理
