@@ -162,7 +162,7 @@ tm.define("tds.ShotBullet", {
         this.x += this.vx;
         this.y += this.vy;
 
-        if (this.x < -20 || this.x > SC_W+20 || this.y < -20 || this.y > SC_H+20) {
+        if (this.x<-20 || this.x>SC_W+20 || this.y<-20 || this.y>SC_H+20) {
             this.remove();
         }
 

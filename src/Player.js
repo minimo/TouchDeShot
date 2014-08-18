@@ -164,14 +164,14 @@ tm.define("tds.Player", {
 
         //タッチorクリック中
         if (this.mouseON && this.control) {
-            this.shieldON = true;
-        } else {
             this.shieldON = false;
 
             //ショット
             if (this.shotON && this.time % this.shotInterval == 0) {
                 this.enterShot();
             }
+        } else {
+            this.shieldON = true;
         }
 
         if (!this.shieldON) {
@@ -207,7 +207,7 @@ tm.define("tds.Player", {
                 this.closeBit();
             }
         } else {
-            //タッチされてないのでパワーとレベルを初期状態にする
+            //パワーとレベルを初期状態にする
             this.power = 0;
             this.level = 0;
             this.shotInterval = 10;
@@ -281,11 +281,15 @@ tm.define("tds.Player", {
         this.bits.status = 1;
         this.bits[0].tweener.clear().to({ x: 48, y: 16, alpha:1}, 300);
         this.bits[1].tweener.clear().to({ x:-48, y: 16, alpha:1}, 300);
+        this.bits[2].tweener.clear().to({ x:0, y: 0, alpha:0}, 300);
+        this.bits[3].tweener.clear().to({ x:0, y: 0, alpha:0}, 300);
     },
 
     //ビット展開２段階目
     openBit2: function() {
         this.bits.status = 2;
+        this.bits[0].tweener.clear().to({ x: 48, y: 16, alpha:1}, 300);
+        this.bits[1].tweener.clear().to({ x:-48, y: 16, alpha:1}, 300);
         this.bits[2].tweener.clear().to({ x: 80, y: 32, alpha:1}, 300);
         this.bits[3].tweener.clear().to({ x:-80, y: 32, alpha:1}, 300);
     },
@@ -335,6 +339,7 @@ tm.define("tds.Player", {
         this.shotON = false;
         this.control = false;
         this.isCollision = false;
+        this.shieldON = true;
     },
 
     //ステージ開始時演出
@@ -352,6 +357,7 @@ tm.define("tds.Player", {
         this.shotON = false;
         this.control = false;
         this.isCollision = false;
+        this.shieldON = true;
     },
 });
 

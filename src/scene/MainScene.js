@@ -89,10 +89,12 @@ tm.define("tds.MainScene", {
 
     //弾の消去
     clearBullet: function(target) {
+/*
         this.layers[LAYER_BULLET].children.each(function(a) {
             a.isVanish = true;
             a.remove();
         });
+*/
      },
 
     //タッチorクリック開始処理
