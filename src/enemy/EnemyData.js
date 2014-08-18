@@ -137,11 +137,11 @@ tds.enemyData['square1'] = {
 tds.enemyData['triangle1'] = {
     bulletPattern: "triangle1",  //使用弾幕パターン
 
-    width:  16,     //当り判定サイズ
-    height: 48,
+    width:  32,     //当り判定サイズ
+    height: 32,
 
-    def: 150,       //耐久力
-    point: 3000,    //ポイント
+    def: 10,        //耐久力
+    point: 500,     //ポイント
 
     layer: LAYER_OBJECT,    //表示レイヤー番号
     type: ENEMY_SMALL,      //敵タイプ
@@ -153,15 +153,16 @@ tds.enemyData['triangle1'] = {
         this.rotation = 0;
 
         var param = {
-            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
-            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
+            strokeStyle:"hsla(200, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(200, 50%, 50%, 0.5)",
             lineWidth: 1,
         };
-        tm.display.Shape(16, 48).addChildTo(this).renderTriangle(param);
+        tm.display.Shape(32, 32).addChildTo(this).renderTriangle(param);
     },
 
     algorithm: function() {
-        this.y += 1;
+        this.rotation += 10;
+        this.y++;
     },
 };
 

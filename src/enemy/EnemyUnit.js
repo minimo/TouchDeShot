@@ -54,8 +54,16 @@ tds.enemyUnit = {
     { "name": "square1", "x":SC_W*0.7, "y":-100 },
 ],
 
-"triangle1-center": [
-    { "name": "triangle1", "x":SC_W*0.5, "y":-100 },
+"triangle1-left": [
+    { "name": "triangle1", "x":SC_W*0.1, "y":-SC_H*0.10 },
+    { "name": "triangle1", "x":SC_W*0.2, "y":-SC_H*0.15 },
+    { "name": "triangle1", "x":SC_W*0.3, "y":-SC_H*0.20 },
+    { "name": "triangle1", "x":SC_W*0.4, "y":-SC_H*0.25 },
+    { "name": "triangle1", "x":SC_W*0.5, "y":-SC_H*0.30 },
+    { "name": "triangle1", "x":SC_W*0.6, "y":-SC_H*0.35 },
+    { "name": "triangle1", "x":SC_W*0.7, "y":-SC_H*0.40 },
+    { "name": "triangle1", "x":SC_W*0.8, "y":-SC_H*0.45 },
+    { "name": "triangle1", "x":SC_W*0.9, "y":-SC_H*0.50 },
 ],
 
 "boss1": [

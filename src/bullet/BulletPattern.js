@@ -172,7 +172,7 @@ tds.bulletPattern["triangle1"] = new bulletml.Root({
         $.wait(60),
         $.repeat(999, [
             $fireRS(6),
-            $.wait("$rand * 60"),
+            $.wait("$rand * 120"),
         ]),
     ]),
 });

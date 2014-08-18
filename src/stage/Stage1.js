@@ -19,7 +19,8 @@ tm.define("tds.Stage1", {
         this.add( 120, "cube1-center");
 
         this.add( 120, "square1-left");
-//        this.add( 120, "triangle1-center");
+
+        this.add( 120, "triangle1-left");
     },
 });
 
