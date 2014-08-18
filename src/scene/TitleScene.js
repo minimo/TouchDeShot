@@ -13,6 +13,22 @@ tm.define("tds.TitleScene", {
         this.superInit();
         app.background = "rgba(0, 0, 0, 1.0)";
 
+        //レイヤー作成
+        this.layers = [];
+        for (var i = 0; i < LAYER_SYSTEM+1; i++) {
+            this.layers[i] = tm.app.Object2D().addChildTo(this);
+        }
+        this.player = tds.Player().addChildTo(this);
+        this.player.setPosition(SC_W*0.5, SC_H*0.8);
+        this.player.isDemo = true;
+        app.player = this.player;
+
+        this.mask = tm.display.Shape(SC_W, SC_H).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        this.mask.renderRectangle({fillStyle: "rgba(0,0,0,0.5)", strokeStyle: "rgba(0,0,0,0.3)"});
+
+        //デモ用ステージデータ
+        this.stage = tds.Stage1();
+
         var t1 = this.title1 = tm.display.OutlineLabel("BulletSimulator", 30).addChildTo(this);
         t1.x = SC_W*0.5; t1.y = SC_H*0.4;
         t1.fontFamily = "'UbuntuMono'"; t1.align = "center"; t1.baseline  = "middle"; t1.fontWeight = 300; t1.outlineWidth = 2;
@@ -36,12 +52,43 @@ tm.define("tds.TitleScene", {
     },
 
     update: function() {
+        //ステージ進行
+        var event = this.stage.get(this.time);
+        if (event) {
+            if (typeof(event.value) === 'function') {
+                event.value.call(this);
+            } else {
+                this.enterEnemyUnit(event.value);
+            }
+        }
         this.time++;
+    },
+
+    //敵ユニット単位の投入
+    enterEnemyUnit: function(name) {
+        var unit = tds.enemyUnit[name];
+        if (unit === undefined)return;
+
+        var len = unit.length;
+        for (var i = 0; i < len; i++) {
+            var e = unit[i];
+            tds.Enemy(e.name,e.x, e.y).addChildTo(this);
+        }
     },
 
     ontouchend: function() {
         app.background = "rgba(0, 0, 0, 0.8)";
         app.replaceScene(tds.MainScene());
+    },
+
+    //addChildオーバーライド
+    addChild: function(child) {
+        if (child.layer === undefined) {
+            return this.superClass.prototype.addChild.apply(this, arguments);
+        }
+        child.parentScene = this;
+        child.player = this.player;
+        return this.layers[child.layer].addChild(child);
     },
 });
 

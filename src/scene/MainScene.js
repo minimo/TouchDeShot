@@ -44,7 +44,6 @@ tm.define("tds.MainScene", {
 
         //プレイヤー
         this.player = tds.Player().addChildTo(this);
-        this.player.setPosition(SC_W*0.5, SC_H*0.8);
         this.player.stageStartup();
         app.player = this.player;
 

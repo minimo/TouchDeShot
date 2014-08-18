@@ -16,6 +16,7 @@ tm.define("tds.Player", {
     shieldON: false,//シールド有効フラグ
 
     isCollision: false, //当り判定有効フラグ
+    isDemo: false,      //デモンストレーションフラグ
 
     speed: 7,       //移動速度
     type: 0,        //自機タイプ
