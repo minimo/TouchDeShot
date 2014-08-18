@@ -17,7 +17,7 @@ tm.define("tds.Enemy", {
     isDead: false,      //死亡
     isMuteki: false,    //無敵
     isBoss: false,      //ボス
-    isOnscreen: false,  //画面内に入った
+    isOnScreen: false,  //画面内に入った
     isGround: false,    //地上フラグ
 
     //キャラクタ情報
@@ -90,9 +90,13 @@ tm.define("tds.Enemy", {
     update: function() {
         if (this.isDead) return;
         this.algorithm();
-        if (this.x < -200 || this.x > SC_W+200 || this.y < -200 || this.y > SC_H+200) {
-            this.remove();
-            this.isCollision = false;
+        if (this.isOnScreen) {
+            if (this.x < -100 || this.x > SC_W+100 || this.y < -100 || this.y > SC_H+100) {
+                this.remove();
+                this.isCollision = false;
+            }
+        } else {
+            if (0 < this.x && this.x < SC_W && 0 < this.y && this.y < SC_H) this.isOnScreen = true;
         }
 
         //自機との当り判定チェック
