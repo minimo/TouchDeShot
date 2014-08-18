@@ -178,6 +178,7 @@ tm.define("tds.ShotBullet", {
         for (var i = 0; i < 3; i++) {
             var layer = this.parentScene.layers[s[i]];
             layer.children.each(function(a) {
+                if (a === this.player) return;
                 if (this.parent && a.isCollision && a.isHitElement(this)) {
                     a.damage(this.power);
                     this.vanish();
