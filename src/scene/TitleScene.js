@@ -24,7 +24,7 @@ tm.define("tds.TitleScene", {
         app.player = this.player;
 
         this.mask = tm.display.Shape(SC_W, SC_H).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
-        this.mask.renderRectangle({fillStyle: "rgba(0,0,0,0.5)", strokeStyle: "rgba(0,0,0,0.3)"});
+        this.mask.renderRectangle({fillStyle: "rgba(0,0,0,0.5)", strokeStyle: "rgba(0,0,0,0.1)"});
 
         //デモ用ステージデータ
         this.stage = tds.Stage1();
