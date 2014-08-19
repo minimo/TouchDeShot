@@ -114,7 +114,7 @@ tm.define("tds.Player", {
         core.tweener.scale(1.0, 100, "easeInOutQuad").scale(0.5, 200, "easeInOutQuad").setLoop(true);
 
         //パワーゲージ
-        tds.PowerGauge().addChildTo(this);
+        this.gauge = tds.PowerGauge().addChildTo(this);
     },
 
     update: function() {
@@ -195,16 +195,24 @@ tm.define("tds.Player", {
 
             //初回検出
             if (this.beforeShieldON) {
-                this.closeBit();
+                this.levelUp();
             }
         } else {
             //パワーとレベルを初期状態にする
-            this.power = 0;
-            this.level = 0;
+            this.power-=10;
+            if (this.power < 0) {
+                this.power = 180;
+                this.level--;
+                if (this.level < 0) {
+                    this.level = 0;
+                    this.power = 0;
+                }
+            }
             this.shotInterval = 10;
             this.rollingBit();
         }
 
+        this.gauge.value = this.power;
         this.bx = this.x;
         this.by = this.y;
         this.beforeShieldON = this.shieldON;
@@ -225,7 +233,7 @@ tm.define("tds.Player", {
     },
 
     levelUp: function() {
-        switch (this.level) {
+/*        switch (this.level) {
             case 1:
                 this.openBit1();
                 break;
@@ -239,6 +247,23 @@ tm.define("tds.Player", {
             case 4:
                 this.shotInterval = 4;
                 break;
+        }
+*/
+        if (this.level == 0) {
+            this.closeBit();
+        }
+        if (this.level > 0) {
+            this.openBit1();
+        }
+        if (this.level > 1) {
+            this.openBit2();
+            this.shotInterval = 8;
+        }
+        if (this.level > 2) {
+            this.shotInterval = 6;
+        }
+        if (this.level > 3) {
+            this.shotInterval = 4;
         }
     },
 
