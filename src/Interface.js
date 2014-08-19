@@ -18,7 +18,7 @@ tm.define("tds.PowerGauge", {
     init: function() {
         this.superInit();
         this.alpha = 0;
-
+        this.rotation = -90;
     },
 
     update: function() {
