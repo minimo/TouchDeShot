@@ -33,9 +33,10 @@ tm.define("tds.Enemy", {
     beforeX: 0,
     beforeY: 0,
 
-    init: function(name, x, y) {
+    init: function(name, x, y, id, param) {
         this.superInit();
         this.setPosition(x, y);
+        this.id = id || -1;
 
         this.name = name;
         var d = this.data = tds.enemyData[name];
@@ -62,15 +63,15 @@ tm.define("tds.Enemy", {
 
         this.parentScene = app.currentScene;
         this.player = app.player;
-        this.setup();
+        this.setup(param);
 
-        var params = {
+        var bulletMLparams = {
             target: this.player,
             createNewBullet: function(runner, attr) {
                 tds.Bullet(runner, attr, this.id).addChildTo(this.parentScene);
             }.bind(this)
         };
-        this.startDanmaku(tds.bulletPattern[this.nowBulletPattern], params);
+        this.startDanmaku(tds.bulletPattern[this.nowBulletPattern], bulletMLparams);
 
         //当り判定設定
         this.boundingType = "rect";

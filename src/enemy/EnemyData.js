@@ -135,10 +135,10 @@ tds.enemyData['square1'] = {
 };
 
 tds.enemyData['triangle1'] = {
-    bulletPattern: "triangle1",  //使用弾幕パターン
+    bulletPattern: "triangle1-a",  //使用弾幕パターン
 
-    width:  32,     //当り判定サイズ
-    height: 32,
+    width:  16,     //当り判定サイズ
+    height: 16,
 
     def: 10,        //耐久力
     point: 500,     //ポイント
@@ -158,6 +158,8 @@ tds.enemyData['triangle1'] = {
             lineWidth: 1,
         };
         tm.display.Shape(32, 32).addChildTo(this).renderTriangle(param);
+
+        if (this.x > SC_W*0.5)this.bulletPattern = "triangle1-b";
     },
 
     algorithm: function() {

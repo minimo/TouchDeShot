@@ -134,7 +134,7 @@ tds.bulletPattern["square1"] = new bulletml.Root({
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
-            $interval(30),
+            $interval(60),
         ]),
     ]),
     top2: $.action([
@@ -148,7 +148,7 @@ tds.bulletPattern["square1"] = new bulletml.Root({
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
-            $interval(30),
+            $interval(60),
         ]),
     ]),
     top3: $.action([
@@ -162,17 +162,28 @@ tds.bulletPattern["square1"] = new bulletml.Root({
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
             $.fire($.direction( 10, "sequence"), $spd(3), RL),
-            $interval(30),
+            $interval(60),
         ]),
     ]),
 });
 
-tds.bulletPattern["triangle1"] = new bulletml.Root({
+tds.bulletPattern["triangle1-a"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
+        $.fire($.direction(180), $spd(4), RL),
         $.repeat(999, [
-            $fireRS(6),
-            $.wait("$rand * 120"),
+            $.fire($.direction(37, "sequence"), $spd(3), BL),
+            $interval(10),
+        ]),
+    ]),
+});
+tds.bulletPattern["triangle1-b"] = new bulletml.Root({
+    top: $.action([
+        $.wait(60),
+        $.fire($.direction(180), $spd(4), RL),
+        $.repeat(999, [
+            $.fire($.direction(-37, "sequence"), $spd(3), BL),
+            $interval(10),
         ]),
     ]),
 });

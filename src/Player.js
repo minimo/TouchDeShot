@@ -194,7 +194,7 @@ tm.define("tds.Player", {
             }
 
             //初回検出
-            if (!this.beforeShieldON) {
+            if (this.beforeShieldON) {
                 this.closeBit();
             }
         } else {
