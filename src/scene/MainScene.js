@@ -27,7 +27,8 @@ tm.define("tds.MainScene", {
     absTime: 0,
 
     //ステージ制御
-    stage: null,
+    stage: null,    //ステージコントローラー
+    enemyID: 0,     //敵投入ＩＤ
 
     init: function() {
         this.superInit();
@@ -85,7 +86,8 @@ tm.define("tds.MainScene", {
         var len = unit.length;
         for (var i = 0; i < len; i++) {
             var e = unit[i];
-            tds.Enemy(e.name,e.x, e.y).addChildTo(this);
+            tds.Enemy(e.name,e.x, e.y, this.enemyID, e.param).addChildTo(this);
+            this.enemyID++;
         }
     },
 
