@@ -119,7 +119,7 @@ tm.define("tds.Player", {
 
     update: function() {
         //操作系
-        if (this.control) {
+        if (this.control && !this.isDemo) {
             var p = app.pointing;
             var dx = p.position.x - p.prevPosition.x;
             var dy = p.position.y - p.prevPosition.y;
