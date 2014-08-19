@@ -55,24 +55,24 @@ tds.enemyUnit = {
 ],
 
 "triangle1-left": [
-    { "name": "triangle1", "x":SC_W*0.1, "y":-SC_H*0.10 },
-    { "name": "triangle1", "x":SC_W*0.2, "y":-SC_H*0.15 },
-    { "name": "triangle1", "x":SC_W*0.3, "y":-SC_H*0.20 },
-    { "name": "triangle1", "x":SC_W*0.4, "y":-SC_H*0.25 },
+    { "name": "triangle1", "x":SC_W*0.1, "y":-SC_H*0.10, "param":"a" },
+    { "name": "triangle1", "x":SC_W*0.2, "y":-SC_H*0.15, "param":"a" },
+    { "name": "triangle1", "x":SC_W*0.3, "y":-SC_H*0.20, "param":"a" },
+    { "name": "triangle1", "x":SC_W*0.4, "y":-SC_H*0.25, "param":"a" },
 ],
 
 "triangle1-right": [
-    { "name": "triangle1", "x":SC_W*0.9, "y":-SC_H*0.10 },
-    { "name": "triangle1", "x":SC_W*0.8, "y":-SC_H*0.15 },
-    { "name": "triangle1", "x":SC_W*0.7, "y":-SC_H*0.20 },
-    { "name": "triangle1", "x":SC_W*0.6, "y":-SC_H*0.25 },
+    { "name": "triangle1", "x":SC_W*0.9, "y":-SC_H*0.10, "param":"b" },
+    { "name": "triangle1", "x":SC_W*0.8, "y":-SC_H*0.15, "param":"b" },
+    { "name": "triangle1", "x":SC_W*0.7, "y":-SC_H*0.20, "param":"b" },
+    { "name": "triangle1", "x":SC_W*0.6, "y":-SC_H*0.25, "param":"b" },
 ],
 
 "triangle1-center": [
-    { "name": "triangle1", "x":SC_W*0.3, "y":-SC_H*0.1 },
-    { "name": "triangle1", "x":SC_W*0.4, "y":-SC_H*0.2 },
-    { "name": "triangle1", "x":SC_W*0.6, "y":-SC_H*0.2 },
-    { "name": "triangle1", "x":SC_W*0.7, "y":-SC_H*0.1 },
+    { "name": "triangle1", "x":SC_W*0.3, "y":-SC_H*0.1, "param":"a" },
+    { "name": "triangle1", "x":SC_W*0.4, "y":-SC_H*0.2, "param":"a" },
+    { "name": "triangle1", "x":SC_W*0.6, "y":-SC_H*0.2, "param":"b" },
+    { "name": "triangle1", "x":SC_W*0.7, "y":-SC_H*0.1, "param":"b" },
 ],
 
 "boss1": [
