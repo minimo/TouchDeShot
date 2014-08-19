@@ -75,7 +75,6 @@ tm.define("tds.Player", {
         c.setLineStyle(3);
         var path = [
             [32,10], [32,32], [0,12], [26,20],    
-//            [16,5], [16,16], [0,6], [13,10],    
         ];
         c.beginPath();
         c.moveTo(path[0][0], path[0][1]);
@@ -233,22 +232,6 @@ tm.define("tds.Player", {
     },
 
     levelUp: function() {
-/*        switch (this.level) {
-            case 1:
-                this.openBit1();
-                break;
-            case 2:
-                this.openBit2();
-                this.shotInterval = 8;
-                break;
-            case 3:
-                this.shotInterval = 6;
-                break;
-            case 4:
-                this.shotInterval = 4;
-                break;
-        }
-*/
         if (this.level == 0) {
             this.closeBit();
         }
