@@ -2,12 +2,7 @@ TouchDeShot
 ============
 
 danmaku shooting<br>
-<br>
-ƒ^ƒbƒ`’†‚Ì‚Ý“–‚è”»’è‚ ‚èAƒVƒ‡ƒbƒg”­ŽË<br>
-ƒ^ƒbƒ`‚µ‘±‚¯‚é‚Æƒpƒ[ƒ`ƒƒ[ƒW<br>
-•ú‚·‚Æƒpƒ[‚Í‚O‚É‚È‚é<br>
-<br>
-ŠÈ’P‚É–³“G‚É‚È‚ê‚é‚Ì‚Å’e–‹‚ÍƒLƒc‚ßB
-<br>
-‚Æ‚¢‚¤‚Ì‚Í‚Ç‚¤‚Å‚µ‚å‚¤<br>
-<br>
+
+<img src="title.png" height="320px">
+
+ï¼œéŠã³æ–¹ï¼ž
