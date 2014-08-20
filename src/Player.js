@@ -10,6 +10,9 @@ tm.define("tds.Player", {
     superClass: "tm.app.Object2D",
     layer: LAYER_OBJECT,
 
+    width: 2,
+    height: 2,
+
     control: true,  //操作可能フラグ
     shotON: true,   //ショットフラグ
     mouseON: false, //マウス操作中フラグ
@@ -430,7 +433,7 @@ tm.define("tds.PowerGauge", {
     },
 
     draw: function(canvas) {
-        canvas.lineWidth = 30;
+        canvas.lineWidth = 15;
         canvas.globalCompositeOperation = "lighter";
 
         var clock = true;
