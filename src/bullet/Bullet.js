@@ -157,7 +157,7 @@ tm.define("tds.ShotBullet", {
         this.radius = 12;
 
         //威力により大きさと判定を変更
-        if (power > 10) {
+        if (power > 4) {
             this.setScale(2);
             this.radius = 24;
         }

@@ -251,7 +251,7 @@ tm.define("tds.Player", {
     },
 
     enterShot: function() {
-        var shotPower = this.level+1;
+        var shotPower = Math.clamp(this.level/2, 1, 5);
         tds.ShotBullet(0, shotPower).addChildTo(this.parentScene).setPosition(this.x, this.y-16);
         if (this.level > 0 || this.power > 90) {
             tds.ShotBullet( 5, shotPower).addChildTo(this.parentScene).setPosition(this.x+16, this.y-16);
