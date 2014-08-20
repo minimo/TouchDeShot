@@ -194,19 +194,25 @@ tds.bulletPattern["triangle2"] = new bulletml.Root({
     top0: $.action([
         $.wait(60),
         $.repeat(999, [
-            $nway(3, -60, 60, $spd(4), RL, 0, 0),
-            $interval(60),
-            $nway(4, -60, 60, $spd(5), BL, 0, 0),
-            $interval(60),
+            $.repeat(3, [
+                $nway(3, -30, 30, $spd(4), RL, 0, 0),
+                $interval(10),
+            ]),
+            $interval(120),
+            $.repeat(3, [
+                $nway(4, -30, 30, $spd(5), BL, 0, 0),
+                $interval(10),
+            ]),
+            $interval(120),
         ]),
     ]),
     top1: $.action([
         $.wait(60),
         $.repeat(999, [
-            $.repeat(3, [
-                $.fire($.direction(180), $spd(3), RL, -64, 0),
-                $.fire($.direction(180), $spd(3), RL,  64, 0),
-                $interval(20),
+            $.repeat(6, [
+                $.fire($.direction(180 ,"absolute"), $spd(3), RL, -64, 0),
+                $.fire($.direction(180 ,"absolute"), $spd(3), RL,  64, 0),
+                $interval(10),
             ]),
             $interval(90),
         ]),

@@ -76,11 +76,11 @@ tds.enemyUnit = {
 ],
 
 "triangle2-left": [
-    { "name": "triangle2", "x":SC_W*0.2, "y":-SC_H*-0.3 },
+    { "name": "triangle2", "x":SC_W*0.2, "y":SC_H*-0.3 },
 ],
 
 "triangle2-right": [
-    { "name": "triangle2", "x":SC_W*0.8, "y":-SC_H*-0.3 },
+    { "name": "triangle2", "x":SC_W*0.8, "y":SC_H*-0.3 },
 ],
 
 "boss1": [
