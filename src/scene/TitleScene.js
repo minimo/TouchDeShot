@@ -27,7 +27,7 @@ tm.define("tds.TitleScene", {
         this.mask.renderRectangle({fillStyle: "rgba(0,0,0,0.5)", strokeStyle: "rgba(0,0,0,0.1)"});
 
         //デモ用ステージデータ
-        this.stage = tds.Stage1();
+        this.stage = tds.Stage0();
 
         var t1 = this.title1 = tm.display.OutlineLabel("BulletSimulator", 30).addChildTo(this);
         t1.x = SC_W*0.5; t1.y = SC_H*0.4;
