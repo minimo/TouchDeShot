@@ -7,6 +7,7 @@
 (function() {
 tds.enemyData = [];
 
+//攻撃ヘリタイプ（通常）
 tds.enemyData['cube1'] = {
     bulletPattern: "cube1",  //使用弾幕パターン
 
@@ -18,7 +19,6 @@ tds.enemyData['cube1'] = {
 
     layer: LAYER_OBJECT,    //表示レイヤー番号
     type: ENEMY_SMALL,      //敵タイプ
-    isGround: false,
 
     setup: function() {
         var param = {
@@ -47,6 +47,7 @@ tds.enemyData['cube1'] = {
     },
 };
 
+//攻撃ヘリタイプ（突撃）
 tds.enemyData['cube2'] = {
     bulletPattern: "cube2",  //使用弾幕パターン
 
@@ -58,7 +59,6 @@ tds.enemyData['cube2'] = {
 
     layer: LAYER_OBJECT,    //表示レイヤー番号
     type: ENEMY_SMALL,      //敵タイプ
-    isGround: false,
 
     isNear: false,
 
@@ -84,6 +84,7 @@ tds.enemyData['cube2'] = {
     },
 };
 
+//中型機
 tds.enemyData['square1'] = {
     bulletPattern: "square1",  //使用弾幕パターン
 
@@ -95,7 +96,6 @@ tds.enemyData['square1'] = {
 
     layer: LAYER_OBJECT,    //表示レイヤー番号
     type: ENEMY_MIDDLE,     //敵タイプ
-    isGround: false,
 
     setup: function() {
         this.phase = 0;
@@ -134,6 +134,7 @@ tds.enemyData['square1'] = {
     },
 };
 
+//小型空中砲台
 tds.enemyData['triangle1'] = {
     bulletPattern: "triangle1-a",  //使用弾幕パターン
 
@@ -145,7 +146,6 @@ tds.enemyData['triangle1'] = {
 
     layer: LAYER_OBJECT,    //表示レイヤー番号
     type: ENEMY_SMALL,      //敵タイプ
-    isGround: false,
 
     setup: function() {
 
@@ -167,6 +167,45 @@ tds.enemyData['triangle1'] = {
         this.y++;
     },
 };
+
+//大型機
+tds.enemyData['triangle2'] = {
+    bulletPattern: "triangle2",  //使用弾幕パターン
+
+    //当り判定サイズ
+    width:  128,
+    height: 64,
+
+    //耐久力
+    def: 50,
+
+    //得点
+    point: 2000,
+
+    //レイヤー
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_SMALL,
+
+    setup: function() {
+        this.rotation = 180;
+
+        var param = {
+            strokeStyle:"hsla(200, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(200, 50%, 50%, 0.5)",
+            lineWidth: 1,
+        };
+        var s = tm.display.Shape(64, 64).addChildTo(this).renderTriangle(param);
+        s.scaleX = 2;
+        
+    },
+
+    algorithm: function() {
+        this.y++;
+    },
+};
+
 
 tds.enemyData['boss1'] = {
     bulletPattern: "basic-aim1",  //使用弾幕パターン
