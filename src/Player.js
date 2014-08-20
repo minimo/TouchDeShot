@@ -149,8 +149,10 @@ tm.define("tds.Player", {
         this.wing.y = -~~(this.pitchcount*0.75);
 
         //移動範囲の制限
-        this.x = Math.clamp(this.x, 16, SC_W-16);
-        this.y = Math.clamp(this.y, 16, SC_H-16);
+        if (this.control) {
+            this.x = Math.clamp(this.x, 16, SC_W-16);
+            this.y = Math.clamp(this.y, 16, SC_H-16);
+        }
 
         //タッチorクリック中
         if (this.mouseON && this.control) {
@@ -235,7 +237,7 @@ tm.define("tds.Player", {
             this.parentScene.eraseBullet();
             this.parentScene.eraseBulletTime = 60;
         } else {
-            this.setPosition(SC_W*0.5, SC_H*3.0);
+            this.setPosition(SC_W*0.5, SC_H*2);
             this.control = false;
         }
     },
