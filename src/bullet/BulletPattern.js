@@ -167,6 +167,7 @@ tds.bulletPattern["square1"] = new bulletml.Root({
     ]),
 });
 
+//小型空中砲台
 tds.bulletPattern["triangle1-a"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
@@ -184,6 +185,30 @@ tds.bulletPattern["triangle1-b"] = new bulletml.Root({
         $.repeat(999, [
             $.fire($.direction(-37, "sequence"), $spd(3), BL),
             $interval(10),
+        ]),
+    ]),
+});
+
+//大型機
+tds.bulletPattern["triangle2"] = new bulletml.Root({
+    top0: $.action([
+        $.wait(60),
+        $.repeat(999, [
+            $nway(3, -60, 60, $spd(4), RL, 0, 0),
+            $interval(60),
+            $nway(4, -60, 60, $spd(5), BL, 0, 0),
+            $interval(60),
+        ]),
+    ]),
+    top1: $.action([
+        $.wait(60),
+        $.repeat(999, [
+            $.repeat(3, [
+                $.fire($.direction(180), $spd(3), RL, -64, 0),
+                $.fire($.direction(180), $spd(3), RL,  64, 0),
+                $interval(20),
+            ]),
+            $interval(90),
         ]),
     ]),
 });
