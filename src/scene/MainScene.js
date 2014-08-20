@@ -30,6 +30,9 @@ tm.define("tds.MainScene", {
     stage: null,    //ステージコントローラー
     enemyID: 0,     //敵投入ＩＤ
 
+    //プレイヤー情報
+    life: 2,
+
     init: function() {
         this.superInit();
         this.background = "rgba(0, 0, 0, 1.0)";
@@ -61,6 +64,21 @@ tm.define("tds.MainScene", {
         sc.update = function() {
             this.text = "SCORE:"+app.score;
         };
+
+        //残機表示
+        this.dispLife = tm.app.Object2D().addChildTo(this);
+        this.dispLife.player = [];
+        this.dispLife.life = 0;
+        this.dispLife.inc = function() {
+            this.life++;
+            this.player[this.life] = tds.PlayerDisp().addChildTo(this).setPosition(this.life*50-20, 64);
+        }
+        this.dispLife.dec = function() {
+            if (this.life == 0) return;
+            this.player[this.life].remove();
+            this.life--;
+        }
+        for (var i = 0; i < this.life; i++) this.dispLife.inc();
 
         this.time = 0;
     },

@@ -226,9 +226,18 @@ tm.define("tds.Player", {
         this.level = 0;
         this.shotInterval = 10;
         this.bits.status = 0;
-        this.rollingBit();
-        this.startup();
-        this.parentScene.eraseBullet();
+
+        this.parentScene.life--;
+        this.parentScene.dispLife.dec();
+        if (this.parentScene.life > -1) {
+            this.rollingBit();
+            this.startup();
+            this.parentScene.eraseBullet();
+            this.parentScene.eraseBulletTime = 60;
+        } else {
+            this.setPosition(SC_W*0.5, SC_H*3.0);
+            this.control = false;
+        }
     },
 
     levelUp: function() {
@@ -442,4 +451,66 @@ tds.PowerGauge.prototype.accessor("value", {
     "set": function(v)  { this._value = Math.clamp(v, this.min, this.max); }
 });
 
+//残機表示用
+tm.define("tds.PlayerDisp", {
+    superClass: "tm.app.Object2D",
+
+    init: function() {
+        this.superInit();
+        this.setScale(0.5);
+
+        //機体
+        this.body = tm.display.Shape(64, 64).addChildTo(this);
+        this.body.y = -7;
+        var c = this.body.canvas;
+        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.0)");
+        c.setLineStyle(3);
+        var path = [
+            [32,0], [22,48], [32,64], [42,48],
+        ];
+        c.beginPath();
+        c.moveTo(path[0][0], path[0][1]);
+        for (var i = 1; i < path.length; i++) {
+            c.lineTo(path[i][0], path[i][1]);
+        }
+        c.lineTo(path[0][0], path[0][1]);
+        c.stroke().fill().closePath();
+
+        //翼
+        this.wing = tm.display.Shape(96, 32).addChildTo(this);
+        this.wing.y = 0;
+        var c = this.wing.canvas;
+        c.setColorStyle("hsla(200, 50%, 50%, 1.0)", "hsla(200, 50%, 50%, 0.5)");
+        c.setLineStyle(3);
+        var path = [
+            [32,10], [32,32], [0,12], [26,20],    
+        ];
+        c.beginPath();
+        c.moveTo(path[0][0], path[0][1]);
+        for (var i = 1; i < path.length; i++) {
+            c.lineTo(path[i][0], path[i][1]);
+        }
+        c.lineTo(path[0][0], path[0][1]);
+        c.moveTo(96-path[0][0], path[0][1]);
+        for (var i = 1; i < path.length; i++) {
+            c.lineTo(96-path[i][0], path[i][1]);
+        }
+        c.lineTo(96-path[0][0], path[0][1]);
+
+        c.stroke().fill().closePath();
+
+        //コア
+        core = tm.display.Shape(32, 32).addChildTo(this);
+        core.canvas.setFillStyle(
+            tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+                .addColorStopList([
+                    {offset:0.0, color: "hsla(200, 60%, 50%, 1.0)"},
+                    {offset:0.5, color: "hsla(240, 60%, 50%, 1.0)"},
+                    {offset:1.0, color: "hsla(240, 60%, 50%, 0.0)"},
+                ]).toStyle()
+            ).fillRect(0, 0, 32, 32);
+        core.tweener.clear();
+        core.tweener.scale(1.0, 100, "easeInOutQuad").scale(0.5, 200, "easeInOutQuad").setLoop(true);
+    },
+});
 })();
