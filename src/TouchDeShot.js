@@ -21,6 +21,7 @@ tds.TouchShooter = tm.createClass({
 
     mainScene: null,
 
+    highScore: 0,
     score: 0,
 
     bgm: null,

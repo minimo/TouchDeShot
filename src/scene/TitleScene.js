@@ -78,6 +78,7 @@ tm.define("tds.TitleScene", {
 
     ontouchend: function() {
         app.background = "rgba(0, 0, 0, 0.8)";
+        app.score = 0;
         app.replaceScene(tds.MainScene());
     },
 
