@@ -356,6 +356,7 @@ tm.define("tds.Player", {
         this.control = false;
         this.isCollision = false;
         this.shieldON = true;
+        this.parentScene.timeVanish = 180;
     },
 
     //ステージ開始時演出

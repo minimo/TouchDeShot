@@ -29,6 +29,7 @@ tm.define("tds.MainScene", {
     //ステージ制御
     stage: null,    //ステージコントローラー
     enemyID: 0,     //敵投入ＩＤ
+    timeVinish: 0,  //敵弾強制消去
 
     //プレイヤー情報
     life: 2,
@@ -94,6 +95,11 @@ tm.define("tds.MainScene", {
             }
         }
 
+        //敵弾強制消去
+        if (this.timeVanish > 0 && this.time % 6 == 0) {
+            this.eraseBullet();
+        }
+
         //エクステンド検知
         if (app.extendNumber < app.extendScore.length) {
             if (app.score > app.extendScore[app.extendNumber]) {
@@ -109,6 +115,7 @@ tm.define("tds.MainScene", {
             tmp.tweener.clear().wait(3000).call(function(){app.replaceScene(tds.GameoverScene())});
         }
         this.time++;
+        this.timeVanish--; 
     },
 
     //敵ユニット単位の投入
