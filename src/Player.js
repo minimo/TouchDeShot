@@ -448,7 +448,7 @@ tm.define("tds.PowerGauge", {
         var clock = true;
         var rad = this._value*toRad;
 
-        var color1 = "hsla({0}, 60%, 50%, 0.5)".format(100+this.parent.level*200+this.parent.power/3);
+        var color1 = "hsla({0}, 60%, 50%, 0.5)".format(100+this.parent.level*200+this.parent.power*0.4);
         var color2 = "hsla({0}, 60%, 50%, 0.5)".format(100+(this.parent.level+1)*200);
 
         canvas.strokeStyle = color1
