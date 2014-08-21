@@ -144,7 +144,28 @@ tm.define("tds.MainScene", {
                 a.isVanish = true;
             });
         }
-     },
+    },
+
+    //WARNING表示投入
+    enterWarning: function() {
+        var wg = this.title2 = tm.display.OutlineLabel("WARNING!!", 60).addChildTo(this);
+        wg.x = -SC_W; wg.y = SC_H*0.5;
+        wg.fontFamily = "'Orbitron'"; wg.align = "center"; wg.baseline  = "middle"; wg.fontWeight = 800; wg.outlineWidth = 2;
+        wg.fillStyle = tm.graphics.LinearGradient(-SC_W*0.5, 0, SC_W*0.5, 64)
+            .addColorStopList([
+                { offset: 0.1, color: "hsla(230, 90%, 50%, 0.5)"},
+                { offset: 0.5, color: "hsla(230, 80%, 90%, 0.9)"},
+                { offset: 0.9, color: "hsla(230, 90%, 50%, 0.5)"},
+            ]).toStyle();
+        wg.shadowColor = "red";
+        wg.shadowBlur = 10;
+        wg.tweener
+            .moveBy(SC_W*1.5, 0, 1000, "easeInOutCubic")
+            .fadeOut(700).fadeIn(1).wait(1000)
+            .fadeOut(700).fadeIn(1).wait(1000)
+            .fadeOut(700).fadeIn(1).wait(1000)
+            .moveBy(SC_W*1.5, 0, 1000, "easeInOutCubic");
+    },
 
     //タッチorクリック開始処理
     ontouchesstart: function(e) {
