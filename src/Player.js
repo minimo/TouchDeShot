@@ -10,6 +10,9 @@ tm.define("tds.Player", {
     superClass: "tm.app.Object2D",
     layer: LAYER_OBJECT,
 
+    width: 2,
+    height: 2,
+
     control: true,  //操作可能フラグ
     shotON: true,   //ショットフラグ
     mouseON: false, //マウス操作中フラグ
@@ -17,6 +20,8 @@ tm.define("tds.Player", {
 
     isCollision: false, //当り判定有効フラグ
     isDemo: false,      //デモンストレーションフラグ
+
+    timerMuteki: 0, //無敵フレーム残り時間
 
     speed: 7,       //移動速度
     type: 0,        //自機タイプ
@@ -218,11 +223,12 @@ tm.define("tds.Player", {
         this.by = this.y;
         this.beforeShieldON = this.shieldON;
         this.time++;
+        this.timerMuteki--;
     },
 
     damage: function() {
+        if (this.timerMuteki>0 || MUTEKI || this.isDemo) return;
         app.playSE("explodePlayer");
-        if (MUTEKI || this.isDemo) return;
 
         this.power = 0;
         this.level = 0;
@@ -291,6 +297,8 @@ tm.define("tds.Player", {
         this.bits.status = 1;
         this.bits[0].tweener.clear().to({ x: 48, y: 16, alpha:1}, 300);
         this.bits[1].tweener.clear().to({ x:-48, y: 16, alpha:1}, 300);
+        this.bits[2].tweener.clear().to({ x:0, y: 0, alpha:0}, 300);
+        this.bits[3].tweener.clear().to({ x:0, y: 0, alpha:0}, 300);
     },
 
     //ビット展開２段階目
@@ -336,11 +344,12 @@ tm.define("tds.Player", {
         this.x = SC_W/2;
         this.y = SC_H+32;
         this.tweener.clear()
-            .to({x: SC_W/2, y: SC_H-64}, 1000, "easeOutQuint")
+            .to({x: SC_W/2, y: SC_H-128}, 2000, "easeOutQuint")
             .call(function(){
                 this.shotON = true;
                 this.control = true;
                 this.isCollision = true;
+                this.timerMuteki = 180;
             }.bind(this));
         this.shotON = false;
         this.control = false;
@@ -359,6 +368,7 @@ tm.define("tds.Player", {
                 this.shotON = true;
                 this.control = true;
                 this.isCollision = true;
+                this.timerMuteki = 180;
             }.bind(this));
         this.shotON = false;
         this.control = false;
@@ -430,7 +440,7 @@ tm.define("tds.PowerGauge", {
     },
 
     draw: function(canvas) {
-        canvas.lineWidth = 30;
+        canvas.lineWidth = 15;
         canvas.globalCompositeOperation = "lighter";
 
         var clock = true;

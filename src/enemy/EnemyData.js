@@ -138,8 +138,8 @@ tds.enemyData['square1'] = {
 tds.enemyData['triangle1'] = {
     bulletPattern: "triangle1-a",  //使用弾幕パターン
 
-    width:  16,     //当り判定サイズ
-    height: 16,
+    width:  8,     //当り判定サイズ
+    height: 8,
 
     def: 10,        //耐久力
     point: 500,     //ポイント
