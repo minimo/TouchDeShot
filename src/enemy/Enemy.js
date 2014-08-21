@@ -12,6 +12,8 @@ tm.define("tds.Enemy", {
     parentScene: null,      //親シーン
     player: null,           //プレイヤー参照用
 
+    parentEnemy: null,      //親となる敵キャラ
+
     //各種フラグ
     isCollision: true,  //当り判定
     isDead: false,      //死亡
@@ -27,6 +29,7 @@ tm.define("tds.Enemy", {
     bulletPattern: null,
     nowBulletPattern: null,
     id: -1,
+    boss: false,
 
     data: null,
 
@@ -106,6 +109,11 @@ tm.define("tds.Enemy", {
             this.player.damage();
         }
 
+        //親機が破壊された場合、自分も破壊
+        if (this.parentEnemy) {
+            if (this.parentEnemy.isDead) this.dead();
+        }
+
         this.beforeX = this.x;
         this.beforeY = this.y;
         this.time++;
@@ -118,7 +126,13 @@ tm.define("tds.Enemy", {
         if (this.isMuteki || this.isDead) return;
         this.def -= power;
         if (this.def < 1) {
-            this.dead();
+            if (this.boss) {
+                this.parentScene.stageClear = true;
+                this.deadBoss();
+            } else {
+                this.dead();
+            }
+
             var pow = Math.clamp(this.player.level, 1, 10);
             app.score += this.data.point*pow;
 
@@ -152,6 +166,29 @@ tm.define("tds.Enemy", {
             tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
             app.playSE("explodeLarge");
         }
+    },
+
+    //ボス破壊パターン
+    deadBoss: function() {
+        this.isCollision = false;
+        this.isDead = true;
+        this.tweener.clear();
+        this.stopDanmaku();
+
+        this.on("enterframe", function() {
+            if (this.time % 30 == 0) {
+                tds.burnParticleSmall().addChildTo(this.parentScene).setPosition(this.x, this.y);
+                app.playSE("explodeSmall");
+            }
+
+            this.alpha *= 0.99;
+            if (this.alpha < 0.05) {
+                tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
+                app.playSE("explodeLarge");
+                this.remove();
+            }
+            this.y += 0.1;
+        }.bind(this));
     },
 
     //指定ターゲットの方向を向く

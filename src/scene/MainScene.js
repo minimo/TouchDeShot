@@ -27,8 +27,13 @@ tm.define("tds.MainScene", {
     absTime: 0,
 
     //ステージ制御
+    nowStage: 1,    //現在ステージ番号
+    maxStage: 2,    //最大ステージ番号
     stage: null,    //ステージコントローラー
     enemyID: 0,     //敵投入ＩＤ
+    timeVinish: 0,  //敵弾強制消去
+    boss: false,    //ボス戦中フラグ
+    stageClear: false,  //ステージクリアフラグ
 
     //プレイヤー情報
     life: 2,
@@ -54,9 +59,6 @@ tm.define("tds.MainScene", {
         this.player.stageStartup();
         app.player = this.player;
 
-        //ステージ制御
-        this.stage = tds.Stage1(this, this.player);
-
         //スコア表示ラベル
         app.score = 0;
         var sc = this.scoreLabel = tm.display.OutlineLabel("SCORE:0", 30).addChildTo(this);
@@ -80,7 +82,8 @@ tm.define("tds.MainScene", {
         }
         for (var i = 0; i < this.life; i++) this.dispLife.inc();
 
-        this.time = 0;
+        //ステージ制御
+        this.initStage();
     },
 
     update: function() {
@@ -92,6 +95,17 @@ tm.define("tds.MainScene", {
             } else {
                 this.enterEnemyUnit(event.value);
             }
+        }
+
+        //敵弾強制消去
+        if (this.timeVanish > 0 && this.time % 6 == 0) {
+            this.eraseBullet();
+        }
+
+        //ステージクリア検知
+        if (this.stageClear) {
+            this.stageClear = false;
+            this.enterStageClear();
         }
 
         //エクステンド検知
@@ -109,6 +123,8 @@ tm.define("tds.MainScene", {
             tmp.tweener.clear().wait(3000).call(function(){app.replaceScene(tds.GameoverScene())});
         }
         this.time++;
+        this.absTime++;
+        this.timeVanish--; 
     },
 
     //敵ユニット単位の投入
@@ -137,7 +153,63 @@ tm.define("tds.MainScene", {
                 a.isVanish = true;
             });
         }
-     },
+    },
+
+    //WARNING表示投入
+    enterWarning: function() {
+        this.boss = true;
+        var wg = tm.display.OutlineLabel("WARNING!!", 60).addChildTo(this);
+        wg.x = -SC_W; wg.y = SC_H*0.5;
+        wg.fontFamily = "'Orbitron'"; wg.align = "center"; wg.baseline  = "middle"; wg.fontWeight = 800; wg.outlineWidth = 2;
+        wg.fillStyle = tm.graphics.LinearGradient(-SC_W*0.5, 0, SC_W*0.5, 64)
+            .addColorStopList([
+                { offset: 0.1, color: "hsla(230, 90%, 50%, 0.5)"},
+                { offset: 0.5, color: "hsla(230, 80%, 90%, 0.9)"},
+                { offset: 0.9, color: "hsla(230, 90%, 50%, 0.5)"},
+            ]).toStyle();
+        wg.shadowColor = "red";
+        wg.shadowBlur = 10;
+        wg.tweener
+            .moveBy(SC_W*1.5, 0, 1000, "easeInOutCubic")
+            .fadeOut(700).fadeIn(1).wait(1000)
+            .fadeOut(700).fadeIn(1).wait(1000)
+            .fadeOut(700).fadeIn(1).wait(1000)
+            .moveBy(SC_W*1.5, 0, 1000, "easeInOutCubic");
+    },
+
+    //ステージ初期化    
+    initStage: function() {
+        switch (this.nowStage) {
+            case 1:
+                this.stage = tds.Stage1(this, this.player);
+                break;
+            case 2:
+                this.stage = tds.Stage1(this, this.player);
+                break;
+            case 2:
+                this.stage = tds.Stage1(this, this.player);
+                break;
+        }
+        this.time = 0;
+        this.timeVanish = 0;
+    },
+
+    //ステージクリア情報表示
+    enterStageClear: function() {
+        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
+        mask.alpha = 0;
+
+        var m1 = tm.display.OutlineLabel("STAGE CLEAR!", 60).addChildTo(mask);
+        m1.x = 0; m1.y = 0;
+        m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
+
+        mask.tweener.fadeIn(1000).wait(5000).fadeOut(2000)
+            .call(function(){
+                this.nowStage++;
+                this.initStage();
+            }.bind(this));
+    },
 
     //タッチorクリック開始処理
     ontouchesstart: function(e) {

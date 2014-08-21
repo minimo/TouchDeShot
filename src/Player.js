@@ -26,12 +26,12 @@ tm.define("tds.Player", {
     speed: 7,       //移動速度
     type: 0,        //自機タイプ
 
-    power: 0,       //パワーチャージ
-    powerMax: 180,  //パワーチャージ最大
-    level: 0,       //ショットレベル
-    levelMax: 10,   //ショットレベル
-    shotLimit: 0,   //ショットレベル上限
-    shotInterval: 10,//ショット間隔
+    power: 0,           //パワーチャージ
+    powerMax: 360,      //パワーチャージ最大
+    level: 0,           //ショットレベル
+    levelMax: 5,        //ショットレベル
+    shotLimit: 0,       //ショットレベル上限
+    shotInterval: 10,   //ショット間隔
 
     rollcount: 0,
     rollmax: 9,
@@ -207,7 +207,7 @@ tm.define("tds.Player", {
             //パワーとレベルを初期状態にする
             this.power-=10;
             if (this.power < 0) {
-                this.power = 180;
+                this.power = this.powerMax;
                 this.level--;
                 if (this.level < 0) {
                     this.level = 0;
@@ -243,7 +243,7 @@ tm.define("tds.Player", {
             this.parentScene.eraseBullet();
             this.parentScene.eraseBulletTime = 60;
         } else {
-            this.setPosition(SC_W*0.5, SC_H*2);
+            this.setPosition(SC_W*0.5, SC_H*3);
             this.control = false;
         }
     },
@@ -260,15 +260,15 @@ tm.define("tds.Player", {
             this.shotInterval = 8;
         }
         if (this.level > 2) {
-            this.shotInterval = 6;
+            this.shotInterval = 7;
         }
         if (this.level > 3) {
-            this.shotInterval = 4;
+            this.shotInterval = 6;
         }
     },
 
     enterShot: function() {
-        var shotPower = Math.clamp(this.level/2, 1, 5);
+        var shotPower = this.level>4?2:1;
         tds.ShotBullet(0, shotPower).addChildTo(this.parentScene).setPosition(this.x, this.y-16);
         if (this.level > 0 || this.power > 90) {
             tds.ShotBullet( 5, shotPower).addChildTo(this.parentScene).setPosition(this.x+16, this.y-16);
@@ -342,8 +342,9 @@ tm.define("tds.Player", {
     //プレイヤー投入時演出
     startup: function() {
         this.x = SC_W/2;
-        this.y = SC_H+32;
+        this.y = SC_H+128;
         this.tweener.clear()
+            .wait(2000)
             .to({x: SC_W/2, y: SC_H-128}, 2000, "easeOutQuint")
             .call(function(){
                 this.shotON = true;
@@ -355,12 +356,13 @@ tm.define("tds.Player", {
         this.control = false;
         this.isCollision = false;
         this.shieldON = true;
+        this.parentScene.timeVanish = 180;
     },
 
     //ステージ開始時演出
     stageStartup: function() {
         this.x = SC_W/2;
-        this.y = SC_H+32;
+        this.y = SC_H+128;
         this.tweener.clear()
             .to({x: SC_W/2, y: SC_H/2+32}, 1000, "easeOutCubic")
             .to({x: SC_W/2, y: SC_H-64  }, 1000)
@@ -420,7 +422,7 @@ tm.define("tds.PowerGauge", {
     superClass:  tm.display.CanvasElement,
 
     min: 0,
-    max: 180,
+    max: 360,
     _value: 0,
 
     init: function() {
@@ -444,9 +446,9 @@ tm.define("tds.PowerGauge", {
         canvas.globalCompositeOperation = "lighter";
 
         var clock = true;
-        var rad = this._value*toRad*2;
+        var rad = this._value*toRad;
 
-        var color1 = "hsla({0}, 60%, 50%, 0.5)".format(100+this.parent.level*200+this.parent.power);
+        var color1 = "hsla({0}, 60%, 50%, 0.5)".format(100+this.parent.level*200+this.parent.power*0.4);
         var color2 = "hsla({0}, 60%, 50%, 0.5)".format(100+(this.parent.level+1)*200);
 
         canvas.strokeStyle = color1
