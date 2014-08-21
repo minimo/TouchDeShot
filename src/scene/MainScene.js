@@ -94,6 +94,14 @@ tm.define("tds.MainScene", {
             }
         }
 
+        //エクステンド検知
+        if (app.extendNumber < app.extendScore.length) {
+            if (app.score > app.extendScore[app.extendNumber]) {
+                app.extendNumber++;
+                this.dispLife.inc();
+            }
+        }
+
         //ゲームオーバー検知
         if (this.life == -1) {
             this.life = -99;

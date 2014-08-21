@@ -23,6 +23,8 @@ tds.TouchShooter = tm.createClass({
 
     highScore: 0,
     score: 0,
+    extendNumber: 0,
+    extendScore: null,
 
     bgm: null,
     bgmIsPlay: false,
@@ -31,6 +33,11 @@ tds.TouchShooter = tm.createClass({
 
     init: function(id) {
         this.superInit(id);
+
+        this.extendScore = [];
+        this.extendScore.push(1000000);
+        this.extendScore.push(2000000);
+        this.extendScore.push(2500000);
 
         tds.core = this;
         this.resize(SC_W, SC_H).fitWindow();
