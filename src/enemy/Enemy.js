@@ -12,6 +12,8 @@ tm.define("tds.Enemy", {
     parentScene: null,      //親シーン
     player: null,           //プレイヤー参照用
 
+    parentEnemy: null,      //親となる敵キャラ
+
     //各種フラグ
     isCollision: true,  //当り判定
     isDead: false,      //死亡
@@ -104,6 +106,11 @@ tm.define("tds.Enemy", {
         this.player.radius = 2;
         if (this.isCollision && this.player.isCollision && this.isHitElement(this.player)) {
             this.player.damage();
+        }
+
+        //親機が破壊された場合、自分も破壊
+        if (this.parentEnemy) {
+            if (this.parentEnemy.isDead) this.dead();
         }
 
         this.beforeX = this.x;
