@@ -126,9 +126,10 @@ tm.define("tds.Enemy", {
         this.def -= power;
         if (this.def < 1) {
             //破壊パターン投入
-            if (this.type == ENEMY_BOSS) {
-                this.parentScene.stageClear = true;
+            if (this.data.type == ENEMY_BOSS) {
                 this.deadBoss();
+                //ボスの場合はステージクリアを親シーンに通知
+                this.parentScene.stageClear = true;
             } else {
                 this.dead();
             }
