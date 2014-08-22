@@ -120,7 +120,7 @@ tm.define("tds.MainScene", {
         if (this.life == -1) {
             this.life = -99;
             var tmp = tm.app.Object2D().addChildTo(this);
-            tmp.tweener.clear().wait(3000).call(function(){app.replaceScene(tds.GameoverScene())});
+            tmp.tweener.clear().wait(3000).call(function(){app.replaceScene(tds.GameoverScene(this.nowStage, this.boss))}.bind(this));
         }
         this.time++;
         this.absTime++;
