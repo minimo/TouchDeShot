@@ -14,6 +14,9 @@ tds.assets = {
     "explodeSmall": "assets/sen_ge_taihou03.mp3", 
     "explodeLarge": "assets/sen_ge_hasai01.mp3", 
     "explodePlayer": "assets/ta_ta_zuban_d01.mp3", 
+
+    //BGM
+    "warning":  "assets/bgm_warning.mp3",
 }
 
 })();

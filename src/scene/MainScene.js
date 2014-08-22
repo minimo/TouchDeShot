@@ -159,6 +159,7 @@ tm.define("tds.MainScene", {
     //WARNING表示投入
     enterWarning: function() {
         this.boss = true;
+        app.playBGM("warning");
         var wg = tm.display.OutlineLabel("WARNING!!", 60).addChildTo(this);
         wg.x = -SC_W; wg.y = SC_H*0.5;
         wg.fontFamily = "'Orbitron'"; wg.align = "center"; wg.baseline  = "middle"; wg.fontWeight = 800; wg.outlineWidth = 2;
