@@ -105,7 +105,8 @@ tm.define("tds.MainScene", {
         //ステージクリア検知
         if (this.stageClear) {
             this.stageClear = false;
-            this.enterStageClear();
+            //１０秒後にステージクリアメッセージ投入
+            tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterStageClear()}.bind(this));
         }
 
         //エクステンド検知
@@ -120,7 +121,7 @@ tm.define("tds.MainScene", {
         if (this.life == -1) {
             this.life = -99;
             var tmp = tm.app.Object2D().addChildTo(this);
-            tmp.tweener.clear().wait(3000).call(function(){app.replaceScene(tds.GameoverScene())});
+            tmp.tweener.clear().wait(3000).call(function(){app.replaceScene(tds.GameoverScene(this.nowStage, this.boss))}.bind(this));
         }
         this.time++;
         this.absTime++;
@@ -200,14 +201,32 @@ tm.define("tds.MainScene", {
         mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
         mask.alpha = 0;
 
-        var m1 = tm.display.OutlineLabel("STAGE CLEAR!", 60).addChildTo(mask);
+        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage+" CLEAR!", 50).addChildTo(mask);
         m1.x = 0; m1.y = 0;
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
 
+        //次ステージへ移行
         mask.tweener.fadeIn(1000).wait(5000).fadeOut(2000)
             .call(function(){
                 this.nowStage++;
                 this.initStage();
+            }.bind(this));
+    },
+
+    //全ステージクリア情報表示
+    enterAllStageClear: function() {
+        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
+        mask.alpha = 0;
+
+        var m1 = tm.display.OutlineLabel("STAGE ALL CLEAR!", 50).addChildTo(mask);
+        m1.x = 0; m1.y = 0;
+        m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
+
+        //ゲームオーバー表示へ移行
+        mask.tweener.fadeIn(1000).wait(5000).fadeOut(2000)
+            .call(function(){
+                app.replaceScene(tds.GameoverScene(this.nowStage, this.boss, true))
             }.bind(this));
     },
 

@@ -21,7 +21,7 @@ tm.define("tds.Player", {
     isCollision: false, //当り判定有効フラグ
     isDemo: false,      //デモンストレーションフラグ
 
-    timerMuteki: 0, //無敵フレーム残り時間
+    timeMuteki: 0, //無敵フレーム残り時間
 
     speed: 7,       //移動速度
     type: 0,        //自機タイプ
@@ -223,11 +223,11 @@ tm.define("tds.Player", {
         this.by = this.y;
         this.beforeShieldON = this.shieldON;
         this.time++;
-        this.timerMuteki--;
+        this.timeMuteki--;
     },
 
     damage: function() {
-        if (this.timerMuteki>0 || MUTEKI || this.isDemo) return;
+        if (this.timeMuteki>0 || MUTEKI || this.isDemo) return;
         app.playSE("explodePlayer");
 
         this.power = 0;
@@ -350,7 +350,7 @@ tm.define("tds.Player", {
                 this.shotON = true;
                 this.control = true;
                 this.isCollision = true;
-                this.timerMuteki = 180;
+                this.timeMuteki = 180;
             }.bind(this));
         this.shotON = false;
         this.control = false;
@@ -370,7 +370,7 @@ tm.define("tds.Player", {
                 this.shotON = true;
                 this.control = true;
                 this.isCollision = true;
-                this.timerMuteki = 180;
+                this.timeMuteki = 180;
             }.bind(this));
         this.shotON = false;
         this.control = false;

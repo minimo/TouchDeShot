@@ -29,7 +29,6 @@ tm.define("tds.Enemy", {
     bulletPattern: null,
     nowBulletPattern: null,
     id: -1,
-    boss: false,
 
     data: null,
 
@@ -126,20 +125,28 @@ tm.define("tds.Enemy", {
         if (this.isMuteki || this.isDead) return;
         this.def -= power;
         if (this.def < 1) {
-            if (this.boss) {
-                this.parentScene.stageClear = true;
+            //破壊パターン投入
+            if (this.data.type == ENEMY_BOSS) {
                 this.deadBoss();
+                //ボスの場合はステージクリアを親シーンに通知
+                this.parentScene.stageClear = true;
             } else {
                 this.dead();
             }
 
+            //親機に破壊を通知
+            if (this.parentEnemy) this.parentEnemy.deadChild(this);
+
+            //スコア加算
             var pow = Math.clamp(this.player.level, 1, 10);
             app.score += this.data.point*pow;
 
+            //得点表示
             var sc = tm.display.OutlineLabel(this.data.point+"x"+pow, 30).addChildTo(this.parentScene).setPosition(this.x, this.y);
             sc.fontFamily = "'UbuntuMono'"; sc.align = "center"; sc.baseline  = "middle"; sc.fontWeight = 300; sc.outlineWidth = 2;
             sc.tweener.to({x: this.x, y: this.y-50, alpha:0}, 1000).call(function(){this.remove()}.bind(sc));
 
+            //弾消し
             if (this.data.type == ENEMY_MIDDLE) {
                 this.parentScene.eraseBullet(this);
             } else if (this.data.type == ENEMY_LARGE) {
@@ -148,12 +155,14 @@ tm.define("tds.Enemy", {
         }
     },
 
+    //通常破壊パターン
     dead: function() {
         this.isCollision = false;
         this.isDead = true;
         this.tweener.clear();
         this.stopDanmaku();
 
+        //フェードアウト
         this.on("enterframe", function() {
             this.alpha *= 0.9;
             if (this.alpha < 0.02) this.remove();
@@ -189,6 +198,10 @@ tm.define("tds.Enemy", {
             }
             this.y += 0.1;
         }.bind(this));
+    },
+
+    //子機が破壊された場合に呼ばれるコールバック
+    deadChild: function(child) {
     },
 
     //指定ターゲットの方向を向く

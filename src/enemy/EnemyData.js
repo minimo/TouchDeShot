@@ -11,14 +11,21 @@ tds.enemyData = [];
 tds.enemyData['cube1'] = {
     bulletPattern: "cube1",  //使用弾幕パターン
 
-    width:  32,  //当り判定サイズ
-    height: 32,
+    //当り判定サイズ
+    width:  16,
+    height: 16,
 
-    def: 3,     //耐久力
-    point: 300, //ポイント
+    //耐久力
+    def: 3,
 
-    layer: LAYER_OBJECT,    //表示レイヤー番号
-    type: ENEMY_SMALL,      //敵タイプ
+    //得点
+    point: 300,
+
+    //表示レイヤー番号
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_SMALL,
 
     setup: function() {
         var param = {
@@ -51,14 +58,21 @@ tds.enemyData['cube1'] = {
 tds.enemyData['cube2'] = {
     bulletPattern: "cube2",  //使用弾幕パターン
 
-    width:  32,  //当り判定サイズ
-    height: 32,
+    //当り判定サイズ
+    width:  16,
+    height: 16,
 
-    def: 3,     //耐久力
-    point: 300, //ポイント
+    //耐久力
+    def: 3,
 
-    layer: LAYER_OBJECT,    //表示レイヤー番号
-    type: ENEMY_SMALL,      //敵タイプ
+    //得点
+    point: 300,
+
+    //表示レイヤー番号
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_SMALL,
 
     isNear: false,
 
@@ -88,14 +102,21 @@ tds.enemyData['cube2'] = {
 tds.enemyData['square1'] = {
     bulletPattern: "square1",  //使用弾幕パターン
 
-    width:  64,     //当り判定サイズ
+    //当り判定サイズ
+    width:  64,
     height: 64,
 
-    def: 150,       //耐久力
-    point: 5000,    //ポイント
+    //耐久力
+    def: 150,
 
-    layer: LAYER_OBJECT,    //表示レイヤー番号
-    type: ENEMY_MIDDLE,     //敵タイプ
+    //得点
+    point: 5000,
+
+    //表示レイヤー番号
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_MIDDLE,
 
     setup: function() {
         this.phase = 0;
@@ -138,14 +159,21 @@ tds.enemyData['square1'] = {
 tds.enemyData['triangle1'] = {
     bulletPattern: "triangle1-a",  //使用弾幕パターン
 
-    width:  8,     //当り判定サイズ
+    //当り判定サイズ
+    width:  8,
     height: 8,
 
-    def: 10,        //耐久力
-    point: 500,     //ポイント
+    //耐久力
+    def: 10,
 
-    layer: LAYER_OBJECT,    //表示レイヤー番号
-    type: ENEMY_SMALL,      //敵タイプ
+    //得点
+    point: 500,
+
+    //表示レイヤー番号
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_SMALL,
 
     setup: function() {
 
@@ -210,15 +238,21 @@ tds.enemyData['triangle2'] = {
 tds.enemyData['boss1'] = {
     bulletPattern: "basic-aim1",  //使用弾幕パターン
 
-    width:  256,  //当り判定サイズ
+    //当り判定サイズ
+    width:  256,
     height: 110,
 
-    def: 500,      //耐久力
-    point: 100000, //ポイント
+    //耐久力
+    def: 500,
 
-    layer: LAYER_OBJECT,    //表示レイヤー番号
-    type: ENEMY_BOSS,       //敵タイプ
-    isGround: false,
+    //得点
+    point: 100000,
+
+    //レイヤー
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_BOSS,
 
     setup: function() {
         var param = {
