@@ -234,6 +234,42 @@ tds.enemyData['triangle2'] = {
     },
 };
 
+//中ボス（四畳半）
+tds.enemyData['yojouhan'] = {
+    bulletPattern: "square1",  //使用弾幕パターン
+
+    //当り判定サイズ
+    width:  64,
+    height: 64,
+
+    //耐久力
+    def: 300,
+
+    //得点
+    point: 5000,
+
+    //表示レイヤー番号
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_MIDDLE,
+
+    setup: function() {
+        this.phase = 0;
+        this.rotation = 45;
+
+        var param = {
+            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
+            lineWidth: 1,
+        };
+        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
+    },
+
+    algorithm: function() {
+    },
+};
+
 
 tds.enemyData['boss1'] = {
     bulletPattern: "basic-aim1",  //使用弾幕パターン

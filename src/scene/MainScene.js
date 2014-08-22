@@ -59,16 +59,19 @@ tm.define("tds.MainScene", {
         this.player.stageStartup();
         app.player = this.player;
 
+        //システム表示ベース
+        this.systemBase = tm.app.Object2D().addChildTo(this).setPosition(0, 0);
+
         //スコア表示ラベル
         app.score = 0;
-        var sc = this.scoreLabel = tm.display.OutlineLabel("SCORE:0", 30).addChildTo(this);
+        var sc = this.scoreLabel = tm.display.OutlineLabel("SCORE:0", 30).addChildTo(this.systemBase);
         sc.fontFamily = "'Orbitron'"; sc.align = "left"; sc.baseline  = "top"; sc.fontWeight = 700; sc.outlineWidth = 2;
         sc.update = function() {
             this.text = "SCORE:"+app.score;
         };
 
         //残機表示
-        this.dispLife = tm.app.Object2D().addChildTo(this);
+        this.dispLife = tm.app.Object2D().addChildTo(this.systemBase);
         this.dispLife.player = [];
         this.dispLife.life = 0;
         this.dispLife.inc = function() {
@@ -81,6 +84,9 @@ tm.define("tds.MainScene", {
             this.life--;
         }
         for (var i = 0; i < this.life; i++) this.dispLife.inc();
+
+        //ボス耐久力ゲージ
+        this.bossGauge = tds.BossGauge().addChildTo(this.systemBase).setPosition(0, -66);
 
         //ステージ制御
         this.initStage();
@@ -107,6 +113,8 @@ tm.define("tds.MainScene", {
             this.stageClear = false;
             //１０秒後にステージクリアメッセージ投入
             tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterStageClear()}.bind(this));
+            //ボス耐久ゲージ隠し
+            this.systemBase.tweener.clear().moveBy(0, -64, 1000);
         }
 
         //エクステンド検知
@@ -136,7 +144,11 @@ tm.define("tds.MainScene", {
         var len = unit.length;
         for (var i = 0; i < len; i++) {
             var e = unit[i];
-            tds.Enemy(e.name,e.x, e.y, this.enemyID, e.param).addChildTo(this);
+            var en = tds.Enemy(e.name,e.x, e.y, this.enemyID, e.param).addChildTo(this);
+            if (en.data.type == ENEMY_BOSS) {
+                this.bossGauge.setTarget(en);
+                this.systemBase.tweener.clear().moveBy(0, 64, 1000);
+            }
             this.enemyID++;
         }
     },
