@@ -12,7 +12,7 @@ tm.define("tds.GameoverScene", {
     result1: "",
     result2: "",
 
-    init: function(stageNumber, boss) {
+    init: function(stageNumber, boss, allclear) {
         this.superInit();
         app.background = "rgba(0, 0, 0, 0.5)";
 
@@ -21,7 +21,11 @@ tm.define("tds.GameoverScene", {
 
         //リザルト表示
         this.result1 = "SCORE: "+app.score;
-        this.result2 = "Stage:"+stageNumber+(boss?" boss":"");
+        if (!allclear) {
+            this.result2 = "Stage:"+stageNumber+(boss?" boss":"");
+        } else {
+            this.result2 = "(ALL CLEAR!!)";
+        }
 
         //ゲームオーバー表示
         var sc = tm.display.OutlineLabel("GAME OVER", 50).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.4);
