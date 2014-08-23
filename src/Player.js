@@ -228,6 +228,8 @@ tm.define("tds.Player", {
 
     damage: function() {
         if (this.timeMuteki>0 || MUTEKI || this.isDemo) return;
+
+        tds.burnParticlePlayer(this.x, this.y).addChildTo(this.parentScene);
         app.playSE("explodePlayer");
 
         this.power = 0;
