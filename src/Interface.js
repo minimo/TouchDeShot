@@ -40,7 +40,7 @@ tm.define("tds.BossGauge", {
         this.blendMode = "lighter";
         this.x = x || 0;
         this.y = y || 0;
-        this.width = width || SC_W;
+        this.width = width || SC_W-32;
         this.height = 16;
     },
 
@@ -63,9 +63,9 @@ tm.define("tds.BossGauge", {
 
             var bl = this.width-20;
             canvas.fillStyle = "rgba(255, 64, 64, 0.8)";
-            canvas.fillRect(0, 0, SC_W, 16);
+            canvas.fillRect(16, 0, SC_W-32, 16);
             canvas.fillStyle = "rgba(64, 255, 64, 1.0)";
-            canvas.fillRect(0, 0, value, 16);
+            canvas.fillRect(16, 0, value, 16);
         }
     }
 });
