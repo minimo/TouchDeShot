@@ -86,7 +86,7 @@ tm.define("tds.MainScene", {
         for (var i = 0; i < this.life; i++) this.dispLife.inc();
 
         //ボス耐久力ゲージ
-        this.bossGauge = tds.BossGauge().addChildTo(this.systemBase).setPosition(0, -66);
+        this.bossGauge = tds.BossGauge().addChildTo(this.systemBase).setPosition(0, -24);
 
         //ステージ制御
         this.initStage();
@@ -114,7 +114,7 @@ tm.define("tds.MainScene", {
             //１０秒後にステージクリアメッセージ投入
             tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterStageClear()}.bind(this));
             //ボス耐久ゲージ隠し
-            this.systemBase.tweener.clear().moveBy(0, -64, 1000);
+            this.systemBase.tweener.clear().moveBy(0, -64, 1000).call(function(){this.bossGauge.setTarget(null)}.bind(this));
         }
 
         //エクステンド検知
@@ -147,7 +147,7 @@ tm.define("tds.MainScene", {
             var en = tds.Enemy(e.name,e.x, e.y, this.enemyID, e.param).addChildTo(this);
             if (en.data.type == ENEMY_BOSS) {
                 this.bossGauge.setTarget(en);
-                this.systemBase.tweener.clear().moveBy(0, 64, 1000);
+                this.systemBase.tweener.clear().moveBy(0, 32, 1000);
             }
             this.enemyID++;
         }
@@ -171,7 +171,7 @@ tm.define("tds.MainScene", {
     //WARNING表示投入
     enterWarning: function() {
         this.boss = true;
-        app.playBGM("warning");
+        app.playSE("warning");
         var wg = tm.display.OutlineLabel("WARNING!!", 60).addChildTo(this);
         wg.x = -SC_W; wg.y = SC_H*0.5;
         wg.fontFamily = "'Orbitron'"; wg.align = "center"; wg.baseline  = "middle"; wg.fontWeight = 800; wg.outlineWidth = 2;
@@ -191,7 +191,7 @@ tm.define("tds.MainScene", {
             .moveBy(SC_W*1.5, 0, 1000, "easeInOutCubic");
     },
 
-    //ステージ初期化    
+    //ステージ初期化
     initStage: function() {
         switch (this.nowStage) {
             case 1:
@@ -200,7 +200,7 @@ tm.define("tds.MainScene", {
             case 2:
                 this.stage = tds.Stage1(this, this.player);
                 break;
-            case 2:
+            case 3:
                 this.stage = tds.Stage1(this, this.player);
                 break;
         }

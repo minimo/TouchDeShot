@@ -34,40 +34,41 @@ tm.define("tds.BossGauge", {
     player: null,               //プレイヤー参照用
     target: null,
 
-    max: 1000,
-    value: 1000,
-    beforeValue: 1000,
-
-    init: function() {
+    init: function(x, y, width) {
         this.superInit();
 
-        this.bar = tm.display.Shape(SC_W*0.9, 32).addChildTo(this).setPosition(SC_W*0.5, 0);
-        this.bar.renderRectangle({fillStyle: "rgba(64,256,64,1.0)", strokeStyle: "rgba(255,255,255,1.0)"});
-    },
-
-    update: function() {
-        this.beforeValue = this.value;
-    },
-
-    draw: function(canvas) {
-        canvas.lineWidth = 2;
-        canvas.globalCompositeOperation = "lighter";
-
-        var color1 = "hsla({0}, 60%, 50%, 0.5)".format(100);
-        var color2 = "hsla({0}, 60%, 50%, 1.0)".format(280);
-
-        canvas.strokeStyle = "white";
-        canvas.strokeRect(0, 0, SC_W, 64);
-        canvas.fillStyle = "red";
-        canvas.fillRect(0, 0, SC_W, 64);
-        canvas.fillStyle = "green";
-        canvas.fillRect(0, 0, SC_W, 64);
+        this.blendMode = "lighter";
+        this.x = x || 0;
+        this.y = y || 0;
+        this.width = width || SC_W;
+        this.height = 16;
     },
 
     setTarget: function(target) {
         this.target = target;
-        this.max = this.value = target.def;
     },
+
+    update: function() {
+    },
+
+    draw: function(canvas) {
+        //勢力図作成
+        if (this.target) {
+            canvas.lineWidth = 16;
+            canvas.globalCompositeOperation = "source-over";
+            canvas.fillStyle = "rgba(64, 64, 64, 0.8)";
+            canvas.fillRect(0, 0, this.width, this.height);
+
+            var value = this.width/this.target.defMax*this.target.def;
+
+            var bl = this.width-20;
+            canvas.fillStyle = "rgba(255, 64, 64, 0.8)";
+            canvas.fillRect(0, 0, SC_W, 16);
+            canvas.fillStyle = "rgba(64, 255, 64, 1.0)";
+            canvas.fillRect(0, 0, value, 16);
+        }
+    }
 });
+
 
 })();
