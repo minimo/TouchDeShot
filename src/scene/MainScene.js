@@ -114,7 +114,7 @@ tm.define("tds.MainScene", {
             //１０秒後にステージクリアメッセージ投入
             tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterStageClear()}.bind(this));
             //ボス耐久ゲージ隠し
-            this.systemBase.tweener.clear().moveBy(0, -64, 1000).call(function(){this.bossGauge.setTarget(null)}.bind(this));
+            this.systemBase.tweener.clear().moveBy(0, -24, 1000).call(function(){this.bossGauge.setTarget(null)}.bind(this));
         }
 
         //エクステンド検知
@@ -210,12 +210,13 @@ tm.define("tds.MainScene", {
 
     //ステージクリア情報表示
     enterStageClear: function() {
-        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(0, 0).setPosition(SC_W*0.1, SC_H*0.1);
+        mask.originX = mask.originY = 0;
         mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
         mask.alpha = 0;
 
-        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage+" CLEAR!", 50).addChildTo(mask);
-        m1.x = 0; m1.y = 0;
+        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage+" CLEAR!", 30).addChildTo(mask);
+        m1.setPosition(SC_W*0.5, SC_H*0.5);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
 
         //次ステージへ移行

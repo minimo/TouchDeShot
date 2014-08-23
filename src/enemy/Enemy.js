@@ -169,10 +169,10 @@ tm.define("tds.Enemy", {
 
         var area = this.width*this.height;
         if (area < 1025) {
-            tds.burnParticleSmall().addChildTo(this.parentScene).setPosition(this.x, this.y);
+            tds.burnParticleSmall(this.x, this.y).addChildTo(this.parentScene);
             app.playSE("explodeSmall");
         } else {
-            tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
+            tds.burnParticleLarge(this.x, this.y).addChildTo(this.parentScene);
             app.playSE("explodeLarge");
         }
     },
@@ -188,10 +188,10 @@ tm.define("tds.Enemy", {
             if (this.alpha < 0.02) this.remove();
         }.bind(this));
 
-        var x = rand(0, this.width);
-        var y = rand(0, this.height);
         for (var i = 0; i < 10; i++) {
-            tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
+            var x = rand(0, this.width)-this.width/2;
+            var y = rand(0, this.height)-this.height/2;
+            tds.burnParticleLarge(this.x+x, this.y+y).addChildTo(this.parentScene);
         }
         app.playSE("explodeLarge");
     },
