@@ -53,7 +53,7 @@ tds.TouchShooter = tm.createClass({
             bgColor: "black",
             nextScene: function() {
                 this._onLoadAssets();
-                return tds.TitleScene();
+                return tds.WaitScene();
             }.bind(this),
         });
         this.replaceScene(loadingScene);

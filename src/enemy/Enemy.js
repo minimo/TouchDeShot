@@ -162,22 +162,21 @@ tm.define("tds.Enemy", {
         this.tweener.clear();
         this.stopDanmaku();
 
-        //フェードアウト
         this.on("enterframe", function() {
             this.alpha *= 0.9;
             if (this.alpha < 0.02) this.remove();
         }.bind(this));
+
         var area = this.width*this.height;
         if (area < 1025) {
-            tds.burnParticleSmall().addChildTo(this.parentScene).setPosition(this.x, this.y);
+            tds.burnParticleSmall(this.x, this.y).addChildTo(this.parentScene);
             app.playSE("explodeSmall");
         } else {
-            tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
+            tds.burnParticleLarge(this.x, this.y).addChildTo(this.parentScene);
             app.playSE("explodeLarge");
         }
     },
 
-    //ボス破壊パターン
     deadBoss: function() {
         this.isCollision = false;
         this.isDead = true;
@@ -185,19 +184,16 @@ tm.define("tds.Enemy", {
         this.stopDanmaku();
 
         this.on("enterframe", function() {
-            if (this.time % 30 == 0) {
-                tds.burnParticleSmall().addChildTo(this.parentScene).setPosition(this.x, this.y);
-                app.playSE("explodeSmall");
-            }
-
-            this.alpha *= 0.99;
-            if (this.alpha < 0.05) {
-                tds.burnParticleLarge().addChildTo(this.parentScene).setPosition(this.x, this.y);
-                app.playSE("explodeLarge");
-                this.remove();
-            }
-            this.y += 0.1;
+            this.alpha *= 0.9;
+            if (this.alpha < 0.02) this.remove();
         }.bind(this));
+
+        for (var i = 0; i < 10; i++) {
+            var x = rand(0, this.width)-this.width/2;
+            var y = rand(0, this.height)-this.height/2;
+            tds.burnParticleLarge(this.x+x, this.y+y).addChildTo(this.parentScene);
+        }
+        app.playSE("explodeLarge");
     },
 
     //子機が破壊された場合に呼ばれるコールバック

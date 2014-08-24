@@ -59,16 +59,19 @@ tm.define("tds.MainScene", {
         this.player.stageStartup();
         app.player = this.player;
 
+        //システム表示ベース
+        this.systemBase = tm.app.Object2D().addChildTo(this).setPosition(0, 0);
+
         //スコア表示ラベル
         app.score = 0;
-        var sc = this.scoreLabel = tm.display.OutlineLabel("SCORE:0", 30).addChildTo(this);
+        var sc = this.scoreLabel = tm.display.OutlineLabel("SCORE:0", 30).addChildTo(this.systemBase);
         sc.fontFamily = "'Orbitron'"; sc.align = "left"; sc.baseline  = "top"; sc.fontWeight = 700; sc.outlineWidth = 2;
         sc.update = function() {
             this.text = "SCORE:"+app.score;
         };
 
         //残機表示
-        this.dispLife = tm.app.Object2D().addChildTo(this);
+        this.dispLife = tm.app.Object2D().addChildTo(this.systemBase);
         this.dispLife.player = [];
         this.dispLife.life = 0;
         this.dispLife.inc = function() {
@@ -81,6 +84,9 @@ tm.define("tds.MainScene", {
             this.life--;
         }
         for (var i = 0; i < this.life; i++) this.dispLife.inc();
+
+        //ボス耐久力ゲージ
+        this.bossGauge = tds.BossGauge().addChildTo(this.systemBase).setPosition(0, -24);
 
         //ステージ制御
         this.initStage();
@@ -107,6 +113,8 @@ tm.define("tds.MainScene", {
             this.stageClear = false;
             //１０秒後にステージクリアメッセージ投入
             tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterStageClear()}.bind(this));
+            //ボス耐久ゲージ隠し
+            this.systemBase.tweener.clear().moveBy(0, -24, 1000).call(function(){this.bossGauge.setTarget(null)}.bind(this));
         }
 
         //エクステンド検知
@@ -136,7 +144,11 @@ tm.define("tds.MainScene", {
         var len = unit.length;
         for (var i = 0; i < len; i++) {
             var e = unit[i];
-            tds.Enemy(e.name,e.x, e.y, this.enemyID, e.param).addChildTo(this);
+            var en = tds.Enemy(e.name,e.x, e.y, this.enemyID, e.param).addChildTo(this);
+            if (en.data.type == ENEMY_BOSS) {
+                this.bossGauge.setTarget(en);
+                this.systemBase.tweener.clear().moveBy(0, 32, 1000);
+            }
             this.enemyID++;
         }
     },
@@ -159,6 +171,7 @@ tm.define("tds.MainScene", {
     //WARNING表示投入
     enterWarning: function() {
         this.boss = true;
+        app.playSE("warning");
         var wg = tm.display.OutlineLabel("WARNING!!", 60).addChildTo(this);
         wg.x = -SC_W; wg.y = SC_H*0.5;
         wg.fontFamily = "'Orbitron'"; wg.align = "center"; wg.baseline  = "middle"; wg.fontWeight = 800; wg.outlineWidth = 2;
@@ -178,7 +191,7 @@ tm.define("tds.MainScene", {
             .moveBy(SC_W*1.5, 0, 1000, "easeInOutCubic");
     },
 
-    //ステージ初期化    
+    //ステージ初期化
     initStage: function() {
         switch (this.nowStage) {
             case 1:
@@ -187,7 +200,7 @@ tm.define("tds.MainScene", {
             case 2:
                 this.stage = tds.Stage1(this, this.player);
                 break;
-            case 2:
+            case 3:
                 this.stage = tds.Stage1(this, this.player);
                 break;
         }
@@ -197,12 +210,13 @@ tm.define("tds.MainScene", {
 
     //ステージクリア情報表示
     enterStageClear: function() {
-        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(0, 0).setPosition(SC_W*0.1, SC_H*0.1);
+        mask.originX = mask.originY = 0;
         mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
         mask.alpha = 0;
 
-        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage+" CLEAR!", 50).addChildTo(mask);
-        m1.x = 0; m1.y = 0;
+        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage+" CLEAR!", 30).addChildTo(mask);
+        m1.setPosition(SC_W*0.5, SC_H*0.5);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
 
         //次ステージへ移行

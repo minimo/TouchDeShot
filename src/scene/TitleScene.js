@@ -29,6 +29,7 @@ tm.define("tds.TitleScene", {
         //デモ用ステージデータ
         this.stage = tds.Stage0();
 
+        //タイトルロゴ
         var t1 = this.title1 = tm.display.OutlineLabel("BulletSimulator", 30).addChildTo(this);
         t1.x = SC_W*0.5; t1.y = SC_H*0.4;
         t1.fontFamily = "'UbuntuMono'"; t1.align = "center"; t1.baseline  = "middle"; t1.fontWeight = 300; t1.outlineWidth = 2;
@@ -47,6 +48,10 @@ tm.define("tds.TitleScene", {
         var ct = this.clickortouch = tm.display.OutlineLabel("Click or Touch", 30).addChildTo(this);
         ct.x = SC_W*0.5; ct.y = SC_H*0.8;
         ct.fontFamily = "'UbuntuMono'"; ct.align = "center"; ct.baseline  = "middle"; ct.fontWeight = 500; ct.outlineWidth = 2;
+
+        //スコア表示ラベル
+        var sc = this.scoreLabel = tm.display.OutlineLabel("HIGHSCORE:"+app.highScore, 30).addChildTo(this);
+        sc.fontFamily = "'Orbitron'"; sc.align = "left"; sc.baseline  = "top"; sc.fontWeight = 700; sc.outlineWidth = 2;
 
         this.time = 0;
     },
@@ -92,4 +97,18 @@ tm.define("tds.TitleScene", {
         return this.layers[child.layer].addChild(child);
     },
 });
+
+tm.define("tds.WaitScene", {
+    superClass: tm.app.Scene,
+
+    init: function() {
+        this.superInit();
+    },
+    update: function() {
+        if (fontLoadEnd) {
+            app.replaceScene(tds.TitleScene());
+        }
+    },
+});
+
 
