@@ -171,7 +171,7 @@ tm.define("tds.MainScene", {
     //WARNING表示投入
     enterWarning: function() {
         this.boss = true;
-        app.playSE("warning");
+        app.playBGM("warning", false);
         var wg = tm.display.OutlineLabel("WARNING!!", 60).addChildTo(this);
         wg.x = -SC_W; wg.y = SC_H*0.5;
         wg.fontFamily = "'Orbitron'"; wg.align = "center"; wg.baseline  = "middle"; wg.fontWeight = 800; wg.outlineWidth = 2;
@@ -184,7 +184,7 @@ tm.define("tds.MainScene", {
         wg.shadowColor = "red";
         wg.shadowBlur = 10;
         wg.tweener
-            .moveBy(SC_W*1.5, 0, 1000, "easeInOutCubic")
+            .moveBy(SC_W*1.5, 0, 700, "easeInOutCubic")
             .fadeOut(700).fadeIn(1).wait(1000)
             .fadeOut(700).fadeIn(1).wait(1000)
             .fadeOut(700).fadeIn(1).wait(1000)

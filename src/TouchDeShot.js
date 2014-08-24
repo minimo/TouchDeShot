@@ -67,7 +67,7 @@ tds.TouchShooter = tm.createClass({
         tm.social.Nineleap.postRanking(this.highScore, "");
     },
 
-    playBGM: function(asset) {
+    playBGM: function(asset, loop) {
         if (this.bgm) {
             if (this.bgmIsPlay) {
                 this.bgm.stop();
@@ -76,7 +76,7 @@ tds.TouchShooter = tm.createClass({
         }
         this.bgm = tm.asset.AssetManager.get(asset).clone();
         if (this.bgm) {
-            this.bgm.loop = true;
+            this.bgm.loop = loop;
             this.bgm.volume = this.volumeBGM*0.34;
             this.bgm.play();
             this.bgmIsPlay = true;
