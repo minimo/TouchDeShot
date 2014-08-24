@@ -98,3 +98,17 @@ tm.define("tds.TitleScene", {
     },
 });
 
+tm.define("tds.WaitScene", {
+    superClass: tm.app.Scene,
+
+    init: function() {
+        this.superInit();
+    },
+    update: function() {
+        if (fontLoadEnd) {
+            app.replaceScene(tds.TitleScene());
+        }
+    },
+});
+
+

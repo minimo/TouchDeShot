@@ -8,6 +8,9 @@
 //乱数発生器
 var mt = new MersenneTwister(0);
 
+//フォント読み込み検出
+var fontLoadEnd = false;
+
 //定数
 //デバッグ
 var DEBUG = false;
@@ -74,5 +77,27 @@ app = {};
 tm.main(function() {
     app = tds.TouchShooter("#world");
 //    app.enableStats();
+    detectFontLoading("'Orbitron'");
     app.run();
 });
+
+//フォント読み込み終了検出
+detectFontLoading = function(fontName) {
+    var tester = document.createElement('span');
+    tester.style.fontFamily = '"' + fontName + '", "Adobe Blank"';
+    tester.style.position = 'absolute';
+    tester.style.top = '-100px';
+    tester.appendChild(document.createTextNode('a'));
+    document.body.appendChild(tester);
+
+    var timerId = setInterval(checkWidth, 500);
+    function checkWidth() {
+        if (tester.offsetWidth > 0) {
+            clearInterval(timerId);
+            document.documentElement.className += ' ' + fontName.toLowerCase().replace(/\s/g, '_');
+            fontLoadEnd = true;
+            tester.parentNode.removeChild(tester);
+        }
+    }
+}
+
