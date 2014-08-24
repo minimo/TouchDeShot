@@ -84,7 +84,7 @@ tm.main(function() {
 //フォント読み込み終了検出
 detectFontLoading = function(fontName) {
     var tester = document.createElement('span');
-    tester.style.fontFamily = '"' + fontName + '", "Adobe Blank"';
+    tester.style.fontFamily = "'" + fontName + "', 'Adobe Blank'";
     tester.style.position = 'absolute';
     tester.style.top = '-100px';
     tester.appendChild(document.createTextNode('a'));
