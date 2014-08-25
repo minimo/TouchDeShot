@@ -29,7 +29,7 @@ tm.define("tds.Bullet", {
         this.id = id || -1;
 
         //弾種別グラフィック
-        this.removeChildren();
+//        this.removeChildren();
         switch (param.type) {
             case "RS":
                 this.body = tm.display.Shape(20, 20).addChildTo(this);
@@ -101,9 +101,6 @@ tm.define("tds.Bullet", {
     },
 });
 
-var shotPath = [
-    [16,0], [32,24], [16,32], [0,24],
-];
 tm.define("tds.ShotBullet", {
     superClass: "tm.display.Shape",
     layer: LAYER_SHOT,
@@ -116,7 +113,9 @@ tm.define("tds.ShotBullet", {
     defaultPower: 1,
 
     init: function(rotation, power) {
-        this.superInit(32,32);
+        this.superInit(32, 32);
+        this.canvas = tds.bulletGraphic["shot"];
+/*
         var c = this.canvas;
         c.setColorStyle("hsla(250, 50%, 50%, 1.0)", "hsla(250, 50%, 50%, 1.0)");
         c.setLineStyle(2);
@@ -127,7 +126,7 @@ tm.define("tds.ShotBullet", {
         }
         c.lineTo(shotPath[0][0], shotPath[0][1]);
         c.stroke().fill().closePath();
-
+*/
         this.rotation = rotation || 0;
         this.speed = this.defaultSpeed;
         this.power = power || this.defaultPower;
@@ -232,6 +231,25 @@ tds.setupBullets = function() {
         .setFillStyle(color1).fillRect(0, 0, 32, 32)
         .setFillStyle(color2).fillRect(2, 2, 16, 16)
         .setFillStyle(color2).fillRect(14, 14, 16, 16);
+
+    //ショット
+    var shotPath = [
+        [16,0], [32,24], [16,32], [0,24],
+    ];
+    tds.bulletGraphic["shot"] = tm.graphics.Canvas()
+        .resize(32, 32)
+        .setColorStyle("hsla(250, 50%, 50%, 1.0)", "hsla(250, 50%, 50%, 1.0)")
+        .setLineStyle(2)
+        .beginPath()
+        .moveTo(shotPath[0][0], shotPath[0][1]);
+    for (var i = 1; i < shotPath.length; i++) {
+        tds.bulletGraphic["shot"].lineTo(shotPath[i][0], shotPath[i][1]);
+    }
+    tds.bulletGraphic["shot"]
+        .lineTo(shotPath[0][0], shotPath[0][1])
+        .stroke()
+        .fill()
+        .closePath();
 }
 
 })();

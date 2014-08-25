@@ -10,6 +10,7 @@ tm.define("tm.bulletml.Bullet", {
 
     init: function(runner) {
         this.superInit();
+/*
         this.fromJSON({
             children: {
                 body: {
@@ -22,7 +23,7 @@ tm.define("tm.bulletml.Bullet", {
                 }
             }
         });
-
+*/
         this.runner = runner;
 
         this.setPosition(this.runner.x, this.runner.y);
