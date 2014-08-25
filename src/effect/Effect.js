@@ -183,7 +183,7 @@ tm.define("tds.Effect.BulletVanish", {
 
     init: function(bullet) {
         var size = bullet.size || 32;
-        var color = bullet.param.color || 0;
+        var type = bullet.param.type || "RL";
         this.superInit(size, size);
 
         this.size = size;
@@ -192,6 +192,20 @@ tm.define("tds.Effect.BulletVanish", {
         this.deltaY = bullet.runner.deltaY;
         this.deltaA = 0.9;
         this.setPosition(bullet.x, bullet.y);
+
+        var color = 0;
+        switch (type) {
+            case "RS":
+            case "RL":
+            case "RE":
+                color = 320;
+                break;
+            case "BS":
+            case "BL":
+            case "BE":
+                color = 240;
+                break;
+        }
 
         var c = this.canvas;
         c.setFillStyle(

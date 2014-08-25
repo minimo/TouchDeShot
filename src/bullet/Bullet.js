@@ -29,17 +29,35 @@ tm.define("tds.Bullet", {
         this.id = id || -1;
 
         //弾種別グラフィック
-        var color = param.color || 200;
         this.removeChildren();
         switch (param.type) {
-            case "normal":
-                this.setupNormalBullet(color);
+            case "RS":
+                this.body = tm.display.Shape(20, 20).addChildTo(this);
+                this.body.canvas = tds.bulletGraphic["NormalR"];
                 break;
-            case "large":
-                this.setupNormalBullet(color, 24);
+            case "BS":
+                this.body = tm.display.Shape(20, 20).addChildTo(this);
+                this.body.canvas = tds.bulletGraphic["NormalB"];
+                break;
+            case "RL":
+                this.body = tm.display.Shape(32, 32).addChildTo(this);
+                this.body.canvas = tds.bulletGraphic["NormalR"];
+                break;
+            case "BL":
+                this.body = tm.display.Shape(32, 32).addChildTo(this);
+                this.body.canvas = tds.bulletGraphic["NormalB"];
+                break;
+            case "RE":
+                this.body = tm.display.Shape(32, 24).addChildTo(this);
+                this.body.canvas = tds.bulletGraphic["NormalR"];
+                break;
+            case "BE":
+                this.body = tm.display.Shape(32, 24).addChildTo(this);
+                this.body.canvas = tds.bulletGraphic["NormalB"];
                 break;
             default:
-                this.setupNormal(color);
+                this.body = tm.display.Shape(32, 32).addChildTo(this);
+                this.body.canvas = tds.bulletGraphic["NormalR"];
                 break;
         }
 
@@ -80,37 +98,6 @@ tm.define("tds.Bullet", {
 
         this.beforeX = this.x;
         this.beforeY = this.y;
-    },
-
-    //通常弾
-    setupNormalBullet: function(color, size) {
-        size = size || 16;
-        this.size = size;
-        var size_h = size/2;
-        var size_q = size/4;
-        var size_z = size/8;
-        var b = tm.display.Shape(size, size).addChildTo(this);
-        var c = b.canvas;
-        c.setFillStyle(
-            tm.graphics.RadialGradient(size_h, size_h, 0, size_h, size_h, size_h)
-                .addColorStopList([
-                    {offset:0.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
-                    {offset:0.9, color: "hsla({0}, 50%, 50%, 1.0)".format(color)},
-                    {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
-                ]).toStyle()
-            ).fillRect(0, 0, size, size);
-
-        var style = tm.graphics.RadialGradient(size_q, size_q, 0, size_q, size_q, size_q)
-                    .addColorStopList([
-                        {offset:0.0, color: "hsla({0}, 70%, 70%, 1.0)".format(color)},
-                        {offset:0.9, color: "hsla({0}, 50%, 50%, 0.5)".format(color)},
-                        {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(color)},
-                    ]).toStyle();
-
-        var b = tm.display.Shape(size_h, size_h).addChildTo(this).setPosition(size_z, size_z);
-        b.canvas.setFillStyle(style).fillRect(0, 0, size_h, size_h);
-        var b = tm.display.Shape(size_h, size_h).addChildTo(this).setPosition(-size_z, -size_z);
-        b.canvas.setFillStyle(style).fillRect(0, 0, size_h, size_h);
     },
 });
 
@@ -198,5 +185,53 @@ tm.define("tds.ShotBullet", {
         }
     },
 });
+
+
+//弾の画像準備
+tds.setupBullets = function() {
+    tds.bulletGraphic = [];
+
+    var c = 320;
+    var color1 = tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+        .addColorStopList([
+            {offset:0.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
+            {offset:0.9, color: "hsla({0}, 50%, 50%, 1.0)".format(c)},
+            {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
+        ]).toStyle();
+
+    var color2 = tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+        .addColorStopList([
+            {offset:0.0, color: "hsla({0}, 70%, 70%, 1.0)".format(c)},
+            {offset:0.9, color: "hsla({0}, 50%, 50%, 0.5)".format(c)},
+            {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
+        ]).toStyle();
+
+    tds.bulletGraphic["NormalR"] = tm.graphics.Canvas()
+        .resize(32, 32)
+        .setFillStyle(color1).fillRect(0, 0, 32, 32)
+        .setFillStyle(color2).fillRect(2, 2, 16, 16)
+        .setFillStyle(color2).fillRect(14, 14, 16, 16);
+
+    var c = 240;
+    var color1 = tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+        .addColorStopList([
+            {offset:0.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
+            {offset:0.9, color: "hsla({0}, 50%, 50%, 1.0)".format(c)},
+            {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
+        ]).toStyle();
+
+    var color2 = tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+        .addColorStopList([
+            {offset:0.0, color: "hsla({0}, 70%, 70%, 1.0)".format(c)},
+            {offset:0.9, color: "hsla({0}, 50%, 50%, 0.5)".format(c)},
+            {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
+        ]).toStyle();
+
+    tds.bulletGraphic["NormalB"] = tm.graphics.Canvas()
+        .resize(32, 32)
+        .setFillStyle(color1).fillRect(0, 0, 32, 32)
+        .setFillStyle(color2).fillRect(2, 2, 16, 16)
+        .setFillStyle(color2).fillRect(14, 14, 16, 16);
+}
 
 })();

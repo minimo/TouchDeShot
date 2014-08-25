@@ -56,6 +56,10 @@ tds.TouchShooter = tm.createClass({
                 return tds.WaitScene();
             }.bind(this),
         });
+
+        //弾セットアップ
+        tds.setupBullets();
+
         this.replaceScene(loadingScene);
     },
 

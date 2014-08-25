@@ -12,10 +12,19 @@ var $ = bulletml.dsl;
 $rank = 1;
 
 //弾種
-var RS = function(action) { return $.bullet(action, {type: "normal", color:320}); };
-var BS = function(action) { return $.bullet(action, {type: "normal", color:240}); };
-var RL = function(action) { return $.bullet(action, {type: "large", color:320}); };
-var BL = function(action) { return $.bullet(action, {type: "large", color:240}); };
+//小弾（赤）
+var RS = function(action) { return $.bullet(action, {type: "RS"}); };
+//小弾（青）
+var BS = function(action) { return $.bullet(action, {type: "BS"}); };
+//大弾（赤）
+var RL = function(action) { return $.bullet(action, {type: "RL"}); };
+//大弾（青）
+var BL = function(action) { return $.bullet(action, {type: "BL"}); };
+//楕円弾（赤）(RedEllipsean)
+var RE = function(action) { return $.bullet(action, {type: "RE"}); };
+//楕円弾（青）(BlueEllipsean)
+var BE = function(action) { return $.bullet(action, {type: "BE"}); };
+
 
 var $interval = function(v) { return $.wait(v) };
 
@@ -171,9 +180,9 @@ tds.bulletPattern["square1"] = new bulletml.Root({
 tds.bulletPattern["triangle1-a"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
-        $.fire($.direction(180), $spd(4), RL),
+        $.fire($.direction(180), $spd(4), BE),
         $.repeat(999, [
-            $.fire($.direction(37, "sequence"), $spd(3), BL),
+            $.fire($.direction(37, "sequence"), $spd(3), BE),
             $interval(10),
         ]),
     ]),
@@ -181,9 +190,9 @@ tds.bulletPattern["triangle1-a"] = new bulletml.Root({
 tds.bulletPattern["triangle1-b"] = new bulletml.Root({
     top: $.action([
         $.wait(60),
-        $.fire($.direction(180), $spd(4), RL),
+        $.fire($.direction(180), $spd(4), BE),
         $.repeat(999, [
-            $.fire($.direction(-37, "sequence"), $spd(3), BL),
+            $.fire($.direction(-37, "sequence"), $spd(3), BE),
             $interval(10),
         ]),
     ]),
