@@ -48,11 +48,11 @@ tm.define("tds.Bullet", {
                 this.body.canvas = tds.bulletGraphic["NormalB"];
                 break;
             case "RE":
-                this.body = tm.display.Shape(32, 24).addChildTo(this);
+                this.body = tm.display.Shape(40, 30).addChildTo(this);
                 this.body.canvas = tds.bulletGraphic["NormalR"];
                 break;
             case "BE":
-                this.body = tm.display.Shape(32, 24).addChildTo(this);
+                this.body = tm.display.Shape(40, 30).addChildTo(this);
                 this.body.canvas = tds.bulletGraphic["NormalB"];
                 break;
             default:
@@ -115,18 +115,7 @@ tm.define("tds.ShotBullet", {
     init: function(rotation, power) {
         this.superInit(32, 32);
         this.canvas = tds.bulletGraphic["shot"];
-/*
-        var c = this.canvas;
-        c.setColorStyle("hsla(250, 50%, 50%, 1.0)", "hsla(250, 50%, 50%, 1.0)");
-        c.setLineStyle(2);
-        c.beginPath();
-        c.moveTo(shotPath[0][0], shotPath[0][1]);
-        for (var i = 1; i < shotPath.length; i++) {
-            c.lineTo(shotPath[i][0], shotPath[i][1]);
-        }
-        c.lineTo(shotPath[0][0], shotPath[0][1]);
-        c.stroke().fill().closePath();
-*/
+
         this.rotation = rotation || 0;
         this.speed = this.defaultSpeed;
         this.power = power || this.defaultPower;
@@ -143,7 +132,7 @@ tm.define("tds.ShotBullet", {
         this.radius = 12;
 
         //威力により大きさと判定を変更
-        if (power > 4) {
+        if (power > 3) {
             this.setScale(2);
             this.radius = 24;
         }
