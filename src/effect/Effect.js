@@ -182,7 +182,7 @@ tm.define("tds.Effect.BulletVanish", {
     deltaA: 1.0,    //速度減衰率
 
     init: function(bullet) {
-        var size = bullet.size || 32;
+        var size = bullet.size || 16;
         var type = bullet.param.type || "RL";
         this.superInit(size, size);
 

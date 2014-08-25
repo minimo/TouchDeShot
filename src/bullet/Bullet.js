@@ -18,6 +18,8 @@ tm.define("tds.Bullet", {
     isVanish: false,
     isVanishEffect: true,
 
+    speedRoll: 10,
+
     init: function(runner, param, id) {
         this.superInit(runner);
 
@@ -32,37 +34,45 @@ tm.define("tds.Bullet", {
 //        this.removeChildren();
         switch (param.type) {
             case "RS":
-                this.body = tm.display.Shape(20, 20).addChildTo(this);
-                this.body.canvas = tds.bulletGraphic["NormalR"];
+                tm.display.Shape(20, 20).addChildTo(this).canvas = tds.bulletGraphic["NormalR-1"];
+                tm.display.Shape(10, 10).addChildTo(this).setPosition(-2,-2).canvas = tds.bulletGraphic["NormalR-2"];
+                tm.display.Shape(10, 10).addChildTo(this).setPosition( 2, 2).canvas = tds.bulletGraphic["NormalR-2"];
                 break;
             case "BS":
-                this.body = tm.display.Shape(20, 20).addChildTo(this);
-                this.body.canvas = tds.bulletGraphic["NormalB"];
+                tm.display.Shape(20, 20).addChildTo(this).canvas = tds.bulletGraphic["NormalB-1"];
+                tm.display.Shape(10, 10).addChildTo(this).setPosition(-2,-2).canvas = tds.bulletGraphic["NormalB-2"];
+                tm.display.Shape(10, 10).addChildTo(this).setPosition( 2, 2).canvas = tds.bulletGraphic["NormalB-2"];
                 break;
             case "RL":
-                this.body = tm.display.Shape(32, 32).addChildTo(this);
-                this.body.canvas = tds.bulletGraphic["NormalR"];
+                tm.display.Shape(32, 32).addChildTo(this).canvas = tds.bulletGraphic["NormalR-1"];
+                tm.display.Shape(16, 16).addChildTo(this).setPosition(-3,-3).canvas = tds.bulletGraphic["NormalR-2"];
+                tm.display.Shape(16, 16).addChildTo(this).setPosition( 3, 3).canvas = tds.bulletGraphic["NormalR-2"];
                 break;
             case "BL":
-                this.body = tm.display.Shape(32, 32).addChildTo(this);
-                this.body.canvas = tds.bulletGraphic["NormalB"];
+                tm.display.Shape(32, 32).addChildTo(this).canvas = tds.bulletGraphic["NormalB-1"];
+                tm.display.Shape(16, 16).addChildTo(this).setPosition(-3,-3).canvas = tds.bulletGraphic["NormalB-2"];
+                tm.display.Shape(16, 16).addChildTo(this).setPosition( 3, 3).canvas = tds.bulletGraphic["NormalB-2"];
                 break;
             case "RE":
-                this.body = tm.display.Shape(40, 30).addChildTo(this);
-                this.body.canvas = tds.bulletGraphic["NormalR"];
+                tm.display.Shape(32, 32).addChildTo(this).canvas = tds.bulletGraphic["NormalR-1"];
+                tm.display.Shape(16, 16).addChildTo(this).setPosition(-3,-3).canvas = tds.bulletGraphic["NormalR-2"];
+                tm.display.Shape(16, 16).addChildTo(this).setPosition( 3, 3).canvas = tds.bulletGraphic["NormalR-2"];
+                this.scaleY = 0.8;
                 break;
             case "BE":
-                this.body = tm.display.Shape(40, 30).addChildTo(this);
-                this.body.canvas = tds.bulletGraphic["NormalB"];
+                tm.display.Shape(32, 32).addChildTo(this).canvas = tds.bulletGraphic["NormalB-1"];
+                tm.display.Shape(16, 16).addChildTo(this).setPosition(-3,-3).canvas = tds.bulletGraphic["NormalB-2"];
+                tm.display.Shape(16, 16).addChildTo(this).setPosition( 3, 3).canvas = tds.bulletGraphic["NormalB-2"];
+                this.scaleY = 0.8;
                 break;
             default:
                 this.body = tm.display.Shape(32, 32).addChildTo(this);
-                this.body.canvas = tds.bulletGraphic["NormalR"];
+                this.body.canvas = tds.bulletGraphic["NormalR-1"];
                 break;
         }
 
         this.on("enterframe", function(){
-            this.rotation+=10;
+            this.rotation += this.speedRoll;
 
             //自機との当り判定チェック
             if (this.player.isCollision) {
@@ -187,18 +197,17 @@ tds.setupBullets = function() {
             {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
         ]).toStyle();
 
-    var color2 = tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+    var color2 = tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8)
         .addColorStopList([
             {offset:0.0, color: "hsla({0}, 70%, 70%, 1.0)".format(c)},
             {offset:0.9, color: "hsla({0}, 50%, 50%, 0.5)".format(c)},
             {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
         ]).toStyle();
 
-    tds.bulletGraphic["NormalR"] = tm.graphics.Canvas()
-        .resize(32, 32)
-        .setFillStyle(color1).fillRect(0, 0, 32, 32)
-        .setFillStyle(color2).fillRect(2, 2, 16, 16)
-        .setFillStyle(color2).fillRect(14, 14, 16, 16);
+    tds.bulletGraphic["NormalR-1"] = tm.graphics.Canvas()
+        .resize(32, 32).setFillStyle(color1).fillRect(0, 0, 32, 32);
+    tds.bulletGraphic["NormalR-2"] = tm.graphics.Canvas()
+        .resize(16, 16).setFillStyle(color2).fillRect(0, 0, 16, 16);
 
     var c = 240;
     var color1 = tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
@@ -208,18 +217,17 @@ tds.setupBullets = function() {
             {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
         ]).toStyle();
 
-    var color2 = tm.graphics.RadialGradient(16, 16, 0, 16, 16, 16)
+    var color2 = tm.graphics.RadialGradient(8, 8, 0, 8, 8, 8)
         .addColorStopList([
             {offset:0.0, color: "hsla({0}, 70%, 70%, 1.0)".format(c)},
             {offset:0.9, color: "hsla({0}, 50%, 50%, 0.5)".format(c)},
             {offset:1.0, color: "hsla({0}, 50%, 50%, 0.0)".format(c)},
         ]).toStyle();
 
-    tds.bulletGraphic["NormalB"] = tm.graphics.Canvas()
-        .resize(32, 32)
-        .setFillStyle(color1).fillRect(0, 0, 32, 32)
-        .setFillStyle(color2).fillRect(2, 2, 16, 16)
-        .setFillStyle(color2).fillRect(14, 14, 16, 16);
+    tds.bulletGraphic["NormalB-1"] = tm.graphics.Canvas()
+        .resize(32, 32).setFillStyle(color1).fillRect(0, 0, 32, 32);
+    tds.bulletGraphic["NormalB-2"] = tm.graphics.Canvas()
+        .resize(16, 16).setFillStyle(color2).fillRect(0, 0, 16, 16);
 
     //ショット
     var shotPath = [
