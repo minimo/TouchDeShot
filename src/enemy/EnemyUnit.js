@@ -83,8 +83,13 @@ tds.enemyUnit = {
     { "name": "triangle2", "x":SC_W*0.8, "y":SC_H*-0.3 },
 ],
 
+"mboss1": [
+    { "name": "", "x":SC_W*0.5, "y":-100 },
+],
+
+//ステージ１ボス「四畳半」
 "boss1": [
-    { "name": "boss1", "x":SC_W*0.5, "y":-100 },
+    { "name": "yojouhan-a", "x":SC_W*0.5, "y":-100 },
 ],
 
 }

@@ -234,79 +234,8 @@ tds.enemyData['triangle2'] = {
     },
 };
 
-//中ボス（四畳半）コア
-tds.enemyData['yojouhan-a'] = {
-    bulletPattern: "square1",  //使用弾幕パターン
-
-    //当り判定サイズ
-    width:  64,
-    height: 64,
-
-    //耐久力
-    def: 300,
-
-    //得点
-    point: 5000,
-
-    //表示レイヤー番号
-    layer: LAYER_OBJECT,
-
-    //敵タイプ
-    type: ENEMY_MIDDLE,
-
-    setup: function() {
-        this.phase = 0;
-        this.rotation = 45;
-
-        var param = {
-            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
-            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
-            lineWidth: 1,
-        };
-        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
-    },
-
-    algorithm: function() {
-    },
-};
-
-//中ボス（四畳半）子機
-tds.enemyData['yojouhan-b'] = {
-    bulletPattern: "square1",  //使用弾幕パターン
-
-    //当り判定サイズ
-    width:  64,
-    height: 64,
-
-    //耐久力
-    def: 300,
-
-    //得点
-    point: 5000,
-
-    //表示レイヤー番号
-    layer: LAYER_OBJECT,
-
-    //敵タイプ
-    type: ENEMY_MIDDLE,
-
-    setup: function() {
-        this.phase = 0;
-        this.rotation = 45;
-
-        var param = {
-            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
-            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
-            lineWidth: 1,
-        };
-        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
-    },
-
-    algorithm: function() {
-    },
-};
-
-tds.enemyData['boss1'] = {
+//ステージ１中ボス（未定）
+tds.enemyData['mboss1'] = {
     bulletPattern: "basic-aim1",  //使用弾幕パターン
 
     //当り判定サイズ
@@ -375,6 +304,114 @@ tds.enemyData['boss1'] = {
         if (this.phase == 1) {
             this.x += Math.sin(this.time*toRad);
         }
+    },
+};
+
+//ステージ１ボス（四畳半）コア
+tds.enemyData['yojouhan-a'] = {
+    bulletPattern: "square1",  //使用弾幕パターン
+
+    //当り判定サイズ
+    width:  64,
+    height: 64,
+
+    //耐久力
+    def: 300,
+
+    //得点
+    point: 50000,
+
+    //表示レイヤー番号
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_BOSS,
+
+    setup: function() {
+        this.phase = 0;
+
+        var param = {
+            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
+            lineWidth: 1,
+        };
+        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
+
+        this.tweener.moveBy(0, 300, 3000, "easeOutQuart").call(function(){this.phase++}.bind(this));
+
+        //子機の投入
+        var sc = this.parentScene;
+        sc.enterEnemy("yojouhan-b", this.x+64, this.y-32).setRotation(0).setParentEnemy(this);
+        sc.enterEnemy("yojouhan-b", this.x+32, this.y+64).setRotation(90).setParentEnemy(this);
+        sc.enterEnemy("yojouhan-b", this.x-64, this.y+32).setRotation(180).setParentEnemy(this);
+        sc.enterEnemy("yojouhan-b", this.x-32, this.y-64).setRotation(270).setParentEnemy(this);
+    },
+
+    algorithm: function() {
+        if (this.phase == 1) this.rotation += 5;
+    },
+};
+
+//ステージ１ボス（四畳半）子機
+tds.enemyData['yojouhan-b'] = {
+    bulletPattern: "square1",  //使用弾幕パターン
+
+    //当り判定サイズ
+    width:  64,
+    height: 64,
+
+    //耐久力
+    def: 100,
+
+    //得点
+    point: 10000,
+
+    //表示レイヤー番号
+    layer: LAYER_OBJECT,
+
+    //敵タイプ
+    type: ENEMY_MIDDLE,
+
+    setup: function() {
+        this.phase = 0;
+        this.originY = 0.25;
+
+        var param = {
+            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
+            lineWidth: 1,
+        };
+        tm.display.Shape(64, 128).addChildTo(this).renderRectangle(param);
+        
+        this.startX = this.x;
+        this.startY = this.y;
+
+        this.tweener.moveBy(0, 300, 3000, "easeOutQuart").call(function(){this.phase++}.bind(this));
+    },
+
+    algorithm: function() {
+        if (this.phase == 1) {
+            var x = rand(SC_W*0.1, SC_W*0.9);
+            var y = rand(SC_H*0.1, SC_H*0.4);
+            this.tweener.clear()
+                .to({rotation:0, x:x, y:y},1000,"easeInOutCubic")
+                .call(function(){this.phase++}.bind(this));
+            this.phase++;
+        }
+        if (this.phase > 2) this.lookAt();
+        if (this.phase == 3) {
+            this.tweener.clear()
+                .to({x:rand(SC_W*0.1, SC_W*0.9), y:rand(SC_H*0.1, SC_H*0.4)},1000,"easeInOutCubic")
+                .wait(1000)
+                .call(function(){this.phase = 3}.bind(this));
+            this.phase++;
+        }
+
+        if (this.phase == 10) {
+            this.tweener.clear()
+                .to({rotation:0, x:this.startX, y:this.startY},1000,"easeInOutCubic");
+        } 
+
     },
 };
 

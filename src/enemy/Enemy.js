@@ -17,6 +17,7 @@ tm.define("tds.Enemy", {
     //各種フラグ
     isCollision: true,  //当り判定
     isDead: false,      //死亡
+    isSelfCrash: false, //自爆
     isMuteki: false,    //無敵
     isBoss: false,      //ボス
     isOnScreen: false,  //画面内に入った
@@ -134,6 +135,13 @@ tm.define("tds.Enemy", {
                 this.dead();
             }
 
+            //弾消し
+            if (this.data.type == ENEMY_MIDDLE) {
+                this.parentScene.eraseBullet(this);
+            } else if (this.data.type == ENEMY_LARGE) {
+                this.parentScene.eraseBullet();
+            }
+
             //親機に破壊を通知
             if (this.parentEnemy) this.parentEnemy.deadChild(this);
 
@@ -145,13 +153,6 @@ tm.define("tds.Enemy", {
             var sc = tm.display.OutlineLabel(this.data.point+"x"+pow, 30).addChildTo(this.parentScene).setPosition(this.x, this.y);
             sc.fontFamily = "'UbuntuMono'"; sc.align = "center"; sc.baseline  = "middle"; sc.fontWeight = 300; sc.outlineWidth = 2;
             sc.tweener.to({x: this.x, y: this.y-50, alpha:0}, 1000).call(function(){this.remove()}.bind(sc));
-
-            //弾消し
-            if (this.data.type == ENEMY_MIDDLE) {
-                this.parentScene.eraseBullet(this);
-            } else if (this.data.type == ENEMY_LARGE) {
-                this.parentScene.eraseBullet();
-            }
         }
     },
 
@@ -194,6 +195,13 @@ tm.define("tds.Enemy", {
             tds.burnParticleLarge(this.x+x, this.y+y).addChildTo(this.parentScene);
         }
         app.playSE("explodeLarge");
+
+        this.parentScene.eraseBullet();
+    },
+
+    //親機のセット
+    setParentEnemy: function(parent) {
+        this.parentEnemy = parent;
     },
 
     //子機が破壊された場合に呼ばれるコールバック
