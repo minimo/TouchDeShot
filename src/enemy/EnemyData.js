@@ -339,12 +339,12 @@ tds.enemyData['yojouhan-a'] = {
 
         this.tweener.moveBy(0, 300, 3000, "easeOutQuart").call(function(){this.phase++}.bind(this));
 
-        //子機の投入
+        //子機の投入（右上から時計回り）
         var sc = this.parentScene;
-        sc.enterEnemy("yojouhan-b", this.x+64, this.y-32).setRotation(0).setParentEnemy(this);
-        sc.enterEnemy("yojouhan-b", this.x+32, this.y+64).setRotation(90).setParentEnemy(this);
-        sc.enterEnemy("yojouhan-b", this.x-64, this.y+32).setRotation(180).setParentEnemy(this);
-        sc.enterEnemy("yojouhan-b", this.x-32, this.y-64).setRotation(270).setParentEnemy(this);
+        sc.enterEnemy("yojouhan-b", this.x+64, this.y-32, {num:1, rotation:  0}).setParentEnemy(this);
+        sc.enterEnemy("yojouhan-b", this.x+32, this.y+64, {num:2, rotation: 90}).setParentEnemy(this);
+        sc.enterEnemy("yojouhan-b", this.x-64, this.y+32, {num:3, rotation:180}).setParentEnemy(this);
+        sc.enterEnemy("yojouhan-b", this.x-32, this.y-64, {num:4, rotation:270}).setParentEnemy(this);
     },
 
     algorithm: function() {
@@ -372,9 +372,10 @@ tds.enemyData['yojouhan-b'] = {
     //敵タイプ
     type: ENEMY_MIDDLE,
 
-    setup: function() {
+    setup: function(param) {
         this.phase = 0;
         this.originY = 0.25;
+        this.num = param.num;
 
         var param = {
             strokeStyle:"hsla(180, 50%, 70%, 1.0)",
@@ -385,6 +386,7 @@ tds.enemyData['yojouhan-b'] = {
         
         this.startX = this.x;
         this.startY = this.y;
+        this.rotation = param.rotation;
 
         this.tweener.moveBy(0, 300, 3000, "easeOutQuart").call(function(){this.phase++}.bind(this));
     },

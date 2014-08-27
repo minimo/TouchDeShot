@@ -30,6 +30,7 @@ tm.define("tds.Enemy", {
     bulletPattern: null,
     nowBulletPattern: null,
     id: -1,
+    param: null,
 
     data: null,
 
@@ -40,6 +41,7 @@ tm.define("tds.Enemy", {
         this.superInit();
         this.setPosition(x, y);
         this.id = id || -1;
+        this.param = param;
 
         this.name = name;
         var d = this.data = tds.enemyData[name];
