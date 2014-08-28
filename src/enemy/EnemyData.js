@@ -9,7 +9,8 @@ tds.enemyData = [];
 
 //攻撃ヘリタイプ（通常）
 tds.enemyData['cube1'] = {
-    bulletPattern: "cube1",  //使用弾幕パターン
+    //使用弾幕パターン
+    bulletPattern: "cube1",
 
     //当り判定サイズ
     width:  16,
@@ -56,7 +57,8 @@ tds.enemyData['cube1'] = {
 
 //攻撃ヘリタイプ（突撃）
 tds.enemyData['cube2'] = {
-    bulletPattern: "cube2",  //使用弾幕パターン
+    //使用弾幕パターン
+    bulletPattern: "cube2",
 
     //当り判定サイズ
     width:  16,
@@ -100,7 +102,8 @@ tds.enemyData['cube2'] = {
 
 //中型機
 tds.enemyData['square1'] = {
-    bulletPattern: "square1",  //使用弾幕パターン
+    //使用弾幕パターン
+    bulletPattern: "square1",
 
     //当り判定サイズ
     width:  64,
@@ -157,7 +160,8 @@ tds.enemyData['square1'] = {
 
 //小型空中砲台
 tds.enemyData['triangle1'] = {
-    bulletPattern: "triangle1-a",  //使用弾幕パターン
+    //使用弾幕パターン
+    bulletPattern: "triangle1-a",
 
     //当り判定サイズ
     width:  8,
@@ -198,7 +202,8 @@ tds.enemyData['triangle1'] = {
 
 //大型機
 tds.enemyData['triangle2'] = {
-    bulletPattern: "triangle2",  //使用弾幕パターン
+    //使用弾幕パターン
+    bulletPattern: "triangle2",
 
     //当り判定サイズ
     width:  128,
@@ -236,7 +241,8 @@ tds.enemyData['triangle2'] = {
 
 //ステージ１中ボス（未定）
 tds.enemyData['mboss1'] = {
-    bulletPattern: "basic-aim1",  //使用弾幕パターン
+    //使用弾幕パターン
+    bulletPattern: "basic-aim1",
 
     //当り判定サイズ
     width:  256,
@@ -309,7 +315,8 @@ tds.enemyData['mboss1'] = {
 
 //ステージ１ボス（四畳半）コア
 tds.enemyData['yojouhan-a'] = {
-    bulletPattern: "square1",  //使用弾幕パターン
+    //使用弾幕パターン
+    bulletPattern: ["yojouhan-a-1", "yojouhan-a-2"],
 
     //当り判定サイズ
     width:  64,

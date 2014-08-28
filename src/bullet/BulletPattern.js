@@ -239,4 +239,56 @@ tds.bulletPattern["square1-child"] = new bulletml.Root({
     ]),
 });
 
+//四畳半第一段階
+tds.bulletPattern["yojouhan-a-1"] = new bulletml.Root({
+    top1: $.action([
+        $.wait(180),
+        $.fire($.direction(0), $spd(3), RL),
+        $.repeat(999, [
+            $.repeat(20, [
+                $.fire($.direction( 5, "sequence"), $spd(3), RL),
+                $interval(5),
+            ]),
+            $interval(60),
+        ]),
+    ]),
+    top1: $.action([
+        $.wait(180),
+        $.fire($.direction(180), $spd(3), RL),
+        $.repeat(999, [
+            $.repeat(20, [
+                $.fire($.direction( 5, "sequence"), $spd(3), RL),
+                $interval(5),
+            ]),
+            $interval(60),
+        ]),
+    ]),
+});
+
+//四畳半第二段階
+tds.bulletPattern["yojouhan-a-2"] = new bulletml.Root({
+    top1: $.action([
+        $.wait(180),
+        $.fire($.direction(0), $spd(3), RL),
+        $.repeat(999, [
+            $.repeat(20, [
+                $.fire($.direction( 5, "sequence"), $spd(3), RL),
+                $interval(5),
+            ]),
+            $interval(60),
+        ]),
+    ]),
+    top1: $.action([
+        $.wait(180),
+        $.fire($.direction(180), $spd(3), RL),
+        $.repeat(999, [
+            $.repeat(20, [
+                $.fire($.direction( 5, "sequence"), $spd(3), RL),
+                $interval(5),
+            ]),
+            $interval(60),
+        ]),
+    ]),
+});
+
 })();
