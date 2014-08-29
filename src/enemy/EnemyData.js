@@ -29,15 +29,15 @@ tds.enemyData['cube1'] = {
     type: ENEMY_SMALL,
 
     setup: function() {
-        var param = {
+        var colorparam = {
             strokeStyle:"hsla(100, 50%, 70%, 1.0)",
             fillStyle:  "hsla(100, 50%, 50%, 0.3)",
             lineWidth: 1,
         };
-        tm.display.Shape(16, 40).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(16, 40).addChildTo(this).renderRectangle(colorparam);
 
         var sh = tm.display.Shape(60, 10).addChildTo(this);
-        sh.renderRectangle(param);
+        sh.renderRectangle(colorparam);
         sh.update = function() {
             this.rotation += 30;
         }
@@ -79,15 +79,15 @@ tds.enemyData['cube2'] = {
     isNear: false,
 
     setup: function() {
-        var param = {
+        var colorparam = {
             strokeStyle:"hsla(100, 50%, 70%, 1.0)",
             fillStyle:  "hsla(100, 50%, 50%, 0.3)",
             lineWidth: 1,
         };
-        tm.display.Shape(16, 40).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(16, 40).addChildTo(this).renderRectangle(colorparam);
 
         var sh = tm.display.Shape(60, 10).addChildTo(this);
-        sh.renderRectangle(param);
+        sh.renderRectangle(colorparam);
         sh.update = function() {
             this.rotation += 30;
         }
@@ -125,21 +125,21 @@ tds.enemyData['square1'] = {
         this.phase = 0;
         this.rotation = 45;
 
-        var param = {
+        var colorparam = {
             strokeStyle:"hsla(180, 50%, 70%, 1.0)",
             fillStyle:  "hsla(180, 50%, 50%, 0.5)",
             lineWidth: 1,
         };
-        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(colorparam);
 
         var that = this;
-        this.c1 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition(-32,-32);
+        this.c1 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(colorparam).setPosition(-32,-32);
         this.c1.update = function() {if (that.phase ==1) this.rotation = -that.rotation+45;}
-        this.c2 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition( 32,-32);
+        this.c2 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(colorparam).setPosition( 32,-32);
         this.c2.update = function() {if (that.phase ==1) this.rotation = -that.rotation+45;}
-        this.c3 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition(-32, 32);
+        this.c3 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(colorparam).setPosition(-32, 32);
         this.c3.update = function() {if (that.phase ==1) this.rotation = -that.rotation+45;}
-        this.c4 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param).setPosition( 32, 32);
+        this.c4 = tm.display.Shape(64, 64).addChildTo(this).renderRectangle(colorparam).setPosition( 32, 32);
         this.c4.update = function() {if (that.phase ==1) this.rotation = -that.rotation+45;}
 
         this.tweener.moveBy(0, 300, 4000, "easeOutQuart")
@@ -184,12 +184,12 @@ tds.enemyData['triangle1'] = {
         this.phase = 0;
         this.rotation = 0;
 
-        var param = {
+        var colorparam = {
             strokeStyle:"hsla(200, 50%, 70%, 1.0)",
             fillStyle:  "hsla(200, 50%, 50%, 0.5)",
             lineWidth: 1,
         };
-        tm.display.Shape(32, 32).addChildTo(this).renderTriangle(param);
+        tm.display.Shape(32, 32).addChildTo(this).renderTriangle(colorparam);
 
         if (this.x > SC_W*0.5)this.bulletPattern = "triangle1-b";
     },
@@ -224,12 +224,12 @@ tds.enemyData['triangle2'] = {
     setup: function() {
         this.rotation = 180;
 
-        var param = {
+        var colorparam = {
             strokeStyle:"hsla(200, 50%, 70%, 1.0)",
             fillStyle:  "hsla(200, 50%, 50%, 0.5)",
             lineWidth: 1,
         };
-        var s = tm.display.Shape(64, 64).addChildTo(this).renderTriangle(param);
+        var s = tm.display.Shape(64, 64).addChildTo(this).renderTriangle(colorparam);
         s.scaleX = 2;
         
     },
@@ -261,42 +261,42 @@ tds.enemyData['mboss1'] = {
     type: ENEMY_BOSS,
 
     setup: function() {
-        var param = {
+        var colorparam = {
             strokeStyle:"hsla(250, 50%, 50%, 1.0)",
             fillStyle:  "hsla(250, 50%, 50%, 0.3)",
             lineWidth: 2,
         };
-        tm.display.Shape(200, 100).addChildTo(this).renderRectangle(param);
-        tm.display.Shape(240,  80).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(200, 100).addChildTo(this).renderRectangle(colorparam);
+        tm.display.Shape(240,  80).addChildTo(this).renderRectangle(colorparam);
 
-        var r1 = tm.display.Shape(64, 128).addChildTo(this).setPosition( 138, 0).renderRectangle(param);
-        var r2 = tm.display.Shape(54, 118).addChildTo(this).setPosition( 138, 0).renderRectangle(param);
+        var r1 = tm.display.Shape(64, 128).addChildTo(this).setPosition( 138, 0).renderRectangle(colorparam);
+        var r2 = tm.display.Shape(54, 118).addChildTo(this).setPosition( 138, 0).renderRectangle(colorparam);
 
-        var l1 = tm.display.Shape(64, 128).addChildTo(this).setPosition(-138, 0).renderRectangle(param);
-        var l2 = tm.display.Shape(54, 118).addChildTo(this).setPosition(-138, 0).renderRectangle(param);
+        var l1 = tm.display.Shape(64, 128).addChildTo(this).setPosition(-138, 0).renderRectangle(colorparam);
+        var l2 = tm.display.Shape(54, 118).addChildTo(this).setPosition(-138, 0).renderRectangle(colorparam);
 
         //ローター
-        tm.display.Shape(16, 16).addChildTo(r1).renderRectangle(param);
+        tm.display.Shape(16, 16).addChildTo(r1).renderRectangle(colorparam);
         var sh = tm.display.Shape(110, 20).addChildTo(r1);
-        sh.renderRectangle(param);
+        sh.renderRectangle(colorparam);
         sh.update = function() {
             this.rotation += 10;
         }
         var sh = tm.display.Shape(110, 20).addChildTo(r1);
-        sh.renderRectangle(param);
+        sh.renderRectangle(colorparam);
         sh.rotation = 90;
         sh.update = function() {
             this.rotation += 10;
         }
 
-        tm.display.Shape(16, 16).addChildTo(l1).renderRectangle(param);
+        tm.display.Shape(16, 16).addChildTo(l1).renderRectangle(colorparam);
         var sh = tm.display.Shape(110, 20).addChildTo(l1);
-        sh.renderRectangle(param);
+        sh.renderRectangle(colorparam);
         sh.update = function() {
             this.rotation -= 10;
         }
         var sh = tm.display.Shape(110, 20).addChildTo(l1);
-        sh.renderRectangle(param);
+        sh.renderRectangle(colorparam);
         sh.rotation = 90;
         sh.update = function() {
             this.rotation -= 10;
@@ -337,12 +337,12 @@ tds.enemyData['yojouhan-a'] = {
     setup: function() {
         this.phase = 0;
 
-        var param = {
+        var colorparam = {
             strokeStyle:"hsla(180, 50%, 70%, 1.0)",
             fillStyle:  "hsla(180, 50%, 50%, 0.5)",
             lineWidth: 1,
         };
-        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(param);
+        tm.display.Shape(64, 64).addChildTo(this).renderRectangle(colorparam);
 
         this.tweener.moveBy(0, 300, 3000, "easeOutQuart").call(function(){this.phase++}.bind(this));
 
@@ -384,17 +384,17 @@ tds.enemyData['yojouhan-b'] = {
         this.originY = 0.25;
         this.num = param.num;
 
-        var param = {
-            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
-            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
-            lineWidth: 1,
-        };
-        tm.display.Shape(64, 128).addChildTo(this).renderRectangle(param);
-        
         this.startX = this.x;
         this.startY = this.y;
         this.rotation = param.rotation;
 
+        var colorparam = {
+            strokeStyle:"hsla(180, 50%, 70%, 1.0)",
+            fillStyle:  "hsla(180, 50%, 50%, 0.5)",
+            lineWidth: 1,
+        };
+        tm.display.Shape(64, 128).addChildTo(this).renderRectangle(colorparam);
+        
         this.tweener.moveBy(0, 300, 3000, "easeOutQuart").call(function(){this.phase++}.bind(this));
     },
 
@@ -420,7 +420,6 @@ tds.enemyData['yojouhan-b'] = {
             this.tweener.clear()
                 .to({rotation:0, x:this.startX, y:this.startY},1000,"easeInOutCubic");
         } 
-
     },
 };
 
