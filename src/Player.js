@@ -27,7 +27,7 @@ tm.define("tds.Player", {
     type: 0,        //自機タイプ
 
     power: 0,           //パワーチャージ
-    powerMax: 360,      //パワーチャージ最大
+    powerMax: 180,      //パワーチャージ最大
     level: 0,           //ショットレベル
     levelMax: 5,        //ショットレベル
     shotLimit: 0,       //ショットレベル上限
@@ -424,7 +424,7 @@ tm.define("tds.PowerGauge", {
     superClass:  tm.display.CanvasElement,
 
     min: 0,
-    max: 360,
+    max: 180,
     _value: 0,
 
     init: function() {
