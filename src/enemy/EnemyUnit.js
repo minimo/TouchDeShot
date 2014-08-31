@@ -47,11 +47,11 @@ tds.enemyUnit = {
 ],
 
 "square1-left": [
-    { "name": "square1", "x":SC_W*0.3, "y":-100 },
+    { "name": "square1", "x":SC_W*0.2, "y":-100 },
 ],
 
 "square1-right": [
-    { "name": "square1", "x":SC_W*0.7, "y":-100 },
+    { "name": "square1", "x":SC_W*0.8, "y":-100 },
 ],
 
 "triangle1-left": [

@@ -119,7 +119,7 @@ tds.enemyData['square1'] = {
     layer: LAYER_OBJECT,
 
     //敵タイプ
-    type: ENEMY_MIDDLE,
+    type: ENEMY_LARGE,
 
     setup: function() {
         this.phase = 0;
@@ -177,7 +177,7 @@ tds.enemyData['triangle1'] = {
     layer: LAYER_OBJECT,
 
     //敵タイプ
-    type: ENEMY_SMALL,
+    type: ENEMY_MIDDLE,
 
     setup: function() {
 

@@ -142,6 +142,7 @@ tm.define("tds.Enemy", {
                 this.parentScene.eraseBullet(this);
             } else if (this.data.type == ENEMY_LARGE) {
                 this.parentScene.eraseBullet();
+                this.parentScene.timeVanish = 60;
             }
 
             //親機に破壊を通知

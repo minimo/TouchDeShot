@@ -28,7 +28,7 @@ tm.define("tds.MainScene", {
 
     //ステージ制御
     nowStage: 1,    //現在ステージ番号
-    maxStage: 2,    //最大ステージ番号
+    maxStage: 1,    //最大ステージ番号
     stage: null,    //ステージコントローラー
     enemyID: 0,     //敵投入ＩＤ
     timeVinish: 0,  //敵弾強制消去
@@ -111,10 +111,18 @@ tm.define("tds.MainScene", {
         //ステージクリア検知
         if (this.stageClear) {
             this.stageClear = false;
-            //１０秒後にステージクリアメッセージ投入
-            tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterStageClear()}.bind(this));
             //ボス耐久ゲージ隠し
             this.systemBase.tweener.clear().moveBy(0, -24, 1000).call(function(){this.bossGauge.setTarget(null)}.bind(this));
+
+            //オールクリア判別
+            if (this.nowStage < this.maxStage) {
+                //１０秒後にステージクリアメッセージ投入
+                tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterStageClear()}.bind(this));
+            } else {
+                //全ステージクリア
+                //１０秒後にステージクリアメッセージ投入
+                tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterAllStageClear()}.bind(this));
+            }
         }
 
         //エクステンド検知
@@ -221,8 +229,7 @@ tm.define("tds.MainScene", {
         mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
         mask.alpha = 0;
 
-        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage+" CLEAR!", 30).addChildTo(mask);
-        m1.setPosition(SC_W*0.5, SC_H*0.5);
+        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage+" CLEAR!", 30).addChildTo(mask).setPosition(SC_W*0.4, SC_H*0.1);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
 
         //次ステージへ移行
@@ -239,8 +246,7 @@ tm.define("tds.MainScene", {
         mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
         mask.alpha = 0;
 
-        var m1 = tm.display.OutlineLabel("STAGE ALL CLEAR!", 50).addChildTo(mask);
-        m1.x = 0; m1.y = 0;
+        var m1 = tm.display.OutlineLabel("ALL CLEAR!", 30).addChildTo(mask).setPosition(SC_W*0.4, SC_H*0.1);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
 
         //ゲームオーバー表示へ移行
