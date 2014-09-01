@@ -219,8 +219,8 @@ tds.bulletPattern["triangle2"] = new bulletml.Root({
         $.wait(60),
         $.repeat(999, [
             $.repeat(6, [
-                $.fire($.direction(180 ,"absolute"), $spd(3), RL, -64, 0),
-                $.fire($.direction(180 ,"absolute"), $spd(3), RL,  64, 0),
+                $.fire($.direction(180 ,"absolute"), $spd(3), RL, $.offsetX(-64)),
+                $.fire($.direction(180 ,"absolute"), $spd(3), RL, $.offsetX( 64)),
                 $interval(10),
             ]),
             $interval(90),
@@ -245,22 +245,37 @@ tds.bulletPattern["yojouhan-a-1"] = new bulletml.Root({
         $.wait(180),
         $.fire($.direction(0), $spd(3), RL),
         $.repeat(999, [
-            $.repeat(20, [
-                $.fire($.direction( 5, "sequence"), $spd(3), RL),
-                $interval(5),
+            $.repeat(5, [
+                $.repeat(10, [
+                    $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                    $interval(5),
+                ]),
+                $interval(20),
             ]),
-            $interval(60),
+            $interval(120),
         ]),
     ]),
-    top1: $.action([
+    top2: $.action([
         $.wait(180),
         $.fire($.direction(180), $spd(3), RL),
         $.repeat(999, [
-            $.repeat(20, [
-                $.fire($.direction( 5, "sequence"), $spd(3), RL),
-                $interval(5),
+            $.repeat(5, [
+                $.repeat(10, [
+                    $.fire($.direction( 10, "sequence"), $spd(3), RL),
+                    $interval(5),
+                ]),
+                $interval(20),
             ]),
-            $interval(60),
+            $interval(120),
+        ]),
+    ]),
+    top3: $.action([
+        $.wait(180),
+        $.repeat(999, [
+            $whip($spd(2), 0.01, 5, $nwayVs(7, -90, 90, BL)),
+            $interval(180),
+            $whip($spd(2), 0.01, 5, $nwayVs(6, -90, 90, RL)),
+            $interval(240),
         ]),
     ]),
 });
