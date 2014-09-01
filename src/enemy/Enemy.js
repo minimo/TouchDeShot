@@ -136,6 +136,7 @@ tm.define("tds.Enemy", {
             } else {
                 this.dead();
             }
+            this.parentScene.enemyKill++;
 
             //弾消し
             if (this.data.type == ENEMY_MIDDLE) {
