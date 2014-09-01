@@ -15,7 +15,7 @@ tm.define("tds.Result", {
     parentScene: null,          //親シーン
     player: null,               //プレイヤー参照用
 
-    phase: 0,       //表示フェーズ
+    phase: 1,       //表示フェーズ
     finish: false,  //表示終了フラグ
 
     init: function(stageNumber, bonus, enemyCount, enemyKill) {
@@ -25,7 +25,7 @@ tm.define("tds.Result", {
 
         var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
         mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
-        mask.alpha = 0;
+        mask.alpha = 1;
         mask.tweener.fadeIn(1000);
 
         this.msg = [];
@@ -57,7 +57,7 @@ tm.define("tds.Result", {
 
     update: function() {
         if (this.time % 120 == 0 && this.phase < this.msg.length) {
-            this.msg[this.phase].tweener.fadeIn(1000);
+            this.msg[this.phase].tweener.fadeIn(500);
             this.phase++;
             if (this.phase == this.msg.length) this.finish = true;
         }
