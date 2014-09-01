@@ -28,12 +28,16 @@ tm.define("tds.MainScene", {
 
     //ステージ制御
     nowStage: 1,    //現在ステージ番号
-    maxStage: 1,    //最大ステージ番号
+    maxStage: 2,    //最大ステージ番号
     stage: null,    //ステージコントローラー
     enemyID: 0,     //敵投入ＩＤ
     timeVinish: 0,  //敵弾強制消去
     boss: false,    //ボス戦中フラグ
     stageClear: false,  //ステージクリアフラグ
+
+    //敵投入数と撃破数
+    enemyCount: 0,
+    enemyKill: 0,
 
     //プレイヤー情報
     life: 2,
@@ -116,12 +120,12 @@ tm.define("tds.MainScene", {
 
             //オールクリア判別
             if (this.nowStage < this.maxStage) {
-                //１０秒後にステージクリアメッセージ投入
-                tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterStageClear()}.bind(this));
+                //５秒後にステージクリアメッセージ投入
+                tm.app.Object2D().addChildTo(this).tweener.wait(5000).call(function(){this.enterStageClear()}.bind(this));
             } else {
                 //全ステージクリア
-                //１０秒後にステージクリアメッセージ投入
-                tm.app.Object2D().addChildTo(this).tweener.wait(10000).call(function(){this.enterAllStageClear()}.bind(this));
+                //５秒後にステージクリアメッセージ投入
+                tm.app.Object2D().addChildTo(this).tweener.wait(5000).call(function(){this.enterAllStageClear()}.bind(this));
             }
         }
 
@@ -158,6 +162,7 @@ tm.define("tds.MainScene", {
                 this.systemBase.tweener.clear().moveBy(0, 32, 1000);
             }
             this.enemyID++;
+            this.enemyCount++;
         }
     },
 
@@ -165,6 +170,7 @@ tm.define("tds.MainScene", {
     enterEnemy: function(name, x, y, param) {
         this.enemyID++;
         return tds.Enemy(name, x, y, this.enemyID-1, param).addChildTo(this);
+        this.enemyCount++;
     },
 
     //弾の消去
@@ -220,11 +226,14 @@ tm.define("tds.MainScene", {
         }
         this.time = 0;
         this.timeVanish = 0;
+        this.enemyCount = 0;
+        this.enemyKill = 0;
     },
 
     //ステージクリア情報表示
     enterStageClear: function() {
-        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(0, 0).setPosition(SC_W*0.1, SC_H*0.1);
+/*
+        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(SC_W*0.1, SC_H*0.1);
         mask.originX = mask.originY = 0;
         mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
         mask.alpha = 0;
@@ -238,6 +247,16 @@ tm.define("tds.MainScene", {
                 this.nowStage++;
                 this.initStage();
             }.bind(this));
+*/
+        //リザルト表示
+        var clearBonus = 100000*this.nowStage;
+        var res = tds.Result(this.nowStage, clearBonus, this.enemyCount, this.enemyKill).addChildTo(this);
+/*        res.tweener.wait(5000)
+            .call(function(){
+                this.nowStage++;
+                this.initStage();
+            }.bind(this));
+*/
     },
 
     //全ステージクリア情報表示

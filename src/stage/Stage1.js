@@ -13,6 +13,7 @@ tm.define("tds.Stage1", {
     init: function(parent, player) {
         this.superInit(parent, player);
 
+/*
         //Stage data
         this.add( 180, "cube1-left");
         this.add(   1, "cube1-right");
@@ -56,7 +57,7 @@ tm.define("tds.Stage1", {
 
         this.add( 240, "triangle1-left");
         this.add( 240, "triangle1-right");
-
+*/
         this.add( 120, function(){ this.enterWarning()});
         this.add( 360, "boss1");
     },
