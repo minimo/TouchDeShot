@@ -89,7 +89,7 @@ tds.enemyUnit = {
 
 //ステージ１ボス「四畳半」
 "boss1": [
-    { "name": "yojouhan-a", "x":SC_W*0.5, "y":-100 },
+    { "name": "yojouhan-a", "x":SC_W*0.5, "y":-SC_H*0.2 },
 ],
 
 }

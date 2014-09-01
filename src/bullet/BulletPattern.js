@@ -245,12 +245,12 @@ tds.bulletPattern["yojouhan-a-1"] = new bulletml.Root({
         $.wait(180),
         $.fire($.direction(0), $spd(3), RL),
         $.repeat(999, [
-            $.repeat(5, [
-                $.repeat(10, [
+            $.repeat(4, [
+                $.repeat(12, [
                     $.fire($.direction( 10, "sequence"), $spd(3), RL),
                     $interval(5),
                 ]),
-                $interval(20),
+                $interval(30),
             ]),
             $interval(120),
         ]),
@@ -259,12 +259,12 @@ tds.bulletPattern["yojouhan-a-1"] = new bulletml.Root({
         $.wait(180),
         $.fire($.direction(180), $spd(3), RL),
         $.repeat(999, [
-            $.repeat(5, [
-                $.repeat(10, [
+            $.repeat(4, [
+                $.repeat(12, [
                     $.fire($.direction( 10, "sequence"), $spd(3), RL),
                     $interval(5),
                 ]),
-                $interval(20),
+                $interval(30),
             ]),
             $interval(120),
         ]),
@@ -272,10 +272,10 @@ tds.bulletPattern["yojouhan-a-1"] = new bulletml.Root({
     top3: $.action([
         $.wait(180),
         $.repeat(999, [
-            $whip($spd(2), 0.01, 5, $nwayVs(7, -90, 90, BL)),
-            $interval(180),
-            $whip($spd(2), 0.01, 5, $nwayVs(6, -90, 90, RL)),
-            $interval(240),
+            $whip($spd(4), 0.1, 5, $nwayVs(7, -60, 60, BL)),
+            $interval(60*3),
+            $whip($spd(4), 0.1, 5, $nwayVs(6, -60, 60, RL)),
+            $interval(60*4),
         ]),
     ]),
 });
@@ -302,6 +302,17 @@ tds.bulletPattern["yojouhan-a-2"] = new bulletml.Root({
                 $interval(5),
             ]),
             $interval(60),
+        ]),
+    ]),
+});
+
+//四畳半子機第一段階
+tds.bulletPattern["yojouhan-b-1"] = new bulletml.Root({
+    top: $.action([
+        $.wait(300),
+        $.repeat(3, [
+            $fireRS(6),
+            $.wait("$rand * 60"),
         ]),
     ]),
 });

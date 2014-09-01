@@ -344,7 +344,16 @@ tds.enemyData['yojouhan-a'] = {
         };
         tm.display.Shape(64, 64).addChildTo(this).renderRectangle(colorparam);
 
-        this.tweener.moveBy(0, 300, 3000, "easeOutQuart").call(function(){this.phase++}.bind(this));
+        this.tweener
+            .moveBy(0, SC_H*0.5, 3000, "easeOutQuart")
+            .call(function(){this.phase++}.bind(this))
+            .wait(1000)
+            .moveBy(SC_W*0.3, 0, 3000, "easeInOutCubic")
+            .call(function(){
+                this.tweener.clear()
+                .moveBy(-SC_W*0.6, 0, 6000, "easeInOutCubic")
+                .moveBy( SC_W*0.6, 0, 6000, "easeInOutCubic").setLoop(true);
+            }.bind(this));
 
         //子機の投入（右上から時計回り）
         var sc = this.parentScene;
@@ -355,13 +364,13 @@ tds.enemyData['yojouhan-a'] = {
     },
 
     algorithm: function() {
-        if (this.phase == 1) this.rotation += 5;
+        if (this.phase > 0) this.rotation += 5;
     },
 };
 
 //ステージ１ボス（四畳半）子機
 tds.enemyData['yojouhan-b'] = {
-    bulletPattern: "square1",  //使用弾幕パターン
+    bulletPattern: "yojouhan-b-1",  //使用弾幕パターン
 
     //当り判定サイズ
     width:  64,
@@ -384,8 +393,6 @@ tds.enemyData['yojouhan-b'] = {
         this.originY = 0.25;
         this.num = param.num;
 
-        this.startX = this.x;
-        this.startY = this.y;
         this.rotation = param.rotation;
 
         var colorparam = {
@@ -394,12 +401,37 @@ tds.enemyData['yojouhan-b'] = {
             lineWidth: 1,
         };
         tm.display.Shape(64, 128).addChildTo(this).renderRectangle(colorparam);
-        
-        this.tweener.moveBy(0, 300, 3000, "easeOutQuart").call(function(){this.phase++}.bind(this));
+
+        var x = 0, y = 0;
+        if (param.num == 1) {x = SC_W*0.4; y = SC_H*0.2}
+        if (param.num == 2) {x = SC_W*0.6; y = SC_H*0.2}
+        if (param.num == 3) {x = SC_W*0.3; y = SC_H*0.3}
+        if (param.num == 4) {x = SC_W*0.7; y = SC_H*0.3}
+        this.relativeX = x-SC_W*0.5;
+        this.relativeY = y-SC_W*0.3;
+        this.tweener
+            .moveBy(0, SC_H*0.5, 3000, "easeOutQuart")
+            .call(function(){this.phase++}.bind(this))
+            .wait(500)
+            .to({rotation:0, x:x, y:y},1000,"easeInOutCubic")
+            .call(function(){this.phase++}.bind(this));
     },
 
     algorithm: function() {
         if (this.phase == 1) {
+            //初期位置の記録
+            this.startX = this.x;
+            this.startY = this.y;
+            this.startR = this.rotation;
+            this.phase++;
+        }
+        if (this.phase == 3) {
+            this.x = this.parentEnemy.x+this.relativeX;
+            this.y = this.parentEnemy.y+this.relativeY;
+            this.lookAt();
+        }
+
+        if (this.phase == 11) {
             var x = rand(SC_W*0.1, SC_W*0.9);
             var y = rand(SC_H*0.1, SC_H*0.4);
             this.tweener.clear()
@@ -407,8 +439,8 @@ tds.enemyData['yojouhan-b'] = {
                 .call(function(){this.phase++}.bind(this));
             this.phase++;
         }
-        if (this.phase > 2) this.lookAt();
-        if (this.phase == 3) {
+        if (this.phase > 12) this.lookAt();
+        if (this.phase == 13) {
             this.tweener.clear()
                 .to({x:rand(SC_W*0.1, SC_W*0.9), y:rand(SC_H*0.1, SC_H*0.4)},1000,"easeInOutCubic")
                 .wait(1000)
