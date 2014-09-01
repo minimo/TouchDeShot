@@ -169,8 +169,8 @@ tm.define("tds.MainScene", {
     //敵単体の投入
     enterEnemy: function(name, x, y, param) {
         this.enemyID++;
-        return tds.Enemy(name, x, y, this.enemyID-1, param).addChildTo(this);
         this.enemyCount++;
+        return tds.Enemy(name, x, y, this.enemyID-1, param).addChildTo(this);
     },
 
     //弾の消去
