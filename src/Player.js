@@ -27,9 +27,10 @@ tm.define("tds.Player", {
     type: 0,        //自機タイプ
 
     power: 0,           //パワーチャージ
-    powerMax: 180,      //パワーチャージ最大
+    powerMax: 120,      //パワーチャージ最大
     level: 0,           //ショットレベル
     levelMax: 5,        //ショットレベル
+    shotPower: 1,       //ショット威力
     shotLimit: 0,       //ショットレベル上限
     shotInterval: 10,   //ショット間隔
 
@@ -218,7 +219,7 @@ tm.define("tds.Player", {
             this.rollingBit();
         }
 
-        this.gauge.value = this.power;
+        this.gauge.value = this.level*this.powerMax+this.power;
         this.bx = this.x;
         this.by = this.y;
         this.beforeShieldON = this.shieldON;
@@ -358,7 +359,7 @@ tm.define("tds.Player", {
         this.control = false;
         this.isCollision = false;
         this.shieldON = true;
-        this.parentScene.timeVanish = 180;
+        this.parentScene.timeVanish = 300;
     },
 
     //ステージ開始時演出
@@ -424,13 +425,15 @@ tm.define("tds.PowerGauge", {
     superClass:  tm.display.CanvasElement,
 
     min: 0,
-    max: 180,
+    max: 600,
     _value: 0,
 
     init: function() {
         this.superInit();
         this.alpha = 0;
         this.rotation = -90;
+
+        this.toRad = (Math.PI*2)/this.max;
     },
 
     update: function() {
@@ -447,18 +450,19 @@ tm.define("tds.PowerGauge", {
         canvas.lineWidth = 15;
         canvas.globalCompositeOperation = "lighter";
 
-        var clock = true;
-        var rad = this._value*toRad;
-
+        var rad = this._value*this.toRad;
+        var color1 = "hsla({0}, 60%, 50%, 0.5)".format(240);
+        var color2 = "hsla({0}, 60%, 50%, 0.5)".format(120);
+/*
         var color1 = "hsla({0}, 60%, 50%, 0.5)".format(100+this.parent.level*200+this.parent.power*0.4);
         var color2 = "hsla({0}, 60%, 50%, 0.5)".format(100+(this.parent.level+1)*200);
+*/
 
         canvas.strokeStyle = color1
         canvas.shadowBlur = 15;
-        canvas.shadowColor = "blue";
-        canvas.strokeArc(0, 0, 80, Math.PI*2, rad, clock);
+        canvas.strokeArc(0, 0, 80, Math.PI*2, rad, true);
         canvas.strokeStyle = color2;
-        canvas.strokeArc(0, 0, 80, rad, 0, clock);
+        canvas.strokeArc(0, 0, 80, rad, 0, true);
     },
 });
 
