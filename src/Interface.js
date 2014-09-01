@@ -20,35 +20,32 @@ tm.define("tds.Result", {
 
     init: function(stageNumber, bonus, enemyCount, enemyKill) {
         this.superInit();
-        this.setPosition(SC_W*0.1, SC_H*0.1);
         this.originX = this.originY = 0;
 
-        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.6).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
         mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
         mask.alpha = 1;
         mask.tweener.fadeIn(1000);
 
         this.msg = [];
         if (stageNumber != 0) {
-            var m1 = this.msg[0] = tm.display.OutlineLabel("STAGE "+stageNumber+" CLEAR!", 30).addChildTo(this).setPosition(SC_W*0.4, SC_H*0.1);
+            var m1 = this.msg[0] = tm.display.OutlineLabel("STAGE "+stageNumber+" CLEAR!", 30).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.3);
             m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
-            m1.alpha = 0;
         } else {
-            var m1 = this.msg[0] = tm.display.OutlineLabel("ALL CLEAR!", 30).addChildTo(this).setPosition(SC_W*0.4, SC_H*0.1);
+            var m1 = this.msg[0] = tm.display.OutlineLabel("ALL CLEAR!", 30).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.3);
             m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
-            m1.alpha = 0;
         }
 
-        m1 = this.msg[1] = tm.display.OutlineLabel("Clear Bonus: "+bonus, 25).addChildTo(this).setPosition(SC_W*0.4, SC_H*0.2);
+        m1 = this.msg[1] = tm.display.OutlineLabel("Clear Bonus: "+bonus, 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.4);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
         m1.alpha = 0;
 
-        m1 = this.msg[2] = tm.display.OutlineLabel("Enemy kill: "+enemyKill, 25).addChildTo(this).setPosition(SC_W*0.4, SC_H*0.3);
+        m1 = this.msg[2] = tm.display.OutlineLabel("Enemy kill: "+enemyKill, 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
         m1.alpha = 0;
 
         var killRatio = ~~(enemyKill/enemyCount*1000)/10;
-        m1 = this.msg[3] = tm.display.OutlineLabel("Kill ratio: "+killRatio+"%", 25).addChildTo(this).setPosition(SC_W*0.4, SC_H*0.4);
+        m1 = this.msg[3] = tm.display.OutlineLabel("Kill ratio: "+killRatio+"%", 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.6);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
         m1.alpha = 0;
 
@@ -56,8 +53,8 @@ tm.define("tds.Result", {
     },
 
     update: function() {
-        if (this.time % 120 == 0 && this.phase < this.msg.length) {
-            this.msg[this.phase].tweener.fadeIn(500);
+        if (this.time % 30 == 0 && this.phase < this.msg.length) {
+            this.msg[this.phase].tweener.fadeIn(100);
             this.phase++;
             if (this.phase == this.msg.length) this.finish = true;
         }
