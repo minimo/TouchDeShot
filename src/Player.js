@@ -238,6 +238,7 @@ tm.define("tds.Player", {
         this.shotInterval = 10;
         this.bits.status = 0;
 
+        this.parentScene.stageMiss++;
         this.parentScene.life--;
         this.parentScene.dispLife.dec();
         if (this.parentScene.life > -1) {

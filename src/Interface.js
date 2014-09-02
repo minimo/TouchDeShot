@@ -18,7 +18,10 @@ tm.define("tds.Result", {
     phase: 1,       //表示フェーズ
     finish: false,  //表示終了フラグ
 
-    init: function(stageNumber, bonus, enemyCount, enemyKill) {
+    clearBonus: 0,
+    ratioBonus: 0,
+
+    init: function(stageNumber, enemyCount, enemyKill, clearBonus, nomiss) {
         this.superInit();
         this.originX = this.originY = 0;
 
@@ -36,18 +39,29 @@ tm.define("tds.Result", {
             m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
         }
 
-        m1 = this.msg[1] = tm.display.OutlineLabel("Clear Bonus: "+bonus, 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.4);
-        m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
-        m1.alpha = 0;
-
-        m1 = this.msg[2] = tm.display.OutlineLabel("Enemy kill: "+enemyKill, 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        this.clearBonus = clearBonus;
+        m1 = this.msg[1] = tm.display.OutlineLabel("CLEAR BONUS: "+clearBonus, 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.4);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
         m1.alpha = 0;
 
         var killRatio = ~~(enemyKill/enemyCount*1000)/10;
-        m1 = this.msg[3] = tm.display.OutlineLabel("Kill ratio: "+killRatio+"%", 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.6);
+        m1 = this.msg[2] = tm.display.OutlineLabel("KILL RATIO: "+killRatio+"%", 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
         m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
         m1.alpha = 0;
+
+        this.ratioBonus = 0;
+        if (killRatio == 100) {
+            this.ratioBonus = 100000;
+        } else if (killRatio >= 90) {
+            this.ratioBonus = 50000;
+        } else if (killRatio >= 80) {
+            this.ratioBonus = 30000;
+        }
+        if (this.ratioBonus > 0) {
+            m1 = this.msg[3] = tm.display.OutlineLabel("RATIO BONUS: "+this.ratioBonus, 25).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.6);
+            m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
+            m1.alpha = 0;
+        }
 
         this.time = 1;
     },
@@ -57,6 +71,12 @@ tm.define("tds.Result", {
             this.msg[this.phase].tweener.fadeIn(100);
             this.phase++;
             if (this.phase == this.msg.length) this.finish = true;
+            if (this.phase == 1) {
+                this.parentScene.score+=this.clearBonus;
+            }
+            if (this.phase == 3) {
+                this.parentScene.score+=this.ratioBonus;
+            }
         }
         this.time++;
     },

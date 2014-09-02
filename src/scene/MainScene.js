@@ -28,12 +28,13 @@ tm.define("tds.MainScene", {
 
     //ステージ制御
     nowStage: 1,    //現在ステージ番号
-    maxStage: 2,    //最大ステージ番号
+    maxStage: 1,    //最大ステージ番号
     stage: null,    //ステージコントローラー
     enemyID: 0,     //敵投入ＩＤ
     timeVinish: 0,  //敵弾強制消去
     boss: false,    //ボス戦中フラグ
     stageClear: false,  //ステージクリアフラグ
+    stageMiss: 0,   //ステージ内ミス回数
 
     //敵投入数と撃破数
     enemyCount: 0,
@@ -118,15 +119,8 @@ tm.define("tds.MainScene", {
             //ボス耐久ゲージ隠し
             this.systemBase.tweener.clear().moveBy(0, -24, 1000).call(function(){this.bossGauge.setTarget(null)}.bind(this));
 
-            //オールクリア判別
-            if (this.nowStage < this.maxStage) {
-                //５秒後にステージクリアメッセージ投入
-                tm.app.Object2D().addChildTo(this).tweener.wait(5000).call(function(){this.enterStageClear()}.bind(this));
-            } else {
-                //全ステージクリア
-                //５秒後にステージクリアメッセージ投入
-                tm.app.Object2D().addChildTo(this).tweener.wait(5000).call(function(){this.enterAllStageClear()}.bind(this));
-            }
+            //５秒後にステージクリアメッセージ投入
+            tm.app.Object2D().addChildTo(this).tweener.wait(5000).call(function(){this.enterStageClear()}.bind(this));
         }
 
         //エクステンド検知
@@ -228,35 +222,35 @@ tm.define("tds.MainScene", {
         this.timeVanish = 0;
         this.enemyCount = 0;
         this.enemyKill = 0;
+        this.stageMiss = 0;
+
+        //ステージ番号表示
+        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage, 50).addChildTo(this).setPosition(SC_W*0.5, SC_H*0.5);
+        m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
+        m1.alpha = 0;
+        m1.tweener.wait(500).fadeIn(250).wait(1000).fadeOut(250).call(function(){this.remove()}.bind(m1));
     },
 
     //ステージクリア情報表示
     enterStageClear: function() {
-/*
-        var mask = tm.display.Shape(SC_W*0.8, SC_H*0.8).addChildTo(this).setPosition(SC_W*0.1, SC_H*0.1);
-        mask.originX = mask.originY = 0;
-        mask.renderRectangle({fillStyle: "rgba(0,0,128,0.5)", strokeStyle: "rgba(128,128,128,0.5)"});
-        mask.alpha = 0;
-
-        var m1 = tm.display.OutlineLabel("STAGE "+this.nowStage+" CLEAR!", 30).addChildTo(mask).setPosition(SC_W*0.4, SC_H*0.1);
-        m1.fontFamily = "'Orbitron'"; m1.align = "center"; m1.baseline  = "middle"; m1.fontWeight = 800; m1.outlineWidth = 2;
-
-        //次ステージへ移行
-        mask.tweener.fadeIn(1000).wait(5000).fadeOut(2000)
-            .call(function(){
-                this.nowStage++;
-                this.initStage();
-            }.bind(this));
-*/
         //リザルト表示
         var clearBonus = 100000*this.nowStage;
-        var res = tds.Result(this.nowStage, clearBonus, this.enemyCount, this.enemyKill).addChildTo(this);
-/*        res.tweener.wait(5000)
-            .call(function(){
-                this.nowStage++;
-                this.initStage();
-            }.bind(this));
-*/
+        var res = tds.Result(this.nowStage, this.enemyCount, this.enemyKill, clearBonus, (this.stageMiss==0)?true:false).addChildTo(this);
+        if (this.nowStage < this.maxStage) {
+            res.tweener.wait(10000)
+                .call(function() {
+                    this.nowStage++;
+                    this.initStage();
+                    res.remove();
+                }.bind(this));
+        } else {
+            //ゲームオーバー表示へ移行
+            res.tweener.wait(10000)
+                .call(function() {
+                    app.replaceScene(tds.GameoverScene(this.nowStage, this.boss, true));
+                    res.remove();
+                }.bind(this));
+        }
     },
 
     //全ステージクリア情報表示
