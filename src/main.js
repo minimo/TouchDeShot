@@ -77,7 +77,7 @@ app = {};
 tm.main(function() {
     app = tds.TouchShooter("#world");
 //    app.enableStats();
-    detectFontLoading("'Orbitron'");
+    detectFontLoading("Orbitron");
     app.run();
 });
 
