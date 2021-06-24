@@ -12,7 +12,6 @@
 [Dd]ebugPublic/
 [Rr]elease/
 x64/
-build/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -173,3 +172,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+.settings/
+
+.idea/

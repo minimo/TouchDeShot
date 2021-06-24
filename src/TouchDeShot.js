@@ -68,7 +68,8 @@ tds.TouchShooter = tm.createClass({
 
     exitApp: function() {
         this.stop();
-        tm.social.Nineleap.postRanking(this.highScore, "");
+        // tm.social.Nineleap.postRanking(this.highScore, "");
+        location.reload();
     },
 
     playBGM: function(asset, loop) {
